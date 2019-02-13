@@ -16,4 +16,5 @@ public class Category {
     private  String categoryName;
     private  Integer pid;
     private  List<Category> children;
+    private  List<Category> categoryList;
 }

@@ -44,4 +44,13 @@ public class CategoryServiceImpl implements  CategoryService{
         return map;
 
     }
+
+    @Override
+    public List<Category> queryAll() {
+        //前台分类
+            List<Category> categories = categoryMapper.queryAll();
+
+            return  categories;
+
+    }
 }

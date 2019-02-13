@@ -55,9 +55,9 @@
     <div class="wrapper">
         <h2><img src="${pageContext.request.contextPath}/img/ih1.jpg"/></h2>
         <div class="top clearfix">
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n1.jpg"/><p></p></a>
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n2.jpg"/><p></p></a>
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n3.jpg"/><p></p></a>
+            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo1.jpg"/><p></p></a>
+            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo2.jpg"/><p></p></a>
+            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo3.jpg"/><p></p></a>
         </div>
         <div class="bott clearfix">
             <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n4.jpg"/><p></p></a>

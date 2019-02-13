@@ -35,4 +35,10 @@ public class CategoryController {
         return map;
 
     }
+    @RequestMapping("queryAll")
+    public  List<Category> queryAll(){
+        List<Category> categories = categoryService.queryAll();
+
+        return categories;
+    }
 }

@@ -11,6 +11,16 @@
             <result column="ccpid" property="pid"></result>
         </collection>
     </resultMap>
+    <resultMap type="Category" id="res2">
+        <id column="cid" property="id"></id>
+        <result column="ccate" property="categoryName"></result>
+        <result column="cpid" property="pid"></result>
+        <collection property="categoryList" ofType="Category">
+            <id column="ccid" property="id"></id>
+            <result column="cccate" property="categoryName"></result>
+            <result column="ccpid" property="pid"></result>
+        </collection>
+    </resultMap>
     <!--分页查询 先分页再表连接-->
     <select id="queryAllByPage" resultMap="res1">
         select c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid from (select id,categoryName,pid from category where pid is null limit ${(page-1)*rows},${rows}) c
@@ -23,6 +33,10 @@
 
     <select id="querySecond" resultType="Category" parameterType="java.lang.Integer">
         select id,categoryName,pid from category where pid=#{pid}
+    </select>
+    <select id="queryAll" resultMap="res2">
+        select  c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid
+        from category c left join category cc on c.id=cc.pid where c.pid is null
     </select>
 
 </mapper>

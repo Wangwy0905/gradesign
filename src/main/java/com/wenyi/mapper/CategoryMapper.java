@@ -10,4 +10,7 @@ public interface CategoryMapper extends Mapper<Category> {
     public Integer totalNum();
     public List<Category> queryAllByPage(@Param(value="page")int page, @Param(value="rows") int rows);
     public  List<Category> querySecond(Integer pid);
+
+    //前台分类
+    public  List<Category> queryAll();
 }
