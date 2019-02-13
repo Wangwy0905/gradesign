@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -28,14 +29,19 @@ public class CategoryServiceImpl implements  CategoryService{
 
     //查询二级标题
     @Override
-    public void querySecond(Integer pid1, Integer pid2, Integer pid3, Integer pid4, HttpSession session) {
+    public HashMap<String, List<Category>> querySecond(Integer pid1, Integer pid2, Integer pid3, Integer pid4) {
+        HashMap<String, List<Category>> map = new HashMap<>();
         List<Category> categories1 = categoryMapper.querySecond(pid1);
         List<Category> categories2 = categoryMapper.querySecond(pid2);
         List<Category> categories3 = categoryMapper.querySecond(pid3);
         List<Category> categories4 = categoryMapper.querySecond(pid4);
-        session.setAttribute("list1",categories1);
-        session.setAttribute("list2",categories2);
-        session.setAttribute("list3",categories3);
-        session.setAttribute("list4",categories4);
+
+        map.put("list1",categories1);
+        map.put("list2",categories2);
+        map.put("list3",categories3);
+        map.put("list4",categories4);
+
+        return map;
+
     }
 }

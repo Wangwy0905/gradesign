@@ -24,4 +24,5 @@
     <select id="querySecond" resultType="Category" parameterType="java.lang.Integer">
         select id,categoryName,pid from category where pid=#{pid}
     </select>
+
 </mapper>

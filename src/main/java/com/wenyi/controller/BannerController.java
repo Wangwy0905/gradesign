@@ -28,7 +28,7 @@ public class BannerController {
     @RequestMapping("queryAllBanner")
     public List<Banner> queryAllBanner(){
         List<Banner> banners = bannerService.queryAll();
-        System.out.println(banners);
+       // System.out.println(banners);
         return banners;
     }
 }

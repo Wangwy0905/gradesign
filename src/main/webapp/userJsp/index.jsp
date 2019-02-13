@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
-<!DOCTYPE html>
+<%@ page  contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head lang="en">
     <meta charset="utf-8" />
@@ -11,6 +9,7 @@
     <script src="js/public.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/nav.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/jquery.flexslider-min.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
 <body>
 <!------------------------------head------------------------------>

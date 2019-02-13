@@ -7,17 +7,7 @@
     <title>易瑞商城</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/public.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css" />
-    <script type="text/javascript">
-        $.ajax({
-            type:"POST",
-            url:"${pageContext.request.contextPath}/category/querySecond",
-            data:"pid1=1&pid2=7&pid3=11&pid4=18",
-            async:false,
-            success:function(){
-                alert();
-            }
-        });
-    </script>
+
 
 </head>
 <body>
@@ -81,39 +71,32 @@
                     </div>
                 </div>
             </li>
-            <li><a href="flowerDer.html">品牌电脑</a>
+
+            <li><a href="javascript:void(0)">品牌电脑</a>
                 <div class="sList2">
                     <div class="clearfix">
-                        <a href="proList.html">联想</a>
-                        <a href="vase_proList.html">华硕</a>
+                        <div class="clearfix" id="list1">
+                        </div>
                     </div>
                 </div>
             </li>
             <li><a href="javascript:void(0)">电脑配件</a>
                 <div class="sList2">
-                    <div class="clearfix">
-                        <c:forEach var="c" items="${sessionScope.list2}">
-                            <a href="zbproList.html">${c.categoryName}</a>
-                        </c:forEach>
+                    <div class="clearfix" id="list2">
+                        <a href="zbproList.html"></a>
                     </div>
                 </div>
             </li>
             <li><a href="javascript:void(0)">外设产品</a>
                 <div class="sList2">
-                    <div class="clearfix">
-                        <c:forEach var="c" items="${sessionScope.list3}">
-                        <a href="zbproList.html">${c.categoryName}</a>
-                       </c:forEach>
+                    <div class="clearfix" id="list3">
                     </div>
                 </div>
             </li>
             <li><a href="javascript:void(0)">游戏装备</a>
                 <div class="sList2">
                     <div class="clearfix">
-                        <div class="clearfix">
-                            <c:forEach var="c" items="${sessionScope.list4}">
-                                <a href="zbproList.html">${c.categoryName}</a>
-                            </c:forEach>
+                        <div class="clearfix" id="list4">
                         </div>
                     </div>
                 </div>
@@ -121,10 +104,41 @@
             <li><a href="perfume.html">关于我们</a>
                 <div class="sList2">
                     <div class="clearfix">
-
                     </div>
                 </div>
             </li>
+            <script type="text/javascript">
+                $.ajax({
+                    type:"POST",
+                    url:"${pageContext.request.contextPath}/category/querySecond",
+                    data:"pid1=1&pid2=7&pid3=11&pid4=18",
+                    async:false,
+                    success:function(result){
+                        $("#list1").empty();
+                        $("#list2").empty();
+                        $("#list3").empty();
+                        $("#list4").empty();
+                        for(var i=0; i<result.list1.length; i++){
+                            var a = $("<a href='#'>"+result.list1[i].categoryName+"</a>");
+                            $("#list1").append(a);
+                        }
+                        for(var i=0; i<result.list2.length; i++){
+                            var a = $("<a href='#'>"+result.list2[i].categoryName+"</a>");
+                            $("#list2").append(a);
+                        }
+                        for(var i=0; i<result.list3.length; i++){
+                            var a = $("<a href='#'>"+result.list3[i].categoryName+"</a>");
+                            $("#list3").append(a);
+                        }
+                        for(var i=0; i<result.list4.length; i++){
+                            var a = $("<a href='#'>"+result.list4[i].categoryName+"</a>");
+                            $("#list4").append(a);
+                        }
+                    }
+
+                });
+
+            </script>
         </ul>
     </div>
 </div>
