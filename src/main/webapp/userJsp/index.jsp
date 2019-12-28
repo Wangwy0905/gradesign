@@ -55,44 +55,44 @@
     <div class="wrapper">
         <h2><img src="${pageContext.request.contextPath}/img/ih1.jpg"/></h2>
         <div class="top clearfix">
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo1.jpg"/><p></p></a>
+            <a href="${pageContext.request.contextPath}/index/queryOne?id=12"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo1.jpg"/><p></p></a>
             <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo2.jpg"/><p></p></a>
             <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo3.jpg"/><p></p></a>
         </div>
         <div class="bott clearfix">
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n4.jpg"/><p></p></a>
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n5.jpg"/><p></p></a>
-            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/img/n6.jpg"/><p></p></a>
+            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo4.jpg"/><p></p></a>
+            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo5.jpg"/><p></p></a>
+            <a href="proDetail.html"><img src="${pageContext.request.contextPath}/userJsp/img/Lenovo6.jpg"/><p></p></a>
         </div>
         <h2><img src="${pageContext.request.contextPath}/img/ih2.jpg"/></h2>
         <div class="flower clearfix tran">
-            <a href="proDetail.html" class="clearfix">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp" class="clearfix">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/flo1.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hs1.jpg"/>
                         <span class="abr"></span>
                     </dt>
                     <dd>【花艺】七头美丽玫瑰仿真花束</dd>
                     <dd><span>¥ 79.00</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/flo2.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hs2.jpg"/>
                         <span class="abr"></span>
                     </dt>
                     <dd>【花艺】七头美丽玫瑰仿真花束</dd>
                     <dd><span>¥ 79.00</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/flo3.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hs3.jpg"/>
                         <span class="abr"></span>
                     </dt>
                     <dd>【花艺】七头美丽玫瑰仿真花束</dd>
@@ -112,44 +112,44 @@
     <div class="wrapper">
         <h2><img src="${pageContext.request.contextPath}/img/ih3.jpg"/></h2>
         <div class="pList clearfix tran">
-            <a href="proDetail.html">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/s7.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hp1.jpg"/>
                         <span class="abr"></span>
                     </dt>
-                    <dd>【最家】不锈钢壁饰墙饰软装</dd>
-                    <dd><span>￥688.00</span></dd>
+                    <dd>【惠普】14-ce1004tx超轻薄笔记本电脑</dd>
+                    <dd><span>￥5599.00</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/s10.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hp2.jpg"/>
                         <span class="abr"></span>
                     </dt>
                     <dd>【最家】小城动物木板画壁挂北欧</dd>
                     <dd><span>￥188.00</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/s4.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hp3.jpg"/>
                         <span class="abr"></span>
                     </dt>
                     <dd>【最家】玄关假山水壁饰背景墙饰挂件创意</dd>
                     <dd><span>￥599.00</span></dd>
                 </dl>
             </a>
-            <a href="proDetail.html">
+            <a href="${pageContext.request.contextPath}/userJsp/ProductDetail.jsp">
                 <dl>
                     <dt>
                         <span class="abl"></span>
-                        <img src="${pageContext.request.contextPath}/img/s9.jpg"/>
+                        <img src="${pageContext.request.contextPath}/userJsp/img/hp4.jpg"/>
                         <span class="abr"></span>
                     </dt>
                     <dd>【最家】金属树枝壁饰铜鸟装饰品</dd>

@@ -6,7 +6,8 @@
 <title>易瑞商城主页</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/adminJsp/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/adminJsp/themes/IconExtension.css">
-<script type="text/javascript" src="${pageContext.request.contextPath}/adminJsp/js/jquery.min.js"></script>
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/adminJsp/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/adminJsp/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/adminJsp/js/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="../adminJsp/js/datagrid-detailview.js"></script>

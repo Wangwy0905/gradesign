@@ -12,10 +12,6 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/gradesign
 
-  mvc:
-    view:
-      prefix: /
-      suffix: .jsp
   http:
     encoding:
       charset: UTF-8
@@ -31,8 +27,10 @@ spring:
       min-idle: 1
       max-active: 1000
       max-wait: -1
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
 mybatis:
-  type-aliases-package: com.wenyi.entity
+  type-aliases-package: com.libei.entity
   mapper-locations: classpath:Mapper/*Mapper.xml
-
-

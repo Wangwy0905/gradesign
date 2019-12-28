@@ -2,6 +2,7 @@
 <script type="text/javascript">
     $(function(){
 
+
         $("#ComputerMessage") .edatagrid({
             fitColumns:true,
             fit:true,
@@ -9,6 +10,7 @@
             pagination:true,
             pageSize:5,
             pageList:[1,3,5,7,9],
+            toolbar:tb,
             view:detailview,
             columns: [[
                 {field: 'productName', title: '电脑名', width: 100},
@@ -38,6 +40,39 @@
             }
 
         });
+        //添加
+        $("#addComputer").linkbutton({
+            plain:true,
+            iconCls:"icon-add",
+            onClick:function(){
+                $("#addComputerDialog").dialog("open");
+            }
+        });
+
+
+      /*  //保存
+        $("#saveComputer").linkbutton({
+            plain:true,
+            iconCls:"icon-add",
+
+            onClick: function () {
+
+                /!*$("#BannerTable").edatagrid("saveRow");*!/
+            }
+
+        });*/
+
+        $("#addComputerDialog").dialog({
+            title:"添加框",
+            width:800,
+            height:400,
+            closed: true,
+            href: '${pageContext.request.contextPath}/adminJsp/addComputer.jsp',
+            modal: true
+
+        });
+
+
 
     });
 
@@ -52,3 +87,10 @@
 </script>
 
 <table id="ComputerMessage"></table>
+<div id="addComputerDialog"></div>
+<div id="tb">
+    <a id="addComputer">添加</a>
+    <a id="updateComputer">修改</a>
+    <a id="deleteComputer">删除</a>
+    <a id="saveComputer">保存</a>
+</div>

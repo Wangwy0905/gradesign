@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wenyi.mapper.CategoryMapper">
-    <resultMap type="Category" id="res1">
-        <id column="cid" property="id"></id>
-        <result column="ccate" property="categoryName"></result>
-        <result column="cpid" property="pid"></result>
-        <collection property="children" ofType="Category">
-            <id column="ccid" property="id"></id>
-            <result column="cccate" property="categoryName"></result>
-            <result column="ccpid" property="pid"></result>
-        </collection>
-    </resultMap>
-    <resultMap type="Category" id="res2">
-        <id column="cid" property="id"></id>
-        <result column="ccate" property="categoryName"></result>
-        <result column="cpid" property="pid"></result>
-        <collection property="categoryList" ofType="Category">
-            <id column="ccid" property="id"></id>
-            <result column="cccate" property="categoryName"></result>
-            <result column="ccpid" property="pid"></result>
-        </collection>
-    </resultMap>
-    <!--分页查询 先分页再表连接-->
-    <select id="queryAllByPage" resultMap="res1">
-        select c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid from (select id,categoryName,pid from category where pid is null limit ${(page-1)*rows},${rows}) c
-        left join category cc on c.id=cc.pid
-    </select>
+<mapper namespace="com.libei.mapper.CategoryMapper">
+    <!--<resultMap type="Category" id="res1">-->
+        <!--<id column="cid" property="id"></id>-->
+        <!--<result column="ccate" property="categoryName"></result>-->
+        <!--<result column="cpid" property="pid"></result>-->
+        <!--<collection property="children" ofType="Category">-->
+            <!--<id column="ccid" property="id"></id>-->
+            <!--<result column="cccate" property="categoryName"></result>-->
+            <!--<result column="ccpid" property="pid"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+    <!--<resultMap type="Category" id="res2">-->
+        <!--<id column="cid" property="id"></id>-->
+        <!--<result column="ccate" property="categoryName"></result>-->
+        <!--<result column="cpid" property="pid"></result>-->
+        <!--<collection property="categoryList" ofType="Category">-->
+            <!--<id column="ccid" property="id"></id>-->
+            <!--<result column="cccate" property="categoryName"></result>-->
+            <!--<result column="ccpid" property="pid"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+    <!--&lt;!&ndash;分页查询 先分页再表连接&ndash;&gt;-->
+    <!--<select id="queryAllByPage" resultMap="res1">-->
+        <!--select c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid from (select id,categoryName,pid from category where pid is null limit ${(page-1)*rows},${rows}) c-->
+        <!--left join category cc on c.id=cc.pid-->
+    <!--</select>-->
 
-    <select id="totalNum" resultType="java.lang.Integer">
-        select count(*) from  category
-    </select>
+    <!--<select id="totalNum" resultType="java.lang.Integer">-->
+        <!--select count(*) from  category-->
+    <!--</select>-->
 
-    <select id="querySecond" resultType="Category" parameterType="java.lang.Integer">
-        select id,categoryName,pid from category where pid=#{pid}
-    </select>
-    <select id="queryAll" resultMap="res2">
-        select  c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid
-        from category c left join category cc on c.id=cc.pid where c.pid is null
-    </select>
+    <!--<select id="querySecond" resultType="Category" parameterType="java.lang.Integer">-->
+        <!--select id,categoryName,pid from category where pid=#{pid}-->
+    <!--</select>-->
+    <!--<select id="queryAll" resultMap="res2">-->
+        <!--select  c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid-->
+        <!--from category c left join category cc on c.id=cc.pid where c.pid is null-->
+    <!--</select>-->
 
 </mapper>
