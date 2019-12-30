@@ -1,4 +1,4 @@
-package com.libei.controller.LoginController.request;
+package com.libei.controller.request;
 
 import lombok.Data;
 

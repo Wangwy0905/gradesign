@@ -1,6 +1,6 @@
 package com.libei.service.impl;
 
-import com.libei.entity.PhoneEntity;
+import com.libei.entity.ProductEntity;
 import com.libei.mapper.IndexMapper;
 import com.libei.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,8 @@ public class IndexServiceImpl implements IndexService {
    @Autowired
     IndexMapper indexMapper;
     @Override
-    public PhoneEntity queryOne(Integer id) {
-        PhoneEntity computer = indexMapper.selectByPrimaryKey(id);
+    public ProductEntity queryOne(Integer id) {
+        ProductEntity computer = indexMapper.selectByPrimaryKey(id);
         return  computer;
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @Author li bei
  * @date 2019.12.28
+ * 菜单接口
  */
 @RestController
 @RequestMapping("menu")

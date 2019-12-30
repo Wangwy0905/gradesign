@@ -4,6 +4,7 @@ import com.libei.Dto.MenuDto;
 import com.libei.entity.MenuEntity;
 import com.libei.mapper.MenuMapper;
 import com.libei.service.MenuService;
+import com.libei.util.ListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,6 @@ public class MenuServiceImpl implements MenuService {
     public List<MenuDto> queryAll() {
         List<MenuEntity> menuEntityList = menuMapper.selectAll();
 
-        List<MenuDto> menuDtoList = new ArrayList<>();
-        BeanUtils.copyProperties(menuEntityList, menuDtoList);
-
-        return menuDtoList;
+        return ListUtils.entityListToModelList(menuEntityList, MenuDto.class);
     }
 }

@@ -1,19 +1,27 @@
 package com.libei.controller;
 
 import com.libei.Dto.CategoryDto;
-import com.libei.entity.CategoryEntity;
 import com.libei.service.CategoryService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * @auth li bei
+ * @date 2019.12.30
+ * 产品类别相关接口
+ */
 @RestController
 @RequestMapping("category")
-@Api(value = "别相关Api接口", description = "类别相关Api接口")
+@Api(value = "类别相关Api接口", description = "类别相关Api接口")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
@@ -26,7 +34,7 @@ public class CategoryController {
         return categoryDtoList;
     }
 
-    @GetMapping("query-Second")
+    @GetMapping("query-second")
     @CrossOrigin
     public List<CategoryDto> querySecond(@RequestBody @Valid @NotNull Long firstId) {
 
@@ -34,12 +42,4 @@ public class CategoryController {
         return categoryDtoList;
 
     }
-
-
-//    @GetMapping("queryAll")
-//    public List<CategoryEntity> queryAll() {
-//        List<CategoryEntity> categories = categoryService.queryAll();
-//
-//        return categories;
-//    }
 }

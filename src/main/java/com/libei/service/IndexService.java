@@ -1,7 +1,7 @@
 package com.libei.service;
 
-import com.libei.entity.PhoneEntity;
+import com.libei.entity.ProductEntity;
 
 public interface IndexService {
-    PhoneEntity queryOne(Integer id);
+    ProductEntity queryOne(Integer id);
 }

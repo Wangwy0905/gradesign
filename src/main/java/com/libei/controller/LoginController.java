@@ -1,6 +1,6 @@
-package com.libei.controller.LoginController;
+package com.libei.controller;
 
-import com.libei.controller.LoginController.request.LoginRequest;
+import com.libei.controller.request.LoginRequest;
 import com.libei.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ public class LoginController {
 
     @CrossOrigin
     @PostMapping("login")
-    public Boolean login(@RequestBody LoginRequest request) {
+    public Boolean login(@RequestBody LoginRequest request)throws Exception {
 
         return loginService.login(request);
     }

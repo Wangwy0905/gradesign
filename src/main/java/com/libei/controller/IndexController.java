@@ -1,6 +1,6 @@
 package com.libei.controller;
 
-import com.libei.entity.PhoneEntity;
+import com.libei.entity.ProductEntity;
 import com.libei.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ public class IndexController {
     @RequestMapping("queryOne")
 
     public String  queryOne(Integer id, HttpSession session){
-        PhoneEntity computer = indexService.queryOne(id);
+        ProductEntity computer = indexService.queryOne(id);
         session.setAttribute("computer",computer);
         System.out.println(computer);
         return "userJsp/ProductDetail";

@@ -1,7 +1,7 @@
 package com.libei.service.impl;
 
 import com.libei.Dto.AdminDto;
-import com.libei.controller.LoginController.request.LoginRequest;
+import com.libei.controller.request.LoginRequest;
 import com.libei.entity.Admin;
 import com.libei.mapper.AdminMapper;
 import com.libei.service.AdminService;

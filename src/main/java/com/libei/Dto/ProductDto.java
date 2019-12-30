@@ -1,6 +1,6 @@
 package com.libei.Dto;
 
-import com.libei.entity.PhoneEntity;
+import com.libei.entity.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ComputerDto {
-    private  Integer total;
-    private List<PhoneEntity> rows;
+public class ProductDto {
+    private Integer total;
+    private List<ProductEntity> rows;
 }
