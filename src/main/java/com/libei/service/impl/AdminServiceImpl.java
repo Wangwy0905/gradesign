@@ -2,7 +2,7 @@ package com.libei.service.impl;
 
 import com.libei.Dto.AdminDto;
 import com.libei.controller.request.LoginRequest;
-import com.libei.entity.Admin;
+import com.libei.entity.AdminEntity;
 import com.libei.mapper.AdminMapper;
 import com.libei.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminDto queryAdminDto(int page,int rows) {
 
-        List<Admin> admins = adminMapper.queryAll(page,rows);
+        List<AdminEntity> admins = adminMapper.queryAll(page,rows);
 
 
         Integer integer = adminMapper.totalNum();

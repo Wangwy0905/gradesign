@@ -23,23 +23,23 @@ import java.util.List;
 @RequestMapping("category")
 @Api(value = "类别相关Api接口", description = "类别相关Api接口")
 public class CategoryController {
-    @Autowired
-    CategoryService categoryService;
-
-    @CrossOrigin
-    @GetMapping("query-first")
-    public List<CategoryDto> queryFirst() {
-        List<CategoryDto> categoryDtoList = categoryService.queryFirst();
-
-        return categoryDtoList;
-    }
-
-    @GetMapping("query-second")
-    @CrossOrigin
-    public List<CategoryDto> querySecond(@RequestBody @Valid @NotNull Long firstId) {
-
-        List<CategoryDto> categoryDtoList = categoryService.querySecond(firstId);
-        return categoryDtoList;
-
-    }
+//    @Autowired
+//    CategoryService categoryService;
+//
+//    @CrossOrigin
+//    @GetMapping("query-first")
+//    public List<CategoryDto> queryFirst() {
+//        List<CategoryDto> categoryDtoList = categoryService.queryFirst();
+//
+//        return categoryDtoList;
+//    }
+//
+//    @GetMapping("query-second")
+//    @CrossOrigin
+//    public List<CategoryDto> querySecond(@RequestBody @Valid @NotNull Long firstId) {
+//
+//        List<CategoryDto> categoryDtoList = categoryService.querySecond(firstId);
+//        return categoryDtoList;
+//
+//    }
 }

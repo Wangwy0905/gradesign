@@ -9,9 +9,13 @@ import java.util.List;
 
 public interface BannerMapper extends Mapper<BannerEntity> {
 
-    List<BannerEntity> queryAllByPage(@Param(value = "rows") int rows, @Param(value = "page") int page);
+    List<BannerEntity> queryByPage(@Param(value = "pageSize") int pageSize, @Param(value = "pageNum") int pageNum);
+
     Integer queryNum();
-    List<BannerEntity> queryAllBanner();
+
+    List<BannerEntity> queryLike(@Param(value = "pageSize") int pageSize, @Param(value = "pageNum") int pageNum, @Param("param") String param);
+
+    List<BannerEntity> query();
 
 
 }

@@ -13,5 +13,6 @@ public class MenuEntity {
     private Long id;
     private String title;
     private Boolean isShow;
+    private Long firstId;
     private Date createDateTime;
 }

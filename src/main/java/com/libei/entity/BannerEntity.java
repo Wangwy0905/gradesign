@@ -11,15 +11,15 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Data
-@Table(name="banner")
+@Table(name = "banner")
 public class BannerEntity {
     @Id
-    private  Integer id;
-    private  String picture;
-    private  String title;
-    private  String description;
+    private Long id;
+    private String picture;
+    private String title;
+    private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JSONField(format = "yyyy-MM-dd")
-    private Date createDateTime;
-    private  Integer status;
+    private Date createTime;
+    private Integer status;
 }

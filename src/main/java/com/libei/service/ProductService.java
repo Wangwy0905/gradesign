@@ -17,4 +17,6 @@ public interface ProductService {
     ProductDto queryOne(Long id);
 
     ProductDto search(SearchRequest request);
+
+    String upload(MultipartFile file) throws Exception;
 }

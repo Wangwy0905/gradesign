@@ -6,6 +6,5 @@ import lombok.Data;
 public class LoginRequest {
     private String account;
     private String password;
-    private String salt;
     private String type;  //0-管理员  1-用户
 }

@@ -6,7 +6,6 @@ import com.libei.controller.request.SearchRequest;
 import com.libei.entity.ProductEntity;
 import com.libei.mapper.ProductMapper;
 import com.libei.service.ProductService;
-import com.libei.util.ListUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author li bei
@@ -62,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
         return true;
     }
-
+    @Override
     public String upload(MultipartFile file) throws Exception {
 
         if (file == null) {

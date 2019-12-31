@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.BannerMapper">
-    <!--<select id="queryAllByPage" resultType="Banner">-->
-        <!--select id,title,img_path imgPath,status,pub_date pubDate,descption from banner limit ${(page-1)*rows},${rows}-->
-    <!--</select>-->
+    <select id="queryByPage" resultType="BannerEntity">
+        select id,title,img_path imgPath,status,pub_date pubDate,descption from banner where status=1 limit ${(pageNum-1)*pageSize},${pageSize}
+    </select>
 
-    <!--<select id="queryNum" resultType="java.lang.Integer" >-->
-        <!--select count(*) from banner-->
-    <!--</select>-->
+    <select id="queryNum" resultType="java.lang.Integer">
+        select count(*) from banner where status=1
+    </select>
 
-    <!--<delete id="deleteBanner" parameterType="java.lang.Integer">-->
-        <!--delete from banner where id=#{id}-->
-    <!--</delete>-->
-    <!--<select id="queryAllBanner" resultType="Banner">-->
-        <!--select id,title,img_path imgPath,status,pub_date pubDate,descption from banner where status=1-->
-    <!--</select>-->
+    <select id="query" resultType="BannerEntity">
+        select id,title,img_path imgPath,status,pub_date pubDate,descption from banner where status=1
+    </select>
+
+    <select id="queryLike" resultType="BannerEntity">
+        select id,title,img_path imgPath,status,pub_date pubDate,descption from banner where status=1 and title like '%'||#{param}||'%' limit ${(pageNum-1)*pageSize},${pageSize}
+    </select>
 
 </mapper>

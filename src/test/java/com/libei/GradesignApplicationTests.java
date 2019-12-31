@@ -1,21 +1,10 @@
 package com.libei;
 
-import com.libei.entity.Admin;
-import com.libei.entity.MenuEntity;
-import com.libei.mapper.MenuMapper;
-import com.libei.util.ListUtils;
-import io.swagger.models.auth.In;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.script.DigestUtils;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,17 +21,17 @@ public class GradesignApplicationTests {
     @Test
     public void mappertest() {
 
-//        List<Admin> list = new ArrayList<>();
+//        List<AdminEntity> list = new ArrayList<>();
 //
-//        list.add(new Admin(1, "12", "w", "1", 1));
-//        list.add(new Admin(2, "12", "w", "", 1));
-//        list.add(new Admin(3, "12", "w", "", 1));
-//        list.add(new Admin(4, "12", "w", "", 1));
-//        list.add(new Admin(5, "12", "w", "", 1));
+//        list.add(new AdminEntity(1, "12", "w", "1", 1));
+//        list.add(new AdminEntity(2, "12", "w", "", 1));
+//        list.add(new AdminEntity(3, "12", "w", "", 1));
+//        list.add(new AdminEntity(4, "12", "w", "", 1));
+//        list.add(new AdminEntity(5, "12", "w", "", 1));
 
-        //  List<Admin> copyList = new ArrayList<>();
+        //  List<AdminEntity> copyList = new ArrayList<>();
 //
-//        List<Admin> admins = ListUtils.entityListToModelList(list, Admin.class);
+//        List<AdminEntity> admins = ListUtils.entityListToModelList(list, AdminEntity.class);
 //
 //        System.out.println(admins);
     }

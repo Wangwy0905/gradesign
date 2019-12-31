@@ -1,6 +1,7 @@
 package com.libei.service.impl;
 
 import com.libei.controller.request.LoginRequest;
+import com.libei.controller.request.RegisteredRequest;
 import com.libei.entity.UserEntity;
 import com.libei.service.LoginService;
 import com.libei.service.UserService;
@@ -18,27 +19,25 @@ public class LoginServiceImpl implements LoginService {
     public Boolean login(LoginRequest request) throws Exception {
         String account = request.getAccount();
         String password = request.getPassword();
-        String salt = request.getSalt();
 
         UserEntity entity = userService.query(account);
         if (entity == null) {
             throw new Exception("账户号不存在,请确定账户号的正确性");
         }
+        //MD5加密
+        String salt = entity.getSalt();
+        password = DigestUtils.md5DigestAsHex((password + salt).getBytes());
 
-        if ("0".equals(request.getType())) {
-            if (!salt.toUpperCase().equals(entity.getSalt().toUpperCase())) {
-                throw new Exception("验证码检验失败，请重试");
-            }
+        if (!password.equals(entity.getPassword())) {
+            throw new Exception("密码输入错误，请重新输入");
         }
 
-        //MD5加密
-        password = DigestUtils.md5DigestAsHex(password.getBytes());
-
-        return userService.query(account, password);
+        return true;
     }
 
     @Override
-    public Boolean registered(LoginRequest request) {
-        return true;
+    public Boolean registered(RegisteredRequest request) {
+
+        return userService.registered(request);
     }
 }
