@@ -6,5 +6,6 @@ import lombok.Data;
 public class CommonRequest {
     private int pageNum;
     private int pageSize;
-    private String param;
+    private String name;
+    private String phoneNum;
 }

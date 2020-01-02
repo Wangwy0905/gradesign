@@ -4,4 +4,18 @@
     <select id="query" resultType="UserEntity">
         select * from user where account=#{account} and password=#{password}
     </select>
+
+    <select id="queryUser" resultType="UserEntity">
+        select * from user
+        <where>
+            <if test="name !=null">
+                and name like '%'||#{name}||'%'
+            </if>
+            <if test="phoneNum !=null">
+                and phoneNum like '%'||#{proneNum}||'%'
+            </if>
+            and status='1'
+            order by createDateTime desc
+        </where>
+    </select>
 </mapper>
