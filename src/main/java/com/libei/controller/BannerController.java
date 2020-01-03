@@ -29,7 +29,7 @@ import java.util.List;
 @Api(value = "轮播图相关Api接口", tags = {"轮播图相关Api接口"})
 public class BannerController {
     @Autowired
-    BannerService bannerService;
+    private BannerService bannerService = null;
 
     @CrossOrigin
     @GetMapping("query-back")

@@ -1,18 +1,23 @@
 package com.libei.controller;
 
 import com.libei.Dto.ProductDto;
-import com.libei.controller.request.ProductQueryRequest;
 import com.libei.controller.request.ProductCommitRequest;
+import com.libei.controller.request.ProductQueryRequest;
 import com.libei.controller.request.SearchRequest;
+import com.libei.entity.ProductEntity;
 import com.libei.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @Author libei
@@ -56,7 +61,7 @@ public class ProductController {
 
     @CrossOrigin
     @PostMapping("query-one")
-    public ProductDto queryOne(@RequestBody @Valid @NotNull Long id) throws IOException {
+    public ProductEntity queryOne(@RequestBody @Valid @NotNull Long id) throws IOException {
         return productService.queryOne(id);
     }
 

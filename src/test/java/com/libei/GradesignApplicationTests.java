@@ -3,7 +3,6 @@ package com.libei;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.script.DigestUtils;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -38,10 +37,10 @@ public class GradesignApplicationTests {
 
     @Test
     public void mappetest() {
-        String code = "1234";
-        code = DigestUtils.sha1DigestAsHex(code);
-
-        System.out.println(code);
+//        String code = "1234";
+//        code = DigestUtils.sha1DigestAsHex(code);
+//
+//        System.out.println(code);
 
 
     }

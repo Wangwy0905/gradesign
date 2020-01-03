@@ -60,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
         return true;
     }
+
     @Override
     public String upload(MultipartFile file) throws Exception {
 
@@ -105,12 +106,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto queryOne(Long id) {
+    public ProductEntity queryOne(Long id) {
 
         ProductDto productDto = new ProductDto();
-        BeanUtils.copyProperties(productDto, productMapper.selectByPrimaryKey(id));
+        return productMapper.selectByPrimaryKey(id);
 
-        return productDto;
     }
 
     @Override

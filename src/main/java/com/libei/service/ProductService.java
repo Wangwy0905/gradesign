@@ -3,6 +3,7 @@ package com.libei.service;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.ProductCommitRequest;
 import com.libei.controller.request.SearchRequest;
+import com.libei.entity.ProductEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
@@ -14,7 +15,7 @@ public interface ProductService {
 
     Boolean update(ProductCommitRequest request);
 
-    ProductDto queryOne(Long id);
+    ProductEntity queryOne(Long id);
 
     ProductDto search(SearchRequest request);
 
