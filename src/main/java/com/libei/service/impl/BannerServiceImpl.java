@@ -28,7 +28,7 @@ public class BannerServiceImpl implements BannerService {
     public BannerDto queryDto(CommonRequest request) {
         int pageNum = request.getPageNum();
         int pageSize = request.getPageSize();
-        String param = request.getParam();
+        String param = request.getName();
 
         BannerDto dto = new BannerDto();
         if (param == null || "".equals(param)) {

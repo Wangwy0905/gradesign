@@ -16,4 +16,5 @@ public class AddressEntity {
     private Long userId;
     private String remark;
     private Boolean isDefault;
+    private String status;
 }

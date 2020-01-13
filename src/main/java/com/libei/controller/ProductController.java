@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 /**
- * @Author libei
+ * @Author li bei
  * @date 2019.12.28
  */
 @RestController
@@ -71,6 +71,5 @@ public class ProductController {
 
         return productService.search(request);
     }
-
 
 }

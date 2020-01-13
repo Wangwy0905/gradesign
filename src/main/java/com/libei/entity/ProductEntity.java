@@ -29,6 +29,7 @@ public class ProductEntity {
     private String picture;   //图片
     private String capacity;   //容量
     private String weight;     //重量
+    private String saleCount;  //销售量
     @Enumerated(EnumType.STRING)
     private BlandEnum brand;
     private String description;
