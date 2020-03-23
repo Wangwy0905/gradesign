@@ -36,7 +36,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Boolean registered(RegisteredRequest request) {
+    public Boolean registered(RegisteredRequest request) throws Exception {
+
 
         return userService.registered(request);
     }

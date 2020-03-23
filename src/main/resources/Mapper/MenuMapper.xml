@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.MenuMapper">
 
-    <select id="queryMenu" resultType="MenuEntity">
-        select * from menu where first_id is null
-    </select>
+  <!--  <select id="queryMenu" resultType="MenuEntity">
+        select * from menu w
+    </select>-->
 
 </mapper>

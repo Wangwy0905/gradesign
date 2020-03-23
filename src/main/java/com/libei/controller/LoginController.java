@@ -26,7 +26,7 @@ public class LoginController {
 
     @CrossOrigin
     @PostMapping("registered")
-    public Boolean registered(@RequestBody RegisteredRequest request) {
+    public Boolean registered(@RequestBody RegisteredRequest request) throws Exception {
 
         return loginService.registered(request);
     }

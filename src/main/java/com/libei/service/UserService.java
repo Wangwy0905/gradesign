@@ -8,7 +8,7 @@ import com.libei.entity.UserEntity;
 public interface UserService {
     UserEntity query(String account);
 
-    Boolean registered(RegisteredRequest Request);
+    Boolean registered(RegisteredRequest Request) throws Exception;
 
     PageInfo query(CommonRequest request);
 

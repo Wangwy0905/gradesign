@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,10 +53,13 @@ public class ProductServiceImpl implements ProductService {
     public Boolean addProduct(ProductCommitRequest request, MultipartFile file) throws Exception {
 
         ProductEntity entity = new ProductEntity();
-        BeanUtils.copyProperties(entity, request);
+        BeanUtils.copyProperties(request, entity);
 
         entity.setPicture(this.upload(file));
-
+        entity.setStatus(true);
+        entity.setBrand(request.getBland());
+        entity.setCreateTime(new Date());
+        //TODO 枚举值有未插入问题   待解决
         productMapper.insert(entity);
 
         return true;

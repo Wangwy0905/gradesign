@@ -19,6 +19,6 @@ public class CategoryEntity {
     private Long firstId;
     @Column(name = "TYPE")//分类级别
     private Long type;
-    @Column(name = "CREATE_DATE_TIME")
-    private LocalDateTime createDateTime;
+    @Column(name = "CREATE_TIME")
+    private LocalDateTime createTime;
 }

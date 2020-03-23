@@ -6,13 +6,11 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class MenuDto {
-
+public class BannerFrontDto {
     private Long id;
+    private String picture;
     private String title;
-    //private  Integer parentId;
-    private Boolean isShow;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date createDate;
+    private Date createTime;
+    private Integer status;
 }
-

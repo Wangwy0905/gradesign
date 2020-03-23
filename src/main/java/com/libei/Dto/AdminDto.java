@@ -13,5 +13,5 @@ public class AdminDto {
     //总行数
     private  Integer total;
     //当前页的数据行
-    private List<AdminEntity> rows;
+    private List<AdminDetailDto> rows;
 }

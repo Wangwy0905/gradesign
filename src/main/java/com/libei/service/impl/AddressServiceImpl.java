@@ -21,7 +21,7 @@ public class AddressServiceImpl implements AddressService {
     private AddressMapper addressMapper = null;
 
     @Override
-    public Boolean add(AddressRequest request) {
+    public Boolean  add(AddressRequest request) {
         AddressEntity addressEntity = new AddressEntity();
         BeanUtils.copyProperties(addressEntity, request);
 

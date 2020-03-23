@@ -1,18 +1,15 @@
 package com.libei.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.ProductCommitRequest;
 import com.libei.controller.request.ProductQueryRequest;
 import com.libei.controller.request.SearchRequest;
 import com.libei.entity.ProductEntity;
+import com.libei.enums.BlandEnum;
 import com.libei.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -30,21 +27,38 @@ public class ProductController {
     ProductService productService;
 
     @CrossOrigin
-    @RequestMapping("query")
+    @RequestMapping(value = "query", method = RequestMethod.GET)
     public ProductDto query(@RequestBody ProductQueryRequest request) {
 
         Integer pageNum = request.getPageNum();
         Integer pageSize = request.getPageSize();
         Long categoryId = request.getCategoryId();
-        ProductDto computerDto = productService.query(categoryId,pageNum, pageSize);
+        ProductDto computerDto = productService.query(categoryId, pageNum, pageSize);
         return computerDto;
     }
 
-
+    //对象与文件上传  暂未想到刚好的方法  暂定这样  待优化
     @CrossOrigin
     @PostMapping("add-product")
-    public Boolean addPhone(@RequestBody ProductCommitRequest request, MultipartFile file) throws Exception {
-        return productService.addProduct(request, file);
+    public Boolean addPhone(@RequestParam("productName") String productName,
+                            @RequestParam("color") String color,
+                            @RequestParam("price") Double price,
+                            @RequestParam("repertory") Integer repertory,
+                            @RequestParam("capacity") String capacity,
+                            @RequestParam("description") String description,
+                            @RequestParam("bland") BlandEnum bland,
+                            @RequestParam("file") MultipartFile file) throws Exception {
+
+        ProductCommitRequest productCommitRequest = new ProductCommitRequest();
+        productCommitRequest.setProductName(productName);
+        productCommitRequest.setColor(color);
+        productCommitRequest.setPrice(price);
+        productCommitRequest.setCapacity(capacity);
+        productCommitRequest.setRepertory(repertory);
+        productCommitRequest.setDescription(description);
+        productCommitRequest.setBland(bland);
+
+        return productService.addProduct(productCommitRequest, file);
     }
 
     @CrossOrigin

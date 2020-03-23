@@ -17,9 +17,6 @@ public class BannerEntity {
     private Long id;
     private String picture;
     private String title;
-    private String description;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JSONField(format = "yyyy-MM-dd")
     private Date createTime;
     private Integer status;
 }

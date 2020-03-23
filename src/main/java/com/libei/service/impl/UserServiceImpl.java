@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -21,23 +22,33 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Override
     public UserEntity query(String account) {
-        return userMapper.selectOneByExample(account);
+        UserEntity entity=new UserEntity();
+        entity.setAccount(account);
+        return userMapper.selectOne(entity);
     }
 
     @Override
-    public Boolean registered(RegisteredRequest request) {
-        UserEntity userEntity = new UserEntity();
+    public Boolean registered(RegisteredRequest request) throws Exception {
 
-        BeanUtils.copyProperties(userEntity, request);
+        UserEntity userEntity = new UserEntity();
+        //校验数据库是否已有该账户
+        userEntity.setAccount(request.getAccount());
+        UserEntity entity = userMapper.selectOne(userEntity);
+        if (entity!=null){
+            throw new Exception("该账户已存在，请换账号登录");
+        }
+
+        BeanUtils.copyProperties(request, userEntity);
         userEntity.setStatus("1");
 
         String salt = RandomSaltUtils.generetRandomSaltCode();
         userEntity.setPassword(DigestUtils.md5DigestAsHex((userEntity.getPassword() + salt).getBytes()));
         userEntity.setSalt(salt);
+        userEntity.setCreateTime(new Date());
 
         userMapper.insert(userEntity);
 

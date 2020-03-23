@@ -1,6 +1,7 @@
 package com.libei.service.impl;
 
 import com.libei.Dto.BannerDto;
+import com.libei.Dto.BannerFrontDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.BannerCommitRequest;
 import com.libei.controller.request.CommonRequest;
@@ -8,12 +9,14 @@ import com.libei.entity.BannerEntity;
 import com.libei.mapper.BannerMapper;
 import com.libei.service.BannerService;
 import com.libei.service.ProductService;
+import com.libei.util.ListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,36 +31,39 @@ public class BannerServiceImpl implements BannerService {
     public BannerDto queryDto(CommonRequest request) {
         int pageNum = request.getPageNum();
         int pageSize = request.getPageSize();
-        String param = request.getName();
+        String param = request.getTitle();
 
         BannerDto dto = new BannerDto();
         if (param == null || "".equals(param)) {
             dto.setTotal(bannerMapper.queryNum());
-            dto.setRows(bannerMapper.queryByPage(pageSize, pageNum));
+            List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerMapper.queryByPage(pageSize, pageNum), BannerFrontDto.class);
+            dto.setRows(bannerFrontDtos);
         } else {
             List<BannerEntity> bannerEntityList = bannerMapper.queryLike(pageSize, pageNum, param);
             dto.setTotal(bannerEntityList.size());
-            dto.setRows(bannerEntityList);
+            List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerEntityList, BannerFrontDto.class);
+            dto.setRows(bannerFrontDtos);
         }
 
         return dto;
     }
 
     @Override
-    public List<BannerEntity> query() {
-        List<BannerEntity> bannerEntityList = bannerMapper.query();
+    public List<BannerFrontDto> query() {
+        List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerMapper.query(), BannerFrontDto.class);
 
-        return bannerEntityList;
+        return bannerFrontDtos;
     }
 
 
     @Override
-    public Boolean add(BannerCommitRequest request, MultipartFile file) throws Exception {
+    public Boolean add(String title, MultipartFile file) throws Exception {
         BannerEntity entity = new BannerEntity();
-        BeanUtils.copyProperties(entity, request);
+        entity.setTitle(title);
 
         String imgPath = productService.upload(file);
         entity.setPicture(imgPath);
+        entity.setCreateTime(new Date());
         entity.setStatus(1);
 
         bannerMapper.insert(entity);
@@ -71,31 +77,28 @@ public class BannerServiceImpl implements BannerService {
         BannerEntity entity = bannerMapper.selectByPrimaryKey(id);
 
         entity.setStatus(0);
-
-        bannerMapper.insert(entity);
-
+        bannerMapper.updateByPrimaryKey(entity);
         return true;
     }
 
     @Override
     public Boolean update(BannerCommitRequest request) {
-        BannerEntity entity = new BannerEntity();
-        BeanUtils.copyProperties(entity, request);
-
-        bannerMapper.insert(entity);
-
+        BannerEntity entity = bannerMapper.selectByPrimaryKey(request.getId());
+        entity.setTitle(request.getTitle());
+        bannerMapper.updateByPrimaryKey(entity);
         return true;
     }
 
     @Override
-    public BannerEntity queryDetail(Long id) throws Exception {
+    public BannerFrontDto queryDetail(Long id) throws Exception {
         BannerEntity entity = bannerMapper.selectByPrimaryKey(id);
 
         if (entity == null) {
             throw new Exception("该轮播图不存在，请检查数据");
         }
-
-        return entity;
+        BannerFrontDto bannerFrontDto=new BannerFrontDto();
+        BeanUtils.copyProperties(entity,bannerFrontDto);
+        return bannerFrontDto;
     }
 
 }

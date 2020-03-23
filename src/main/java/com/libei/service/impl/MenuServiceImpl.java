@@ -22,7 +22,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuDto> queryAll() {
-        List<MenuEntity> menuEntityList = menuMapper.queryMenu();
+        List<MenuEntity> menuEntityList = menuMapper.selectAll();
 
         return ListUtils.entityListToModelList(menuEntityList, MenuDto.class);
     }

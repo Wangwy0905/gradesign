@@ -1,18 +1,13 @@
 package com.libei.controller;
 
 import com.libei.Dto.BannerDto;
+import com.libei.Dto.BannerFrontDto;
 import com.libei.controller.request.BannerCommitRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.entity.BannerEntity;
 import com.libei.service.BannerService;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -26,13 +21,12 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("banner")
-@Api(value = "轮播图相关Api接口", tags = {"轮播图相关Api接口"})
 public class BannerController {
     @Autowired
     private BannerService bannerService = null;
 
     @CrossOrigin
-    @GetMapping("query-back")
+    @PostMapping("query-back")
     public BannerDto query(@RequestBody CommonRequest request) {
         BannerDto dto = bannerService.queryDto(request);
 
@@ -41,22 +35,23 @@ public class BannerController {
 
     @CrossOrigin
     @GetMapping("query-front")
-    public List<BannerEntity> query() {
-        List<BannerEntity> bannerEntityList = bannerService.query();
-        return bannerEntityList;
+    public List<BannerFrontDto> query() {
+        List<BannerFrontDto> bannerFrontDtos = bannerService.query();
+
+        return bannerFrontDtos;
     }
 
     @CrossOrigin
     @PostMapping("add")
-    public Boolean add(@RequestBody BannerCommitRequest request, MultipartFile file) throws Exception {
-        return bannerService.add(request, file);
+    public Boolean add(@RequestParam("file") MultipartFile file, @RequestParam String title) throws Exception {
+        return bannerService.add(title, file);
 
     }
 
 
     @CrossOrigin
     @PostMapping("delete")
-    public Boolean delete(@RequestBody @Valid @NotNull Long id) throws Exception {
+    public Boolean delete(@RequestParam @Valid @NotNull Long id) throws Exception {
         return bannerService.delete(id);
 
     }
@@ -71,8 +66,8 @@ public class BannerController {
 
     @CrossOrigin
     @GetMapping("query-detail")
-    public BannerEntity queryDetail(@RequestBody @Valid @NotNull Long id) throws Exception {
-        BannerEntity bannerEntity = bannerService.queryDetail(id);
-        return bannerEntity;
+    public BannerFrontDto queryDetail(@RequestParam @Valid @NotNull Long id) throws Exception {
+        BannerFrontDto bannerFrontDto = bannerService.queryDetail(id);
+        return bannerFrontDto;
     }
 }

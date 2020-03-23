@@ -28,15 +28,12 @@ public class ProductEntity {
     private Integer repertory;//库存
     private String picture;   //图片
     private String capacity;   //容量
-    private String weight;     //重量
-    private String saleCount;  //销售量
+    //private String saleCount;  //销售量  待添加
     @Enumerated(EnumType.STRING)
     private BlandEnum brand;
     private String description;
     private Long categoryId;
     private Long categoryId2;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JSONField(format = "yyyy-MM-dd")
     private Date createTime;
     private Boolean status;
 

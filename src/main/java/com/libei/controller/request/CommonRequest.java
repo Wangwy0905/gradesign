@@ -8,4 +8,5 @@ public class CommonRequest {
     private int pageSize;
     private String name;
     private String phoneNum;
+    private String title;
 }

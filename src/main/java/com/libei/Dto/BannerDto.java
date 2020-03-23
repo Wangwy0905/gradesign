@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 public class BannerDto {
     private  Integer total;
-    private List<BannerEntity> rows;
+    private List<BannerFrontDto> rows;
 }

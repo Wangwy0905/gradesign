@@ -8,6 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface AdminMapper extends Mapper<AdminEntity> {
-    public  Integer  totalNum();
-    public List<AdminEntity> queryAll(@Param(value = "page") int page, @Param(value = "rows") int rows);
+    Integer totalNum();
+
+    List<AdminEntity> queryAll(@Param(value = "pageNum") int pageNum, @Param(value = "pageSize") int pagesize);
 }
