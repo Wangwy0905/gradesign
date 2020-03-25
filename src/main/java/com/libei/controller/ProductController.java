@@ -27,13 +27,14 @@ public class ProductController {
     ProductService productService;
 
     @CrossOrigin
-    @RequestMapping(value = "query", method = RequestMethod.GET)
+    @RequestMapping(value = "query", method = RequestMethod.POST)
     public ProductDto query(@RequestBody ProductQueryRequest request) {
 
         Integer pageNum = request.getPageNum();
         Integer pageSize = request.getPageSize();
         Long categoryId = request.getCategoryId();
-        ProductDto computerDto = productService.query(categoryId, pageNum, pageSize);
+        Long categoryId2 = request.getCategoryId2();
+        ProductDto computerDto = productService.query(categoryId,categoryId2, pageNum, pageSize);
         return computerDto;
     }
 
@@ -74,8 +75,8 @@ public class ProductController {
     }
 
     @CrossOrigin
-    @PostMapping("query-one")
-    public ProductEntity queryOne(@RequestBody @Valid @NotNull Long id) throws IOException {
+    @GetMapping("query-one")
+    public ProductEntity queryOne(@RequestParam @Valid @NotNull Long id) throws IOException {
         return productService.queryOne(id);
     }
 
@@ -86,4 +87,10 @@ public class ProductController {
         return productService.search(request);
     }
 
+    //激活
+    @CrossOrigin
+    @GetMapping("open")
+    public Boolean open(@RequestParam @Valid @NotNull Long id){
+        return productService.open(id);
+    }
 }

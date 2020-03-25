@@ -6,10 +6,7 @@ import com.libei.controller.request.OrderQueryRequest;
 import com.libei.controller.request.ProductQueryRequest;
 import com.libei.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,7 +20,7 @@ public class OrderController {
     private OrderService orderService;
 
     @CrossOrigin
-    @RequestMapping("query")
+    @RequestMapping(value = "query",method = RequestMethod.POST)
     public List<OrderDto> query(@RequestBody OrderQueryRequest request) {
         Integer pageNum = request.getPageNum();
         Integer pageSize = request.getPageSize();
@@ -32,13 +29,13 @@ public class OrderController {
     }
 
     @CrossOrigin
-    @RequestMapping("delete")
-    public Boolean delete(@RequestBody @Valid @NotNull Long id) {
+    @RequestMapping(value = "delete",method = RequestMethod.GET)
+    public Boolean delete(@RequestParam @Valid @NotNull Long id) {
         return orderService.delete(id);
     }
 
     @CrossOrigin
-    @RequestMapping("add")
+    @RequestMapping(value = "add",method = RequestMethod.POST)
     public Boolean add(@RequestBody OrderAddRequest request) {
         return orderService.add(request);
     }

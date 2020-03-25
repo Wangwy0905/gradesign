@@ -2,27 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.ProductMapper">
 
-    <select id="queryByCategoryId" resultType="ProductEntity">
-        select id,productName,color,price,repertory,categoryId,categoryId2,description,createTime,
-        picture,status from product ORDER by createTime desc where status='1' and categoryId=#{categoryId} limit ${(pageSize-1)*pageNum},${pageNum}
+    <select id="queryByCategoryId" parameterType="java.lang.Integer" resultType="ProductEntity">
+        select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
+        categoryId2,description,create_time createTime,
+        picture,status from product ORDER by create_time desc where status='1' and
+        <if test="categoryId！=null">
+            category_id=#{categoryId} limit ${(pageSize-1)*pageNum},${pageNum}
+        </if>
+        <if test="categoryId2！=null">
+            category_id2=#{categoryId2} limit ${(pageSize-1)*pageNum},${pageNum}
+        </if>
+
     </select>
 
     <!--<select id="query" resultType="ProductEntity">-->
-        <!--select id,productName,color,price,repertory,categoryId,categoryId2,description,createTime,-->
-        <!--picture,status from product ORDER by createTime desc where status='1' and productName like '%'||#{param}||'%' limit ${(pageSize-1)*pageNum},${pageNum}-->
+    <!--select id,productName,color,price,repertory,categoryId,categoryId2,description,createTime,-->
+    <!--picture,status from product ORDER by createTime desc where status='1' and productName like '%'||#{param}||'%' limit ${(pageSize-1)*pageNum},${pageNum}-->
     <!--</select>-->
 
     <select id="query" resultType="ProductEntity">
-        select id,productName,color,price,repertory,categoryId,categoryId2,description,createTime,
-        picture,status from product ORDER by createTime desc limit ${(pageSize-1)*pageNum},${pageNum}
+        select id,product_name productName,color,price,repertory,category_id categoryId,category_id2 categoryId2,description,create_time createTime,
+        picture,status from product ORDER by create_time desc limit ${(pageSize-1)*pageNum},${pageNum}
     </select>
 
     <select id="queryLike" resultType="ProductEntity">
-        select id,productName,color,price,brand,repertory,categoryId,categoryId2,description,createTime,
+        select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2 categoryId2,description,create_time createTime,
         picture,status from product
         <where>
             <if test="productName !=null">
-                and productName like '%'||#{productName}||'%'
+                and product_name like '%'||#{productName}||'%'
             </if>
             <if test="brand !=null">
                 and brand like '%'||#{brand}||'%'
@@ -32,7 +40,7 @@
             </if>
             and status='1'
         </where>
-        ORDER by createTime desc limit ${(pageSize-1)*pageNum},${pageNum}
+        ORDER by create_time desc limit ${(pageNum-1)*pageSize},${pageSize}
     </select>
 
 </mapper>

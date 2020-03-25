@@ -7,7 +7,7 @@ import com.libei.entity.ProductEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
-    ProductDto query(Long categoryId, Integer pageNum, Integer pageSize);
+    ProductDto query(Long categoryId,Long category2, Integer pageNum, Integer pageSize);
 
     Boolean addProduct(ProductCommitRequest request, MultipartFile file) throws Exception;
 
@@ -20,4 +20,6 @@ public interface ProductService {
     ProductDto search(SearchRequest request);
 
     String upload(MultipartFile file) throws Exception;
+
+    Boolean open(Long id);
 }

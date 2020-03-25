@@ -12,5 +12,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductDto {
     private Integer total;
-    private List<ProductEntity> rows;
+    private List<ProductDetailDto> rows;
 }

@@ -1,11 +1,13 @@
 package com.libei.service.impl;
 
+import com.libei.Dto.ProductDetailDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.ProductCommitRequest;
 import com.libei.controller.request.SearchRequest;
 import com.libei.entity.ProductEntity;
 import com.libei.mapper.ProductMapper;
 import com.libei.service.ProductService;
+import com.libei.util.ListUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +34,20 @@ public class ProductServiceImpl implements ProductService {
     ProductMapper productMapper;
 
     @Override
-    public ProductDto query(Long categoryId, Integer pageNum, Integer pageSize) {
+    public ProductDto query(Long categoryId,Long category2,Integer pageNum, Integer pageSize) {
         List<ProductEntity> productEntityList = null;
 
-        if (categoryId == null) {
+        if (categoryId == null || categoryId == 0 && category2 == null || category2 == 0) {
             //后端  查所有产品
             productEntityList = productMapper.query(pageNum, pageSize);
-        } else if (categoryId != null) {
+        } else{
             //前端 通过类别信息查产品
-            productEntityList = productMapper.queryByCategoryId(categoryId, pageNum, pageSize);
+            productEntityList = productMapper.queryByCategoryId(categoryId,category2,pageNum, pageSize);
         }
+
+        List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
         ProductDto productDto = new ProductDto();
-        productDto.setRows(productEntityList);
+        productDto.setRows(productDetailDtos);
         productDto.setTotal(productEntityList.size());
 
         return productDto;
@@ -88,12 +92,23 @@ public class ProductServiceImpl implements ProductService {
         return originalFilename;
     }
 
+    @Override
+    public Boolean open(Long id) {
+        ProductEntity productEntity = productMapper.selectByPrimaryKey(id);
+
+        productEntity.setStatus(true);
+
+        productMapper.updateByPrimaryKey(productEntity);
+
+        return true;
+    }
+
 
     @Override
     public Boolean delete(Long id) {
         ProductEntity entity = productMapper.selectByPrimaryKey(id);
         entity.setStatus(false);
-        productMapper.insert(entity);
+        productMapper.updateByPrimaryKey(entity);
 
         return true;
     }
@@ -104,15 +119,13 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity entity = productMapper.selectByPrimaryKey(id);
 
         BeanUtils.copyProperties(entity, request);
-        productMapper.insert(entity);
+        productMapper.updateByPrimaryKey(entity);
 
         return true;
     }
 
     @Override
     public ProductEntity queryOne(Long id) {
-
-        ProductDto productDto = new ProductDto();
         return productMapper.selectByPrimaryKey(id);
 
     }
@@ -126,14 +139,15 @@ public class ProductServiceImpl implements ProductService {
         int pageNum = request.getPageNum();
 
         List<ProductEntity> productEntityList = productMapper.queryLike(brand, productName, description, pageSize, pageNum);
-
+        List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
         ProductDto productDto = new ProductDto();
         productDto.setTotal(productEntityList.size());
-        productDto.setRows(productEntityList);
+        productDto.setRows(productDetailDtos);
 
         return productDto;
 
     }
 
     //TODO  激活待定
+
 }

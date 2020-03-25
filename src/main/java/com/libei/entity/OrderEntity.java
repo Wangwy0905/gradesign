@@ -25,8 +25,6 @@ public class OrderEntity {
     private Long addressId;
     @Column(name = "status") //支付状态   0-未支付  1-已支付
     private String status;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_date")
     private Date createDate;
 }
