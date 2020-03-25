@@ -22,21 +22,27 @@
         <!--</collection>-->
     <!--</resultMap>-->
     <!--&lt;!&ndash;分页查询 先分页再表连接&ndash;&gt;-->
-    <!--<select id="queryAllByPage" resultMap="res1">-->
-        <!--select c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid from (select id,categoryName,pid from category where pid is null limit ${(page-1)*rows},${rows}) c-->
-        <!--left join category cc on c.id=cc.pid-->
-    <!--</select>-->
+<!--    <select id="queryAllByPage" resultMap="res1">
+        select c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid from (select id,categoryName,pid from category where pid is null limit ${(page-1)*rows},${rows}) c
+        left join category cc on c.id=cc.pid
+    </select>
 
-    <!--<select id="totalNum" resultType="java.lang.Integer">-->
-        <!--select count(*) from  category-->
-    <!--</select>-->
+    <select id="totalNum" resultType="java.lang.Integer">
+        select count(*) from  category
+    </select>-->
 
-    <!--<select id="querySecond" resultType="Category" parameterType="java.lang.Integer">-->
-        <!--select id,categoryName,pid from category where pid=#{pid}-->
-    <!--</select>-->
+    <select id="querySecond" resultType="CategoryEntity" parameterType="java.lang.Integer">
+        select id,category_name categoryName,first_id firstId,create_time createTime from category where first_id =#{firstId}
+    </select>
+
+    <select id="queryFirst" resultType="CategoryEntity">
+        select id,category_name categoryName,first_id firstId,create_time createTime from category where first_id is null
+    </select>
     <!--<select id="queryAll" resultMap="res2">-->
         <!--select  c.id cid,c.categoryName ccate,c.pid cpid,cc.id ccid,cc.categoryName cccate,cc.pid ccpid-->
         <!--from category c left join category cc on c.id=cc.pid where c.pid is null-->
     <!--</select>-->
+
+
 
 </mapper>

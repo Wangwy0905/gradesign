@@ -3,18 +3,19 @@ package com.libei.entity;
 import lombok.Data;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
 
 @Data
+@Table(name = "address")
 public class AddressEntity {
     @Id
     private Long id;
-    private String name;
-    private String phoneNum;
     private String province;
     private String city;
     private String detailAddress;
     private Long userId;
     private String remark;
     private Boolean isDefault;
-    private String status;
+    private Date createDate;
 }

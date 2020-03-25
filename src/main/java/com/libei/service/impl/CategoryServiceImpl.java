@@ -4,6 +4,7 @@ import com.libei.Dto.CategoryDto;
 import com.libei.entity.CategoryEntity;
 import com.libei.mapper.CategoryMapper;
 import com.libei.service.CategoryService;
+import com.libei.util.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,17 +15,19 @@ import java.util.List;
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
+    @Autowired
+    private CategoryMapper categoryMapper;
+
     @Override
     public List<CategoryDto> queryFirst() {
-        return null;
+        return ListUtils.entityListToModelList(categoryMapper.queryFirst(), CategoryDto.class);
     }
 
     @Override
     public List<CategoryDto> querySecond(Long firstId) {
-        return null;
+        return ListUtils.entityListToModelList(categoryMapper.querySecond(firstId), CategoryDto.class);
     }
-//    @Autowired
-//    CategoryMapper categoryMapper;
+
 //    @Override
 //    public CategoryDto query() {
 //        List<CategoryEntity> categories = categoryMapper.queryAllByPage(page, rows);

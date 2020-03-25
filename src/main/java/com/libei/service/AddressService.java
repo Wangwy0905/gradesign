@@ -1,7 +1,9 @@
 package com.libei.service;
 
 import com.libei.Dto.AddressDto;
+import com.libei.Dto.AddressResDto;
 import com.libei.controller.request.AddressRequest;
+import com.libei.controller.request.CommonRequest;
 
 import java.util.List;
 
@@ -15,4 +17,6 @@ public interface AddressService {
     Boolean update(AddressRequest request);
 
     AddressDto queryDetail(Long id) throws Exception;
+
+    AddressResDto queryBack(CommonRequest commonRequest);
 }

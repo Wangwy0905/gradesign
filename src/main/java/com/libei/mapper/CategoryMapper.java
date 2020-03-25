@@ -7,10 +7,11 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface CategoryMapper extends Mapper<CategoryEntity> {
-    public Integer totalNum();
-    public List<CategoryEntity> queryAllByPage(@Param(value="page")int page, @Param(value="rows") int rows);
-    public  List<CategoryEntity> querySecond(Integer pid);
-
+    Integer totalNum();
+    List<CategoryEntity> queryAllByPage(@Param(value = "page") int page, @Param(value = "rows") int rows);
+    List<CategoryEntity> querySecond(Long firstId);
     //前台分类
-    public  List<CategoryEntity> queryAll();
+    List<CategoryEntity> queryAll();
+
+    List<CategoryEntity> queryFirst();
 }

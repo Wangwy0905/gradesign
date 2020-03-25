@@ -44,12 +44,12 @@ public class AppraiseServiceImpl implements AppraiseService {
         int pageNum = commonRequest.getPageNum();
         int pageSize = commonRequest.getPageSize();
 
-        List<AppraiseEntity> appraiseDtos = appraiseMapper.queryAll(pageNum, pageSize);
+        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll(pageNum, pageSize);
         Integer integer = appraiseMapper.totalNum();
 
         AppraiseResDto appraiseResDto = new AppraiseResDto();
         appraiseResDto.setTotal(integer);
-        appraiseResDto.setRows(ListUtils.entityListToModelList(appraiseDtos, AppraiseDto.class));
+        appraiseResDto.setRows(ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class));
 
         return appraiseResDto;
     }

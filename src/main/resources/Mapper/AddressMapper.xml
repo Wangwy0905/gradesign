@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.libei.mapper.AddressMapper">
+
+    <select id="totalNum" resultType="java.lang.Integer">
+    select count(*) from address
+</select>
+    <select id="queryAll" resultType="AddressEntity">
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate from address limit ${(pageNum-1)*pageSize},${pageSize}
+    </select>
+
+    <select id="queryDefault" resultType="AddressEntity">
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate from address where user_id=#{userId} and is_default=#{isDefault}
+    </select>
+
+    <select id="queryNotDefault" resultType="AddressEntity">
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate from address where user_id=#{userId} and is_default=#{isDefault}
+    </select>
+</mapper>
