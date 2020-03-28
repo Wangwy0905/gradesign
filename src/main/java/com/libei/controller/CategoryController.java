@@ -1,6 +1,11 @@
 package com.libei.controller;
 
 import com.libei.Dto.CategoryDto;
+import com.libei.Dto.CategoryResDto;
+import com.libei.controller.request.CategoryRequest;
+import com.libei.controller.request.CollectRequest;
+import com.libei.controller.request.CommonRequest;
+import com.libei.entity.CategoryEntity;
 import com.libei.service.CategoryService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +43,30 @@ public class CategoryController {
         return categoryDtoList;
 
     }
+
+
+    @PostMapping("add")
+    @CrossOrigin
+    public Boolean add(@RequestBody @Valid @NotNull CategoryRequest request){
+        return categoryService.add(request);
+    }
+
+    @GetMapping("delete")
+    @CrossOrigin
+    public Boolean delete(@RequestParam Long id){
+        return categoryService.delete(id);
+    }
+
+    @PostMapping("update")
+    @CrossOrigin
+    public Boolean update(@RequestParam CategoryRequest request){
+        return categoryService.update(request);
+    }
+
+    @PostMapping("query-back")
+    @CrossOrigin
+    public CategoryResDto queryBack(@RequestParam CommonRequest request){
+        return categoryService.queryBack(request);
+    }
+
 }

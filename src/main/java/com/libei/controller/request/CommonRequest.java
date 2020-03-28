@@ -9,4 +9,5 @@ public class CommonRequest {
     private String name;
     private String phoneNum;
     private String title;
+    private String categoryName;
 }

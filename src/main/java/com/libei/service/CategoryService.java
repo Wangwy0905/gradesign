@@ -1,6 +1,10 @@
 package com.libei.service;
 
 import com.libei.Dto.CategoryDto;
+import com.libei.Dto.CategoryResDto;
+import com.libei.controller.request.CategoryRequest;
+import com.libei.controller.request.CollectRequest;
+import com.libei.controller.request.CommonRequest;
 import com.libei.entity.CategoryEntity;
 
 import java.util.HashMap;
@@ -12,6 +16,11 @@ public interface CategoryService {
     List<CategoryDto> queryFirst();
     List<CategoryDto> querySecond(Long firstId);
 
-    //List<CategoryEntity> queryAll();
+    Boolean add(CategoryRequest request);
 
+    Boolean delete(Long id);
+
+    Boolean update(CategoryRequest request);
+
+    CategoryResDto queryBack(CommonRequest request);
 }

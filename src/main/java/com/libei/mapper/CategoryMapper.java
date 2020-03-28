@@ -14,4 +14,6 @@ public interface CategoryMapper extends Mapper<CategoryEntity> {
     List<CategoryEntity> queryAll();
 
     List<CategoryEntity> queryFirst();
+
+    List<CategoryEntity> queryByParam(@Param(value = "pageNum")int pageNum, @Param(value = "pageSize")int pageSize, @Param(value = "categoryName")String categoryName);
 }
