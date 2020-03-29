@@ -13,5 +13,9 @@ public interface ProductMapper extends Mapper<ProductEntity> {
 
     List<ProductEntity> queryLike(@Param(value = "brand")String brand, @Param(value = "productName")String productName, @Param(value = "description")String description, @Param(value = "pageSize") Integer pageSize, @Param(value = "pageNum") Integer pageNum);
 
-    void delete(Long categoryId);
+    void deleteByCategory(Long categoryId);
+
+    List<ProductEntity> queryFront(@Param(value = "pageNum")int pageNum,@Param(value = "pageSize")int pageSize,@Param("userId") Long userId);
+
+    Integer count(Long userId);
 }

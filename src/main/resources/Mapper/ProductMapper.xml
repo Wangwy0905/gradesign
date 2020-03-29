@@ -26,7 +26,8 @@
     </select>
 
     <select id="queryLike" resultType="ProductEntity">
-        select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2 categoryId2,description,create_time createTime,
+        select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2
+        categoryId2,description,create_time createTime,
         picture,status from product
         <where>
             <if test="productName !=null">
@@ -42,5 +43,21 @@
         </where>
         ORDER by create_time desc limit ${(pageNum-1)*pageSize},${pageSize}
     </select>
+
+    <select id="queryFront" parameterType="java.lang.Integer" resultType="ProductEntity">
+        select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
+        categoryId2,description,create_time createTime,
+        picture,status from product ORDER by create_time desc where status='1' and
+        user_id=#{userId} limit ${(pageSize-1)*pageNum},${pageNum}
+
+    </select>
+
+    <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+            select count(*) from product where user_id=#{usrId}
+    </select>
+
+    <delete id="deleteByCategory" parameterType="java.lang.Integer">
+        delete from product where category_id=#{categoryId} or category_id2=#{categpryId}
+    </delete>
 
 </mapper>

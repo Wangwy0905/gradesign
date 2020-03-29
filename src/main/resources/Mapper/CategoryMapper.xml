@@ -10,10 +10,6 @@
         select id,category_name categoryName,first_id firstId,create_time createTime from category where first_id is null
     </select>
 
-    <delete id="delete" parameterType="java.lang.Integer">
-        delete from product where category_id=#{categoryId} or category_id2=#{categpryId}
-    </delete>
-
     <select id="queryByParam" resultType="CategoryEntity">
         select id,category_name categoryName,first_id firstId,type, create_time createTime from category where category_name=#{categoryName} limit ${(pageNum-1)*pageSize},${pageSize}
     </select>

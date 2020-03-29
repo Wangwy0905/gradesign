@@ -10,4 +10,5 @@ public class CommonRequest {
     private String phoneNum;
     private String title;
     private String categoryName;
+    private Long userId;
 }
