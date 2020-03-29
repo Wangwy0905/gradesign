@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Boolean delete(Long id) {
         categoryMapper.deleteByPrimaryKey(id);
 
-        //级联删除该分类下所有商品  慎用
+        //级联删除该分类下所有商品   慎用
         CategoryEntity categoryEntity = categoryMapper.selectByPrimaryKey(id);
         productMapper.deleteByCategory(id);
 
