@@ -17,5 +17,6 @@ public interface ProductMapper extends Mapper<ProductEntity> {
 
     List<ProductEntity> queryFront(@Param("userId") Long userId);
 
+
     Integer count(Long userId);
 }
