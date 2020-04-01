@@ -1,6 +1,5 @@
 package com.libei.mapper;
 
-import com.libei.entity.AdminEntity;
 import com.libei.entity.AppraiseEntity;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;

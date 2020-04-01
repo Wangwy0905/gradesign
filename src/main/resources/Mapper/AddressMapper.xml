@@ -6,7 +6,8 @@
     select count(*) from address
 </select>
     <select id="queryAll" resultType="AddressEntity">
-        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate from address limit ${(pageNum-1)*pageSize},${pageSize}
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate from address order by
+         create_date desc
     </select>
 
     <select id="queryDefault" resultType="AddressEntity">

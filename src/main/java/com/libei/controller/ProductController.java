@@ -30,11 +30,9 @@ public class ProductController {
     @RequestMapping(value = "query", method = RequestMethod.POST)
     public ProductDto query(@RequestBody ProductQueryRequest request) {
 
-        Integer pageNum = request.getPageNum();
-        Integer pageSize = request.getPageSize();
         Long categoryId = request.getCategoryId();
         Long categoryId2 = request.getCategoryId2();
-        ProductDto computerDto = productService.query(categoryId,categoryId2, pageNum, pageSize);
+        ProductDto computerDto = productService.query(categoryId,categoryId2);
         return computerDto;
     }
 

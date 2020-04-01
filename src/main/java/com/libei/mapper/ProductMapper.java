@@ -8,14 +8,14 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface ProductMapper extends Mapper<ProductEntity> {
-    List<ProductEntity> queryByCategoryId(@Param("categoryId") Long categoryId, @Param("categoryId2") Long categoryId2, @Param(value = "pageSize") Integer pageSize, @Param(value = "pageNum") Integer pageNum);
-    List<ProductEntity> query(@Param(value = "pageSize") Integer pageSize, @Param(value = "pageNum") Integer pageNum);
+    List<ProductEntity> queryByCategoryId(@Param("categoryId") Long categoryId, @Param("categoryId2") Long categoryId2);
+    List<ProductEntity> query();
 
-    List<ProductEntity> queryLike(@Param(value = "brand")String brand, @Param(value = "productName")String productName, @Param(value = "description")String description, @Param(value = "pageSize") Integer pageSize, @Param(value = "pageNum") Integer pageNum);
+    List<ProductEntity> queryLike(@Param(value = "brand")String brand, @Param(value = "productName")String productName, @Param(value = "description")String description);
 
     void deleteByCategory(Long categoryId);
 
-    List<ProductEntity> queryFront(@Param(value = "pageNum")int pageNum,@Param(value = "pageSize")int pageSize,@Param("userId") Long userId);
+    List<ProductEntity> queryFront(@Param("userId") Long userId);
 
     Integer count(Long userId);
 }

@@ -10,19 +10,15 @@
             category_id=#{categoryId} limit ${(pageSize-1)*pageNum},${pageNum}
         </if>
         <if test="categoryId2！=null">
-            category_id2=#{categoryId2} limit ${(pageSize-1)*pageNum},${pageNum}
+            category_id2=#{categoryId2}
         </if>
 
     </select>
 
-    <!--<select id="query" resultType="ProductEntity">-->
-    <!--select id,productName,color,price,repertory,categoryId,categoryId2,description,createTime,-->
-    <!--picture,status from product ORDER by createTime desc where status='1' and productName like '%'||#{param}||'%' limit ${(pageSize-1)*pageNum},${pageNum}-->
-    <!--</select>-->
 
     <select id="query" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2 categoryId2,description,create_time createTime,
-        picture,status from product ORDER by create_time desc limit ${(pageSize-1)*pageNum},${pageNum}
+        picture,status from product ORDER by create_time desc
     </select>
 
     <select id="queryLike" resultType="ProductEntity">
@@ -31,24 +27,24 @@
         picture,status from product
         <where>
             <if test="productName !=null">
-                and product_name like '%'||#{productName}||'%'
+                and product_name like concat ('%',#{productName},'%')
             </if>
             <if test="brand !=null">
-                and brand like '%'||#{brand}||'%'
+                and brand like concat ('%',#{brand},'%')
             </if>
             <if test="description !=null">
-                and description like '%'||#{description}||'%'
+                and description like  concat ('%',#{description},'%')
             </if>
             and status='1'
         </where>
-        ORDER by create_time desc limit ${(pageNum-1)*pageSize},${pageSize}
+        ORDER by create_time desc
     </select>
 
     <select id="queryFront" parameterType="java.lang.Integer" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
         categoryId2,description,create_time createTime,
-        picture,status from product ORDER by create_time desc where status='1' and
-        user_id=#{userId} limit ${(pageSize-1)*pageNum},${pageNum}
+        picture,status from product where status='1' and
+        user_id=#{userId}  ORDER by create_time desc
 
     </select>
 

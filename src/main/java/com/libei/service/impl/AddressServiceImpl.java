@@ -96,10 +96,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResDto queryBack(CommonRequest commonRequest) {
-        int pageNum = commonRequest.getPageNum();
-        int pageSize = commonRequest.getPageSize();
-
-        List<AddressEntity> addressEntities = addressMapper.queryAll(pageNum, pageSize);
+        List<AddressEntity> addressEntities = addressMapper.queryAll();
         Integer integer = addressMapper.totalNum();
 
         AddressResDto addressResDto = new AddressResDto();

@@ -68,10 +68,8 @@ public class CollectServiceImpl implements CollectService {
 
     @Override
     public ProductDto queryFront(CommonRequest commonRequest) {
-        int pageNum = commonRequest.getPageNum();
-        int pageSize = commonRequest.getPageSize();
         Long userId = commonRequest.getUserId();
-        List<ProductEntity> productEntities = productMapper.queryFront(pageNum, pageSize, userId);
+        List<ProductEntity> productEntities = productMapper.queryFront(userId);
         Integer count = productMapper.count(userId);
 
         ProductDto productDto=new ProductDto();

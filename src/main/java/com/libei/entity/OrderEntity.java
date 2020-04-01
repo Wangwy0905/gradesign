@@ -15,6 +15,7 @@ public class OrderEntity {
     @Id
     @Column(name = "id")
     private Long id;
+    private String orderId;
     @Column(name = "cost")
     private Double cost;
     @Column(name = "number") //购买数量

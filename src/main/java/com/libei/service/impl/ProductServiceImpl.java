@@ -34,15 +34,15 @@ public class ProductServiceImpl implements ProductService {
     ProductMapper productMapper;
 
     @Override
-    public ProductDto query(Long categoryId,Long category2,Integer pageNum, Integer pageSize) {
+    public ProductDto query(Long categoryId,Long category2) {
         List<ProductEntity> productEntityList = null;
 
         if (categoryId == null || categoryId == 0 && category2 == null || category2 == 0) {
             //后端  查所有产品
-            productEntityList = productMapper.query(pageNum, pageSize);
+            productEntityList = productMapper.query();
         } else{
             //前端 通过类别信息查产品
-            productEntityList = productMapper.queryByCategoryId(categoryId,category2,pageNum, pageSize);
+            productEntityList = productMapper.queryByCategoryId(categoryId,category2);
         }
 
         List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         String originalFilename = file.getOriginalFilename();
-        String path = "D:/upload/" + originalFilename;
+        String path = "C:\\Users\\WangWenYi\\IdeaProjects\\gradesign\\src\\main\\webapp\\img" + originalFilename;
 
         File dest = new File(path);
         if (!dest.getParentFile().exists()) {
@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
             e.printStackTrace();
         }
 
-        return originalFilename;
+        return path;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
         int pageSize = request.getPageSize();
         int pageNum = request.getPageNum();
 
-        List<ProductEntity> productEntityList = productMapper.queryLike(brand, productName, description, pageSize, pageNum);
+        List<ProductEntity> productEntityList = productMapper.queryLike(brand, productName, description);
         List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
         ProductDto productDto = new ProductDto();
         productDto.setTotal(productEntityList.size());

@@ -11,7 +11,7 @@ public interface AddressMapper extends Mapper<AddressEntity> {
 
     List<AddressEntity> queryNotDefault(@Param("userId")Long userId, @Param("isDefault")Boolean isDefault);
 
-    List<AddressEntity> queryAll(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+    List<AddressEntity> queryAll();
 
     Integer totalNum();
 }
