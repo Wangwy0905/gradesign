@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Data
-@Table(name = "order")
+@Table(name = "order_entity")
 public class OrderEntity {
     @Id
     @Column(name = "id")

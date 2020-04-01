@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BannerMapper extends Mapper<BannerEntity> {
 
-    List<BannerEntity> queryByPage(@Param(value = "pageSize") int pageSize, @Param(value = "pageNum") int pageNum);
+    List<BannerEntity> queryByPage();
 
     Integer queryNum();
 

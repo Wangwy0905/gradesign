@@ -49,11 +49,7 @@
     </select>
 
     <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-            select count(*) from product where user_id=#{usrId}
+            select count(*) from product where user_id=#{userId}
     </select>
-
-    <delete id="deleteByCategory" parameterType="java.lang.Integer">
-        delete from product where category_id=#{categoryId} or category_id2=#{categpryId}
-    </delete>
 
 </mapper>

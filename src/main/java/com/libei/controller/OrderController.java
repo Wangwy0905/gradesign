@@ -19,14 +19,22 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @CrossOrigin
+/*    @CrossOrigin
     @RequestMapping(value = "query",method = RequestMethod.POST)
     public List<OrderDto> query(@RequestBody OrderQueryRequest request) {
         Integer pageNum = request.getPageNum();
         Integer pageSize = request.getPageSize();
 
         return orderService.query(pageSize, pageNum);
+    }*/
+
+    @CrossOrigin
+    @RequestMapping(value = "query",method = RequestMethod.POST)
+    public List<OrderDto> query() {
+
+        return orderService.query();
     }
+
 
     @CrossOrigin
     @RequestMapping(value = "delete",method = RequestMethod.GET)

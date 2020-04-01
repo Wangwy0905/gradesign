@@ -4,6 +4,7 @@ import com.libei.Dto.BannerDto;
 import com.libei.Dto.BannerFrontDto;
 import com.libei.controller.request.BannerCommitRequest;
 import com.libei.controller.request.CommonRequest;
+import com.libei.controller.request.OpenRequest;
 import com.libei.entity.BannerEntity;
 import com.libei.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,8 @@ public class BannerController {
 
     @CrossOrigin
     @PostMapping("query-back")
-    public BannerDto query(@RequestBody CommonRequest request) {
-        BannerDto dto = bannerService.queryDto(request);
-
-        return dto;
+    public List<BannerEntity> queryBanner() {
+        return bannerService.queryBanner();
     }
 
     @CrossOrigin
@@ -50,7 +49,7 @@ public class BannerController {
 
 
     @CrossOrigin
-    @PostMapping("delete")
+    @GetMapping("delete")
     public Boolean delete(@RequestParam @Valid @NotNull Long id) throws Exception {
         return bannerService.delete(id);
 
@@ -69,5 +68,15 @@ public class BannerController {
     public BannerFrontDto queryDetail(@RequestParam @Valid @NotNull Long id) throws Exception {
         BannerFrontDto bannerFrontDto = bannerService.queryDetail(id);
         return bannerFrontDto;
+    }
+
+
+    @CrossOrigin
+    @PostMapping("open")
+    public Boolean open(@RequestBody OpenRequest request) throws Exception {
+        Boolean status = request.getStatus();
+        Long id = request.getId();
+        return bannerService.open(id,status);
+
     }
 }

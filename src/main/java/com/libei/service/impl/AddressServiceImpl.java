@@ -95,15 +95,10 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressResDto queryBack(CommonRequest commonRequest) {
+    public List<AddressEntity> queryBack() {
         List<AddressEntity> addressEntities = addressMapper.queryAll();
-        Integer integer = addressMapper.totalNum();
 
-        AddressResDto addressResDto = new AddressResDto();
-        addressResDto.setTotal(integer);
-        addressResDto.setRows(ListUtils.entityListToModelList(addressEntities, AddressDto.class));
-
-        return addressResDto;
+        return addressEntities;
     }
 
 

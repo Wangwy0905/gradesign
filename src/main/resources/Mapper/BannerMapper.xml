@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.BannerMapper">
     <select id="queryByPage" resultType="BannerEntity">
-        select id,title,picture,status,create_time createTime from banner where status=1 limit ${(pageNum-1)*pageSize},${pageSize}
+        select id,title,picture,status,create_time createTime from banner where status=1 order by create_time
     </select>
 
     <select id="queryNum" resultType="java.lang.Integer">
@@ -10,7 +10,7 @@
     </select>
 
     <select id="query" resultType="BannerEntity">
-        select id,title,picture,status,create_time createTime from banner where status=1
+        select id,title,picture,status,create_time createTime from banner order by create_time
     </select>
 
     <select id="queryLike"  resultType="BannerEntity">

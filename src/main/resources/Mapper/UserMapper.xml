@@ -6,16 +6,15 @@
     </select>
 
     <select id="queryUser" resultType="UserEntity">
-        select * from user
-        <where>
+        select * from user_entity
+        where 1=1
             <if test="name !=null">
-                and name like '%'||#{name}||'%'
+                and name like concat ('%',#{name,jdbcType=VARCHAR},'%')
             </if>
             <if test="phoneNum !=null">
-                and phoneNum like '%'||#{proneNum}||'%'
+                and account like  concat ('%',#{phoneNum,jdbcType=VARCHAR},'%')
             </if>
-            and status='1'
-            order by createDateTime desc
-        </where>
+            order by create_time desc
+
     </select>
 </mapper>

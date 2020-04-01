@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.OrderMapper">
 
-    <select id="queryAll" resultType="ProductEntity">
-        select * from order where order by create_date desc
+    <select id="queryAll" resultType="OrderEntity">
+        select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1  order by create_date desc
     </select>
+    <delete id="deleteByUserId">
+        delete from order_entity where user_id =#{userId}
+    </delete>
 
 </mapper>

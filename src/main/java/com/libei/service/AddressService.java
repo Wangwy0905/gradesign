@@ -4,6 +4,7 @@ import com.libei.Dto.AddressDto;
 import com.libei.Dto.AddressResDto;
 import com.libei.controller.request.AddressRequest;
 import com.libei.controller.request.CommonRequest;
+import com.libei.entity.AddressEntity;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface AddressService {
 
     AddressDto queryDetail(Long id) throws Exception;
 
-    AddressResDto queryBack(CommonRequest commonRequest);
+    List<AddressEntity> queryBack();
 }

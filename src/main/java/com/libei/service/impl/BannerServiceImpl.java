@@ -6,12 +6,14 @@ import com.libei.Dto.ProductDto;
 import com.libei.controller.request.BannerCommitRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.entity.BannerEntity;
+import com.libei.entity.ProductEntity;
 import com.libei.mapper.BannerMapper;
 import com.libei.service.BannerService;
 import com.libei.service.ProductService;
 import com.libei.util.ListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,26 +29,33 @@ public class BannerServiceImpl implements BannerService {
     @Autowired
     ProductService productService = null;
 
+//    @Override
+//    public BannerDto queryDto(CommonRequest request) {
+//        int pageNum = request.getPageNum();
+//        int pageSize = request.getPageSize();
+//        String param = request.getTitle();
+//
+//        BannerDto dto = new BannerDto();
+//        if (param == null || "".equals(param)) {
+//            dto.setTotal(bannerMapper.queryNum());
+//            List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerMapper.queryByPage(pageSize, pageNum), BannerFrontDto.class);
+//            dto.setRows(bannerFrontDtos);
+//        } else {
+//            List<BannerEntity> bannerEntityList = bannerMapper.queryLike(pageSize, pageNum, param);
+//            dto.setTotal(bannerEntityList.size());
+//            List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerEntityList, BannerFrontDto.class);
+//            dto.setRows(bannerFrontDtos);
+//        }
+//
+//        return dto;
+//    }
+
     @Override
-    public BannerDto queryDto(CommonRequest request) {
-        int pageNum = request.getPageNum();
-        int pageSize = request.getPageSize();
-        String param = request.getTitle();
+    public List<BannerEntity> queryBanner() {
 
-        BannerDto dto = new BannerDto();
-        if (param == null || "".equals(param)) {
-            dto.setTotal(bannerMapper.queryNum());
-            List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerMapper.queryByPage(pageSize, pageNum), BannerFrontDto.class);
-            dto.setRows(bannerFrontDtos);
-        } else {
-            List<BannerEntity> bannerEntityList = bannerMapper.queryLike(pageSize, pageNum, param);
-            dto.setTotal(bannerEntityList.size());
-            List<BannerFrontDto> bannerFrontDtos = ListUtils.entityListToModelList(bannerEntityList, BannerFrontDto.class);
-            dto.setRows(bannerFrontDtos);
-        }
-
-        return dto;
+           return bannerMapper.query();
     }
+
 
     @Override
     public List<BannerFrontDto> query() {
@@ -64,7 +73,7 @@ public class BannerServiceImpl implements BannerService {
         String imgPath = productService.upload(file);
         entity.setPicture(imgPath);
         entity.setCreateTime(new Date());
-        entity.setStatus(1);
+        entity.setStatus(true);
 
         bannerMapper.insert(entity);
 
@@ -74,10 +83,18 @@ public class BannerServiceImpl implements BannerService {
 
     @Override
     public Boolean delete(Long id) {
-        BannerEntity entity = bannerMapper.selectByPrimaryKey(id);
+        bannerMapper.deleteByPrimaryKey(id);
+        return true;
+    }
 
-        entity.setStatus(0);
-        bannerMapper.updateByPrimaryKey(entity);
+    @Override
+    public Boolean open(Long id,Boolean status) {
+        BannerEntity bannerEntity = bannerMapper.selectByPrimaryKey(id);
+
+        bannerEntity.setStatus(status);
+
+        bannerMapper.updateByPrimaryKey(bannerEntity);
+
         return true;
     }
 

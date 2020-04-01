@@ -10,4 +10,6 @@ public interface AppraiseMapper extends Mapper<AppraiseEntity> {
     List<AppraiseEntity> queryAll(@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
 
     Integer totalNum();
+
+    void deleteByUserId(Long userId);
 }

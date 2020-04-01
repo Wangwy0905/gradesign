@@ -18,5 +18,5 @@ public class BannerEntity {
     private String picture;
     private String title;
     private Date createTime;
-    private Integer status;
+    private Boolean status;
 }

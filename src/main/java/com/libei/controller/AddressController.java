@@ -5,6 +5,7 @@ import com.libei.Dto.AddressResDto;
 import com.libei.Dto.AppraiseResDto;
 import com.libei.controller.request.AddressRequest;
 import com.libei.controller.request.CommonRequest;
+import com.libei.entity.AddressEntity;
 import com.libei.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class AddressController {
     }
 
     @CrossOrigin
-    @PostMapping("delete")
+    @GetMapping("delete")
     public Boolean delete(@RequestParam @Valid @NotNull Long id) throws Exception {
 
         return addressService.delete(id);
@@ -61,8 +62,8 @@ public class AddressController {
 
     @CrossOrigin
     @PostMapping("query-back")
-    public AddressResDto queryBack(@RequestBody CommonRequest commonRequest) {
+    public List<AddressEntity> queryBack() {
 
-        return addressService.queryBack(commonRequest);
+        return addressService.queryBack();
     }
 }

@@ -1,7 +1,9 @@
 package com.libei.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.libei.Dto.ProductDetailDto;
 import com.libei.Dto.ProductDto;
+import com.libei.controller.request.OpenRequest;
 import com.libei.controller.request.ProductCommitRequest;
 import com.libei.controller.request.ProductQueryRequest;
 import com.libei.controller.request.SearchRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author li bei
@@ -28,13 +31,20 @@ public class ProductController {
 
     @CrossOrigin
     @RequestMapping(value = "query", method = RequestMethod.POST)
-    public ProductDto query(@RequestBody ProductQueryRequest request) {
+    public List<ProductDetailDto> query() {
 
-        Long categoryId = request.getCategoryId();
-        Long categoryId2 = request.getCategoryId2();
-        ProductDto computerDto = productService.query(categoryId,categoryId2);
-        return computerDto;
+        return productService.query();
+
     }
+//    @CrossOrigin
+//    @RequestMapping(value = "query", method = RequestMethod.POST)
+//    public ProductDto query(@RequestBody ProductQueryRequest request) {
+//
+//        Long categoryId = request.getCategoryId();
+//        Long categoryId2 = request.getCategoryId2();
+//        ProductDto computerDto = productService.query(categoryId,categoryId2);
+//        return computerDto;
+//    }
 
     //对象与文件上传  暂未想到刚好的方法  暂定这样  待优化
     @CrossOrigin
@@ -61,7 +71,7 @@ public class ProductController {
     }
 
     @CrossOrigin
-    @PostMapping("delete")
+    @GetMapping("delete")
     public Boolean delete(@RequestParam Long id) throws IOException {
         return productService.delete(id);
     }
@@ -87,8 +97,10 @@ public class ProductController {
 
     //激活
     @CrossOrigin
-    @GetMapping("open")
-    public Boolean open(@RequestParam @Valid @NotNull Long id){
-        return productService.open(id);
+    @PostMapping("open")
+    public Boolean open(@RequestBody @Valid @NotNull OpenRequest openRequest){
+        Long id = openRequest.getId();
+        Boolean status = openRequest.getStatus();
+        return productService.open(id,status);
     }
 }

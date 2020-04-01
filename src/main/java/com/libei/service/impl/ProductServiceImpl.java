@@ -35,22 +35,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto query(Long categoryId,Long category2) {
-        List<ProductEntity> productEntityList = null;
+//        List<ProductEntity> productEntityList = null;
+//
+//        if (categoryId == null || categoryId == 0 && category2 == null || category2 == 0) {
+//            //后端  查所有产品
+//            productEntityList = productMapper.query();
+//        } else{
+//            //前端 通过类别信息查产品
+//            productEntityList = productMapper.queryByCategoryId(categoryId,category2);
+//        }
+//
+//        List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
+//        ProductDto productDto = new ProductDto();
+//        productDto.setRows(productDetailDtos);
+//        productDto.setTotal(productEntityList.size());
+//
+//       return productDto;
+        return  null;
+    }
 
-        if (categoryId == null || categoryId == 0 && category2 == null || category2 == 0) {
-            //后端  查所有产品
-            productEntityList = productMapper.query();
-        } else{
-            //前端 通过类别信息查产品
-            productEntityList = productMapper.queryByCategoryId(categoryId,category2);
-        }
+    @Override
+    public List<ProductDetailDto> query() {
 
+        List<ProductEntity> productEntityList = productMapper.query();
         List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
-        ProductDto productDto = new ProductDto();
-        productDto.setRows(productDetailDtos);
-        productDto.setTotal(productEntityList.size());
 
-        return productDto;
+        return productDetailDtos;
     }
 
     @Override
@@ -93,10 +103,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean open(Long id) {
+    public Boolean open(Long id,Boolean status) {
         ProductEntity productEntity = productMapper.selectByPrimaryKey(id);
 
-        productEntity.setStatus(true);
+        productEntity.setStatus(status);
 
         productMapper.updateByPrimaryKey(productEntity);
 
@@ -106,9 +116,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Boolean delete(Long id) {
-        ProductEntity entity = productMapper.selectByPrimaryKey(id);
-        entity.setStatus(false);
-        productMapper.updateByPrimaryKey(entity);
+        productMapper.deleteByPrimaryKey(id);
 
         return true;
     }

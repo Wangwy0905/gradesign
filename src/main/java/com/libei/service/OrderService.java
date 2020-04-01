@@ -6,7 +6,7 @@ import com.libei.controller.request.OrderAddRequest;
 import java.util.List;
 
 public interface OrderService {
-    List<OrderDto> query(Integer pageSize, Integer pageNum);
+    List<OrderDto> query();
 
     Boolean delete(Long id);
 

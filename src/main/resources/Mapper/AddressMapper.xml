@@ -17,4 +17,9 @@
     <select id="queryNotDefault" resultType="AddressEntity">
         select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate from address where user_id=#{userId} and is_default=#{isDefault}
     </select>
+
+    <delete id="deleteByUserId">
+        delete from address where user_id =#{userId}
+    </delete>
+
 </mapper>

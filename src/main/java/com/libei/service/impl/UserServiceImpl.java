@@ -5,13 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.RegisteredRequest;
 import com.libei.entity.UserEntity;
-import com.libei.mapper.UserMapper;
+import com.libei.mapper.*;
 import com.libei.service.UserService;
 import com.libei.util.RandomSaltUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
@@ -23,10 +24,18 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private AddressMapper addressMapper;
+    @Autowired
+    private AppraiseMapper appraiseMapper;
+//    @Autowired
+//    private
 
     @Override
     public UserEntity query(String account) {
-        UserEntity entity=new UserEntity();
+        UserEntity entity = new UserEntity();
         entity.setAccount(account);
         return userMapper.selectOne(entity);
     }
@@ -38,7 +47,7 @@ public class UserServiceImpl implements UserService {
         //校验数据库是否已有该账户
         userEntity.setAccount(request.getAccount());
         UserEntity entity = userMapper.selectOne(userEntity);
-        if (entity!=null){
+        if (entity != null) {
             throw new Exception("该账户已存在，请换账号登录");
         }
 
@@ -56,30 +65,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo query(CommonRequest request) {
-        int pageNum = request.getPageNum();
-        int pageSize = request.getPageSize();
-        String name = request.getName();
-        String phoneNum = request.getPhoneNum();
+    public List<UserEntity> query() {
 
-        PageHelper.startPage(pageNum, pageSize);
-        List<UserEntity> userEntityList = userMapper.queryUser(name, phoneNum);
+        List<UserEntity> userEntityList = userMapper.selectAll();
 
-        return new PageInfo(userEntityList);
+        return userEntityList;
     }
 
     @Override
+    @Transactional
     public Boolean delete(Long id) throws Exception {
         UserEntity userEntity = userMapper.selectByPrimaryKey(id);
 
         if (userEntity == null) throw new Exception("该用户不存在，请确认数据正确性");
 
-        userEntity.setStatus("0");
-
-        userMapper.insert(userEntity);
+        userMapper.deleteByPrimaryKey(id);
+        orderMapper.deleteByUserId(id);
+        addressMapper.deleteByUserId(id);
+        appraiseMapper.deleteByUserId(id);
 
         return true;
     }
 
+    //搜索
+    @Override
+    public List<UserEntity> search(CommonRequest commonRequest) {
+
+        String name = commonRequest.getName();
+        String phoneNum = commonRequest.getPhoneNum();
+
+        return userMapper.queryUser(name, phoneNum);
+    }
 
 }

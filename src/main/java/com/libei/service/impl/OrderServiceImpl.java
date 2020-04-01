@@ -1,6 +1,5 @@
 package com.libei.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.libei.Dto.OrderDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.entity.OrderEntity;
@@ -21,10 +20,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public List<OrderDto> query(Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum, pageSize);
-
-        return ListUtils.entityListToModelList(orderMapper.queryAll(), OrderDto.class);
+    public List<OrderDto> query() {
+        List<OrderEntity> orderEntities = orderMapper.queryAll();
+        List<OrderDto> orderDtos = ListUtils.entityListToModelList(orderEntities, OrderDto.class);
+        return orderDtos;
     }
 
     @Override
@@ -38,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity orderEntity = new OrderEntity();
 
         BeanUtils.copyProperties(request, orderEntity);
+        //todo  ststus字段暫未使用  待定
         orderEntity.setStatus("0");
         orderEntity.setCreateDate(new Date());
 
