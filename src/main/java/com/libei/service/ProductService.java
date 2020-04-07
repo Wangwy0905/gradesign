@@ -7,6 +7,7 @@ import com.libei.controller.request.SearchRequest;
 import com.libei.entity.ProductEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ProductService {
@@ -14,7 +15,7 @@ public interface ProductService {
     List<ProductDetailDto> query();
     ProductDto query(Long categoryId,Long category2);
 
-    Boolean addProduct(ProductCommitRequest request, MultipartFile file) throws Exception;
+    Boolean addProduct(ProductCommitRequest productCommitRequest,MultipartFile file,HttpServletRequest request) throws Exception;
 
     Boolean delete(Long id);
 
@@ -24,7 +25,7 @@ public interface ProductService {
 
     ProductDto search(SearchRequest request);
 
-    String upload(MultipartFile file) throws Exception;
+    String upload(MultipartFile file,HttpServletRequest request) throws Exception;
 
     Boolean open(Long id,Boolean status);
 }

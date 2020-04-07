@@ -35,8 +35,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDto> querySecond(Long firstId) {
-        return ListUtils.entityListToModelList(categoryMapper.querySecond(firstId), CategoryDto.class);
+    public List<CategoryEntity> querySecond(Long firstId) {
+        return categoryMapper.querySecond(firstId);
     }
 
     @Override
@@ -74,28 +74,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResDto queryBack(CommonRequest request) {
+    public List<CategoryEntity> queryBack() {
 
-        CategoryResDto categoryResDto = new CategoryResDto();
-        int pageNum = request.getPageNum();
-        int pageSize = request.getPageSize();
-        String categoryName = request.getCategoryName();
+        List<CategoryEntity> categoryEntities = categoryMapper.queryAll();
 
-        int count = 0;
-        List<CategoryEntity> categoryEntities = null;
-        if (categoryName == null) {
-            PageHelper.startPage(pageNum, pageSize);
-            categoryEntities = categoryMapper.selectAll();
-            count = categoryMapper.selectCount(null);
-        } else {
-            categoryEntities = categoryMapper.queryByParam(pageNum, pageSize, categoryName);
-        }
-
-        List<CategoryDto> categoryDtos = ListUtils.entityListToModelList(categoryEntities, CategoryDto.class);
-        categoryResDto.setRows(categoryDtos);
-        categoryResDto.setTotal(Integer.valueOf(count));
-
-        return categoryResDto;
+        return categoryEntities;
 
     }
 

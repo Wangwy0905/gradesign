@@ -7,10 +7,12 @@ import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.OpenRequest;
 import com.libei.entity.BannerEntity;
 import com.libei.service.BannerService;
+import com.libei.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -25,6 +27,9 @@ import java.util.List;
 public class BannerController {
     @Autowired
     private BannerService bannerService = null;
+
+    @Autowired
+    private ProductService productService=null;
 
     @CrossOrigin
     @PostMapping("query-back")
@@ -42,8 +47,8 @@ public class BannerController {
 
     @CrossOrigin
     @PostMapping("add")
-    public Boolean add(@RequestParam("file") MultipartFile file, @RequestParam String title) throws Exception {
-        return bannerService.add(title, file);
+    public Boolean add(@RequestParam("file") MultipartFile file, @RequestParam String title, HttpServletRequest request) throws Exception {
+        return bannerService.add(title, file,request);
 
     }
 
@@ -79,4 +84,12 @@ public class BannerController {
         return bannerService.open(id,status);
 
     }
+
+//    @CrossOrigin
+//    @PostMapping("upload")
+//    public Boolean upload(@RequestParam("file") MultipartFile file,HttpServletRequest request) throws Exception {
+//        return productService.upload(file,request);
+//
+//    }
+
 }

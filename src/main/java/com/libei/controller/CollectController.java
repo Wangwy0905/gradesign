@@ -1,6 +1,5 @@
 package com.libei.controller;
 
-import com.libei.Dto.CollectDto;
 import com.libei.Dto.CollectResDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.CollectRequest;

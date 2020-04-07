@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     ProductMapper productMapper;
 
     @Override
-    public ProductDto query(Long categoryId,Long category2) {
+    public ProductDto query(Long categoryId, Long category2) {
 //        List<ProductEntity> productEntityList = null;
 //
 //        if (categoryId == null || categoryId == 0 && category2 == null || category2 == 0) {
@@ -51,43 +52,47 @@ public class ProductServiceImpl implements ProductService {
 //        productDto.setTotal(productEntityList.size());
 //
 //       return productDto;
-        return  null;
+        return null;
     }
 
     @Override
     public List<ProductDetailDto> query() {
 
-        List<ProductEntity> productEntityList = productMapper.query();
-        List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
-
-        return productDetailDtos;
+        return ListUtils.entityListToModelList(productMapper.query(), ProductDetailDto.class);
     }
 
     @Override
-    public Boolean addProduct(ProductCommitRequest request, MultipartFile file) throws Exception {
+    public Boolean addProduct(ProductCommitRequest productCommitRequest, MultipartFile file, HttpServletRequest request) throws Exception {
 
         ProductEntity entity = new ProductEntity();
-        BeanUtils.copyProperties(request, entity);
+        entity.setProductName(productCommitRequest.getProductName());
+        entity.setColor(productCommitRequest.getColor());
+        entity.setPrice(productCommitRequest.getPrice());
+        entity.setRepertory(productCommitRequest.getRepertory());
+        entity.setCapacity(productCommitRequest.getCapacity());
+        entity.setDescription(productCommitRequest.getDescription());
+        entity.setCategoryId(productCommitRequest.getCategoryId());
+        entity.setCategoryId2(productCommitRequest.getCategoryId2());
 
-        entity.setPicture(this.upload(file));
+        String upload = upload(file, request);
+        entity.setPicture(upload);
         entity.setStatus(true);
-        entity.setBrand(request.getBland());
+        entity.setBrand(productCommitRequest.getBrand().toString());
         entity.setCreateTime(new Date());
-        //TODO 枚举值有未插入问题   待解决
         productMapper.insert(entity);
 
         return true;
     }
 
     @Override
-    public String upload(MultipartFile file) throws Exception {
+    public String upload(MultipartFile file, HttpServletRequest request) throws Exception {
 
         if (file == null) {
             throw new Exception("图片文件为空,请检查");
         }
 
         String originalFilename = file.getOriginalFilename();
-        String path = "C:\\Users\\WangWenYi\\IdeaProjects\\gradesign\\src\\main\\webapp\\img" + originalFilename;
+        String path = request.getSession().getServletContext().getRealPath("/") + "img\\" + originalFilename;
 
         File dest = new File(path);
         if (!dest.getParentFile().exists()) {
@@ -103,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Boolean open(Long id,Boolean status) {
+    public Boolean open(Long id, Boolean status) {
         ProductEntity productEntity = productMapper.selectByPrimaryKey(id);
 
         productEntity.setStatus(status);
@@ -126,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
         Long id = request.getId();
         ProductEntity entity = productMapper.selectByPrimaryKey(id);
 
-        BeanUtils.copyProperties(entity, request);
+        BeanUtils.copyProperties(request, entity);
         productMapper.updateByPrimaryKey(entity);
 
         return true;
@@ -143,8 +148,6 @@ public class ProductServiceImpl implements ProductService {
         String brand = request.getBrand().toString();
         String description = request.getDescription();
         String productName = request.getProductName();
-        int pageSize = request.getPageSize();
-        int pageNum = request.getPageNum();
 
         List<ProductEntity> productEntityList = productMapper.queryLike(brand, productName, description);
         List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);

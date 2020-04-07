@@ -19,4 +19,7 @@ public interface ProductMapper extends Mapper<ProductEntity> {
 
 
     Integer count(Long userId);
+
+
+    //Boolean addSale();
 }

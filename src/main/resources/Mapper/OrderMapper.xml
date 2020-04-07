@@ -9,4 +9,8 @@
         delete from order_entity where user_id =#{userId}
     </delete>
 
+    <select id="queryFront" resultType="java.lang.Long">
+        select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1 and user_id =#{userId} order by create_date desc
+    </select>
+
 </mapper>

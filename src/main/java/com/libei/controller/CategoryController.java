@@ -24,6 +24,7 @@ import java.util.List;
 @RequestMapping("category")
 @Api(value = "类别相关Api接口", description = "类别相关Api接口")
 public class CategoryController {
+
     @Autowired
     CategoryService categoryService;
 
@@ -34,12 +35,11 @@ public class CategoryController {
 
         return categoryDtoList;
     }
-
     @GetMapping("query-second")
     @CrossOrigin
-    public List<CategoryDto> querySecond(@RequestParam @Valid @NotNull Long firstId) {
+    public List<CategoryEntity> querySecond(@RequestParam Long firstId) {
 
-        List<CategoryDto> categoryDtoList = categoryService.querySecond(firstId);
+        List<CategoryEntity> categoryDtoList = categoryService.querySecond(firstId);
         return categoryDtoList;
 
     }
@@ -65,8 +65,8 @@ public class CategoryController {
 
     @PostMapping("query-back")
     @CrossOrigin
-    public CategoryResDto queryBack(@RequestParam CommonRequest request){
-        return categoryService.queryBack(request);
+    public List<CategoryEntity> queryBack(){
+        return categoryService.queryBack();
     }
 
 }

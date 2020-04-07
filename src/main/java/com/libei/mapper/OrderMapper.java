@@ -9,4 +9,6 @@ public interface OrderMapper extends Mapper<OrderEntity> {
     List<OrderEntity> queryAll();
 
     void deleteByUserId(Long userId);
+
+    List<OrderEntity> queryFront(Long userId);
 }

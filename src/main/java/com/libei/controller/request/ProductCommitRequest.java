@@ -12,5 +12,7 @@ public class ProductCommitRequest {
     private Integer repertory;//库存
     private String capacity;   //容量
     private String description;
-    private BlandEnum bland; //品牌
+    private BlandEnum brand; //品牌
+    private Long categoryId;
+    private Long categoryId2;
 }

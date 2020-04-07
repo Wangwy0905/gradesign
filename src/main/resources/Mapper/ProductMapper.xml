@@ -4,7 +4,7 @@
 
     <select id="queryByCategoryId" parameterType="java.lang.Integer" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
-        categoryId2,description,create_time createTime,
+        categoryId2,brand,capacity,description,create_time createTime,
         picture,status from product ORDER by create_time desc where status='1' and
         <if test="categoryId！=null">
             category_id=#{categoryId} limit ${(pageSize-1)*pageNum},${pageNum}
@@ -17,13 +17,13 @@
 
 
     <select id="query" resultType="ProductEntity">
-        select id,product_name productName,color,price,repertory,category_id categoryId,category_id2 categoryId2,description,create_time createTime,
+        select id,product_name productName,color,price,repertory,category_id categoryId,category_id2 categoryId2,description,brand,capacity,create_time createTime,
         picture,status from product ORDER by create_time desc
     </select>
 
     <select id="queryLike" resultType="ProductEntity">
         select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2
-        categoryId2,description,create_time createTime,
+        categoryId2,description,brand,capacity,create_time createTime,
         picture,status from product
         <where>
             <if test="productName !=null">
@@ -33,7 +33,7 @@
                 and brand like concat ('%',#{brand},'%')
             </if>
             <if test="description !=null">
-                and description like  concat ('%',#{description},'%')
+                and description like concat ('%',#{description},'%')
             </if>
             and status='1'
         </where>
@@ -42,7 +42,7 @@
 
     <select id="queryFront" parameterType="java.lang.Integer" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
-        categoryId2,description,create_time createTime,
+        categoryId2,description,brand,capacity,create_time createTime,
         picture,status from product where status='1' and
         user_id=#{userId}  ORDER by create_time desc
 
@@ -51,5 +51,4 @@
     <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
             select count(*) from product where user_id=#{userId}
     </select>
-
 </mapper>

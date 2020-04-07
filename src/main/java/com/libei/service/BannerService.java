@@ -5,6 +5,7 @@ import com.libei.controller.request.BannerCommitRequest;
 import com.libei.entity.BannerEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface BannerService {
@@ -12,7 +13,7 @@ public interface BannerService {
 
     List<BannerEntity> queryBanner();
 
-    Boolean add(String title,MultipartFile file) throws Exception;
+    Boolean add(String title, MultipartFile file, HttpServletRequest request) throws Exception;
 
     Boolean delete(Long id);
 

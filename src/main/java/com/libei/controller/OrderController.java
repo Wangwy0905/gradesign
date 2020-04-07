@@ -4,6 +4,7 @@ import com.libei.Dto.OrderDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.controller.request.OrderQueryRequest;
 import com.libei.controller.request.ProductQueryRequest;
+import com.libei.entity.OrderEntity;
 import com.libei.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class OrderController {
     }*/
 
     @CrossOrigin
-    @RequestMapping(value = "query",method = RequestMethod.POST)
+    @RequestMapping(value = "query",method = RequestMethod.GET)
     public List<OrderDto> query() {
 
         return orderService.query();
@@ -46,6 +47,13 @@ public class OrderController {
     @RequestMapping(value = "add",method = RequestMethod.POST)
     public Boolean add(@RequestBody OrderAddRequest request) {
         return orderService.add(request);
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "query-front",method = RequestMethod.GET)
+    public List<OrderEntity> queryFront(@RequestParam Long userId) {
+        return orderService.queryFront(userId);
     }
 
 }

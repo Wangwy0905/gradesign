@@ -14,7 +14,7 @@ import java.util.List;
 public interface CategoryService {
 
     List<CategoryDto> queryFirst();
-    List<CategoryDto> querySecond(Long firstId);
+    List<CategoryEntity> querySecond(Long firstId);
 
     Boolean add(CategoryRequest request);
 
@@ -22,5 +22,5 @@ public interface CategoryService {
 
     Boolean update(CategoryRequest request);
 
-    CategoryResDto queryBack(CommonRequest request);
+    List<CategoryEntity> queryBack();
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -66,11 +67,11 @@ public class BannerServiceImpl implements BannerService {
 
 
     @Override
-    public Boolean add(String title, MultipartFile file) throws Exception {
+    public Boolean add(String title, MultipartFile file, HttpServletRequest request) throws Exception {
         BannerEntity entity = new BannerEntity();
         entity.setTitle(title);
 
-        String imgPath = productService.upload(file);
+        String imgPath = productService.upload(file,request);
         entity.setPicture(imgPath);
         entity.setCreateTime(new Date());
         entity.setStatus(true);
@@ -102,6 +103,7 @@ public class BannerServiceImpl implements BannerService {
     public Boolean update(BannerCommitRequest request) {
         BannerEntity entity = bannerMapper.selectByPrimaryKey(request.getId());
         entity.setTitle(request.getTitle());
+        entity.setCreateTime(new Date());
         bannerMapper.updateByPrimaryKey(entity);
         return true;
     }

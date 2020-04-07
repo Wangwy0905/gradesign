@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -55,9 +56,11 @@ public class ProductController {
                             @RequestParam("repertory") Integer repertory,
                             @RequestParam("capacity") String capacity,
                             @RequestParam("description") String description,
-                            @RequestParam("bland") BlandEnum bland,
-                            @RequestParam("file") MultipartFile file) throws Exception {
-
+                            @RequestParam("brand") BlandEnum brand,
+                            @RequestParam("file") MultipartFile file,
+                            @RequestParam("categoryId") Long categoryId,
+                            @RequestParam("categoryId2") Long categoryId2,
+                            HttpServletRequest request) throws Exception {
         ProductCommitRequest productCommitRequest = new ProductCommitRequest();
         productCommitRequest.setProductName(productName);
         productCommitRequest.setColor(color);
@@ -65,9 +68,11 @@ public class ProductController {
         productCommitRequest.setCapacity(capacity);
         productCommitRequest.setRepertory(repertory);
         productCommitRequest.setDescription(description);
-        productCommitRequest.setBland(bland);
+        productCommitRequest.setBrand(brand);
+        productCommitRequest.setCategoryId(categoryId);
+        productCommitRequest.setCategoryId2(categoryId2);
 
-        return productService.addProduct(productCommitRequest, file);
+        return productService.addProduct(productCommitRequest,file,request);
     }
 
     @CrossOrigin
