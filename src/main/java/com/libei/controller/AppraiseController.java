@@ -1,11 +1,15 @@
 package com.libei.controller;
 
+import com.libei.Dto.AppraiseDto;
 import com.libei.Dto.AppraiseResDto;
 import com.libei.controller.request.AppraiseRequest;
 import com.libei.controller.request.CommonRequest;
+import com.libei.entity.AppraiseEntity;
 import com.libei.service.AppraiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  *商品评价
@@ -24,7 +28,7 @@ public class AppraiseController {
     }
 
     @CrossOrigin
-    @PostMapping("delete")
+    @GetMapping("delete")
     public Boolean delete(@RequestParam Long id) {
 
         return appraiseService.delete(id);
@@ -32,9 +36,9 @@ public class AppraiseController {
 
     @CrossOrigin
     @PostMapping("query")
-    public AppraiseResDto query(@RequestBody CommonRequest commonRequest) {
+    public List<AppraiseDto> query() {
 
-        return appraiseService.query(commonRequest);
+        return appraiseService.query();
     }
 
     //TODO 暂不提供修改功能  后续可添加

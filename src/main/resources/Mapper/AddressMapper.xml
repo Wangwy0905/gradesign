@@ -22,4 +22,8 @@
         delete from address where user_id =#{userId}
     </delete>
 
+    <select id="queryLike" resultType="AddressEntity" parameterType="java.lang.String">
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate from address where userId LIKE '%'||#{param}||'%' order by create_date desc
+    </select>
+
 </mapper>

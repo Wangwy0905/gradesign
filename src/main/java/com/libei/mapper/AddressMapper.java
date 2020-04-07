@@ -16,4 +16,6 @@ public interface AddressMapper extends Mapper<AddressEntity> {
     Integer totalNum();
 
     void deleteByUserId( Long UserId);
+
+    List<AddressEntity> queryLike(String param);
 }

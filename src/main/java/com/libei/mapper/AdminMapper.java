@@ -11,4 +11,6 @@ public interface AdminMapper extends Mapper<AdminEntity> {
     Integer totalNum();
 
     List<AdminEntity> queryAll(@Param(value = "pageNum") int pageNum, @Param(value = "pageSize") int pagesize);
+
+    List<AdminEntity> queryLike(String param);
 }

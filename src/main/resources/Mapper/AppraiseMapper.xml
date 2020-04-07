@@ -9,7 +9,7 @@
 </select>
     <select id="queryAll" resultType="AppraiseEntity">
 
-        select id,user_id userId,order_id orderId,content,create_date createDate from appraise limit ${(pageNum-1)*pageSize},${pageSize}
+        select id,user_id userId,order_id orderId,content,create_date createDate from appraise order by create_date desc
 
     </select>
 

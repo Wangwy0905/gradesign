@@ -7,7 +7,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface AppraiseMapper extends Mapper<AppraiseEntity> {
-    List<AppraiseEntity> queryAll(@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
+    List<AppraiseEntity> queryAll();
 
     Integer totalNum();
 

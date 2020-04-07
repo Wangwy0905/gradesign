@@ -5,6 +5,7 @@ import com.libei.Dto.AdminDto;
 import com.libei.controller.request.AdminRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.LoginRequest;
+import com.libei.entity.AddressEntity;
 import com.libei.entity.AdminEntity;
 import com.libei.mapper.AdminMapper;
 import com.libei.service.AdminService;
@@ -74,5 +75,11 @@ public class AdminServiceImpl implements AdminService {
         adminMapper.updateByPrimaryKey(adminEntity);
 
         return true;
+    }
+
+    @Override
+    public List<AdminEntity> queryLike(String param) {
+        List<AdminEntity> adminEntities = adminMapper.queryLike(param);
+        return  adminEntities;
     }
 }

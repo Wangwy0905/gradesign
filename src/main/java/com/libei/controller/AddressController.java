@@ -1,10 +1,7 @@
 package com.libei.controller;
 
 import com.libei.Dto.AddressDto;
-import com.libei.Dto.AddressResDto;
-import com.libei.Dto.AppraiseResDto;
 import com.libei.controller.request.AddressRequest;
-import com.libei.controller.request.CommonRequest;
 import com.libei.entity.AddressEntity;
 import com.libei.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +29,10 @@ public class AddressController {
     }
 
     @CrossOrigin
-    @PostMapping("query-front") //参数只需要userId  isDefault  页面地址查询
-    public List<AddressDto> query(@RequestBody AddressRequest request) {
+    @GetMapping("query-front") //参数只需要userId  isDefault  页面地址查询
+    public List<AddressDto> query(@RequestParam("userId")Long userId,@RequestParam("isDefault") Boolean isDefault ) {
 
-        return addressService.query(request);
+        return addressService.query(userId,isDefault);
     }
 
     @CrossOrigin
@@ -62,8 +59,15 @@ public class AddressController {
 
     @CrossOrigin
     @PostMapping("query-back")
-    public List<AddressEntity> queryBack() {
+    public List<AddressDto> queryBack() {
 
         return addressService.queryBack();
+    }
+
+    @CrossOrigin
+    @PostMapping("query-like")
+    public List<AddressEntity> queryLike(@RequestParam("param") String param) {
+
+        return addressService.queryLike(param);
     }
 }

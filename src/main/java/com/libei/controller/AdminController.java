@@ -4,12 +4,12 @@ import com.libei.Dto.AdminDto;
 import com.libei.controller.request.AdminRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.LoginRequest;
+import com.libei.entity.AddressEntity;
 import com.libei.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "admin")
@@ -37,6 +37,13 @@ public class AdminController {
     public Boolean login(@RequestBody LoginRequest loginRequest) throws Exception {
         return adminService.login(loginRequest);
 
+    }
+
+    @CrossOrigin
+    @PostMapping("query-like")
+    public List<AddressEntity> queryLike(@RequestParam("param") String param) {
+
+        return adminService.queryLike(param);
     }
 
     //添加接口  待写

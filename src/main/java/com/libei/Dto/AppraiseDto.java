@@ -8,6 +8,7 @@ import java.util.Date;
 @Data
 public class AppraiseDto {
     private Long id;
+    private String userName;
     private Long userId;
     private Long orderId;
     private String content;

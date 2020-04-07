@@ -1,14 +1,11 @@
 package com.libei.service.impl;
 
-import com.libei.Dto.AdminDetailDto;
-import com.libei.Dto.AdminDto;
 import com.libei.Dto.AppraiseDto;
-import com.libei.Dto.AppraiseResDto;
 import com.libei.controller.request.AppraiseRequest;
-import com.libei.controller.request.CommonRequest;
-import com.libei.entity.AdminEntity;
 import com.libei.entity.AppraiseEntity;
+import com.libei.entity.UserEntity;
 import com.libei.mapper.AppraiseMapper;
+import com.libei.mapper.UserMapper;
 import com.libei.service.AppraiseService;
 import com.libei.util.ListUtils;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +19,8 @@ import java.util.List;
 public class AppraiseServiceImpl implements AppraiseService {
     @Autowired
     private AppraiseMapper appraiseMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Boolean add(AppraiseRequest request) {
@@ -40,17 +39,17 @@ public class AppraiseServiceImpl implements AppraiseService {
     }
 
     @Override
-    public AppraiseResDto query(CommonRequest commonRequest) {
-        int pageNum = commonRequest.getPageNum();
-        int pageSize = commonRequest.getPageSize();
+    public List<AppraiseDto> query() {
 
-        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll(pageNum, pageSize);
-        Integer integer = appraiseMapper.totalNum();
+        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll();
 
-        AppraiseResDto appraiseResDto = new AppraiseResDto();
-        appraiseResDto.setTotal(integer);
-        appraiseResDto.setRows(ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class));
+        List<AppraiseDto> appraiseDtos = ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class);
+        for (AppraiseDto appraiseDto :appraiseDtos){
+            Long id = appraiseDto.getId();
+            UserEntity userEntity = userMapper.selectByPrimaryKey(id);
+            appraiseDto.setUserName(userEntity.getAccount());
+        }
 
-        return appraiseResDto;
+        return appraiseDtos;
     }
 }

@@ -9,7 +9,9 @@ import com.libei.controller.request.CommonRequest;
 import com.libei.entity.AddressEntity;
 import com.libei.entity.AppraiseEntity;
 import com.libei.entity.ProductEntity;
+import com.libei.entity.UserEntity;
 import com.libei.mapper.AddressMapper;
+import com.libei.mapper.UserMapper;
 import com.libei.service.AddressService;
 import com.libei.util.ListUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +30,8 @@ import java.util.List;
 public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressMapper addressMapper = null;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Boolean add(AddressRequest request) {
@@ -40,9 +45,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<AddressDto> query(AddressRequest request) {
-        Long userId = request.getUserId();
-        Boolean isDefault = request.getIsDefault();
+    public List<AddressDto> query(Long userId,Boolean isDefault) {
 
         if (isDefault) {
             AddressEntity addressEntity = addressMapper.queryDefault(userId, isDefault);
@@ -95,10 +98,30 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<AddressEntity> queryBack() {
+    public List<AddressDto> queryBack() {
         List<AddressEntity> addressEntities = addressMapper.queryAll();
+        List<AddressDto> addressDtos=new ArrayList<>();
 
-        return addressEntities;
+
+        for (AddressEntity entity: addressEntities){
+            AddressDto addressDto=new AddressDto();
+            addressDto.setId(entity.getId());
+            addressDto.setDetailAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
+            addressDto.setIsDefault(entity.getIsDefault());
+            addressDto.setRemark(entity.getRemark());
+            UserEntity userEntity = userMapper.selectByPrimaryKey(entity.getUserId());
+            addressDto.setUserName(userEntity.getAccount());
+
+            addressDtos.add(addressDto);
+        }
+
+        return addressDtos;
+    }
+
+    @Override
+    public List<AddressEntity> queryLike(String param) {
+        List<AddressEntity> addressEntities = addressMapper.queryLike(param);
+        return  addressEntities;
     }
 
 
