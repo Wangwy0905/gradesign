@@ -1,5 +1,6 @@
 package com.libei.service.impl;
 
+import com.libei.Dto.Cartitem;
 import com.libei.Dto.ShopCarDto;
 import com.libei.entity.ProductEntity;
 import com.libei.service.ProductService;
@@ -9,68 +10,82 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Set;
 
 @Service
 @Slf4j
 public class ShopCarServiceImpl implements ShopCarService {
 
-    private HashMap<ProductEntity, Double> productHashMap = new HashMap<>();
+    private HashMap<Long, Cartitem> productHashMap = new HashMap<>();
     @Autowired
     private ProductService productService = null;
 
     @Override
     public Boolean addCar(Long id) {
-
         ProductEntity productEntity = productService.queryOne(id);
 
-        if (!productHashMap.containsKey(productEntity)) {
-            productHashMap.put(productEntity, productEntity.getPrice());
+        if (!productHashMap.containsKey(id)) {
+            Cartitem cartitem = new Cartitem(productEntity, 1, productEntity.getPrice());
+            productHashMap.put(id, cartitem);
         } else {
-            Double price = productHashMap.get(productEntity);
-            productHashMap.put(productEntity, price + productEntity.getPrice());
+            Cartitem cartitem = productHashMap.get(id);
+            cartitem.setEntity(productEntity);
+            cartitem.setCount(cartitem.getCount() + 1);
+            cartitem.setPrice(cartitem.getPrice() + productEntity.getPrice());
+            productHashMap.put(id, cartitem);
         }
-
 
         return true;
     }
 
     @Override
     public ShopCarDto queryCar() {
+        Double totalPrice = 0.0;
         ShopCarDto shopCarDto = new ShopCarDto();
-        shopCarDto.setProductHashMap(productHashMap);
-
-        Double totalNum = 0.0;
-        Set<ProductEntity> productEntitySet = productHashMap.keySet();
-        for (ProductEntity product : productEntitySet) {
-            Double price = product.getPrice();
-            totalNum = totalNum + price;
+        if (productHashMap == null) {
+            shopCarDto.setTotalPrice(totalPrice);
+            shopCarDto.setProductHashMap(null);
+        } else {
+            for (Long l : productHashMap.keySet()) {
+                totalPrice += productHashMap.get(l).getPrice();
+            }
+            shopCarDto.setTotalPrice(totalPrice);
+            shopCarDto.setProductHashMap(productHashMap);
         }
-
-        shopCarDto.setTotalNum(totalNum);
 
         return shopCarDto;
     }
 
+    //減少數量操作  刷新页面
     @Override
     public Boolean reduce(Long id) {
-        ProductEntity productEntity = productService.queryOne(id);
-        Double totalNum = productHashMap.get(productEntity);
-        productHashMap.put(productEntity, totalNum - productEntity.getPrice());
+        Cartitem cartitem = productHashMap.get(id);
+        cartitem.setCount(cartitem.getCount()-1);
+        cartitem.setPrice(cartitem.getPrice()-cartitem.getEntity().getPrice());
+        productHashMap.put(id,cartitem);
+
+        return true;
+    }
+
+    //添加数量操作
+    @Override
+    public Boolean addCount(Long id) {
+        Cartitem cartitem = productHashMap.get(id);
+        cartitem.setCount(cartitem.getCount()+1);
+        cartitem.setPrice(cartitem.getPrice()-cartitem.getEntity().getPrice());
+        productHashMap.put(id,cartitem);
+
         return true;
     }
 
     @Override
     public Boolean remove(Long id) {
-        ProductEntity productEntity = productService.queryOne(id);
-        productHashMap.remove(productEntity);
+        productHashMap.remove(id);
         return true;
     }
 
     @Override
     public Boolean clear() {
         productHashMap.clear();
-
         return true;
     }
 

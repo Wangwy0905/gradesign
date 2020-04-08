@@ -7,6 +7,6 @@ import java.util.Map;
 
 @Data
 public class ShopCarDto {
-    private Map<ProductEntity, Double> productHashMap;
-    private Double totalNum;
+    private Map<Long,Cartitem> productHashMap;
+    private Double totalPrice;
 }

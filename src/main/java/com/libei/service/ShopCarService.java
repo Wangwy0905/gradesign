@@ -12,4 +12,6 @@ public interface ShopCarService {
     Boolean remove(Long id);
 
     Boolean clear();
+
+    Boolean addCount(Long id);
 }

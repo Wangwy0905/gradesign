@@ -3,6 +3,7 @@ package com.libei.service.impl;
 import com.libei.Dto.OrderDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.entity.OrderEntity;
+import com.libei.entity.OrderItem;
 import com.libei.entity.ProductEntity;
 import com.libei.mapper.OrderMapper;
 import com.libei.mapper.ProductMapper;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -45,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
         //todo  status字段暫未使用  待定
         orderEntity.setStatus("0");
         orderEntity.setCreateDate(new Date());
+        String replace = UUID.randomUUID().toString().replace("-", "");
+        orderEntity.setOrderId(replace);
 
         //todo  销售排行待定
        // productMapper.addSale();
@@ -53,6 +57,12 @@ public class OrderServiceImpl implements OrderService {
 
         return true;
     }
+   /* @Override
+    public Boolean addOrderItem(OrderItem orderItem) {
+
+        return true;
+    }*/
+
 
     @Override
     public List<OrderEntity> queryFront(Long userId) {

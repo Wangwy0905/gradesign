@@ -9,6 +9,7 @@ import java.util.Date;
 public class OrderDto {
 
     private Long id;
+    private String orderId;
     private Double cost;
     private Integer number;
     private Long userId;

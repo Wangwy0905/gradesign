@@ -51,6 +51,13 @@ public class ShopCarController {
 
         return shopCarService.reduce(id);
     }
+
+    @CrossOrigin
+    @PostMapping("add-count")
+    public Boolean addCount(@RequestBody @Valid @NotNull Long id) throws Exception {
+
+        return shopCarService.addCount(id);
+    }
     @CrossOrigin
     @PostMapping("clear")
     public Boolean clear() throws Exception {
