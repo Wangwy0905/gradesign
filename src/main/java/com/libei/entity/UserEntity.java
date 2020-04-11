@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,5 +20,5 @@ public class UserEntity {
     private String email;
     private String status;
     private String salt;
-    private Date createTime;
+    private LocalDateTime createTime;
 }

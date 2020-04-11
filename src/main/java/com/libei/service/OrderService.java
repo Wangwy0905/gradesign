@@ -1,9 +1,12 @@
 package com.libei.service;
 
 import com.libei.Dto.OrderDto;
+import com.libei.Dto.OrderItemDetailDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.entity.OrderEntity;
+import com.libei.entity.OrderItem;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface OrderService {
@@ -11,8 +14,8 @@ public interface OrderService {
 
     Boolean delete(Long id);
 
-    Boolean add(OrderAddRequest request);
+    Boolean add(HttpSession session,OrderAddRequest request);
 
 
-    List<OrderEntity> queryFront(Long userId);
+    List<OrderItemDetailDto> queryFront(Long userId);
 }

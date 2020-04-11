@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,5 +18,5 @@ public class AddressEntity {
     private Long userId;
     private String remark;
     private Boolean isDefault;
-    private Date createDate;
+    private LocalDateTime createDate;
 }

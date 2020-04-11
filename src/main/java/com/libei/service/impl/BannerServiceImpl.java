@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class BannerServiceImpl implements BannerService {
 
         String imgPath = productService.upload(file,request);
         entity.setPicture(imgPath);
-        entity.setCreateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
         entity.setStatus(true);
 
         bannerMapper.insert(entity);
@@ -103,7 +104,7 @@ public class BannerServiceImpl implements BannerService {
     public Boolean update(BannerCommitRequest request) {
         BannerEntity entity = bannerMapper.selectByPrimaryKey(request.getId());
         entity.setTitle(request.getTitle());
-        entity.setCreateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
         bannerMapper.updateByPrimaryKey(entity);
         return true;
     }

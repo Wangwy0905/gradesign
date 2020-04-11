@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity categoryEntity = new CategoryEntity();
 
         BeanUtils.copyProperties(request, categoryEntity);
-        categoryEntity.setCreateTime(new Date());
+        categoryEntity.setCreateTime(LocalDateTime.now());
         categoryMapper.insert(categoryEntity);
 
         return true;
@@ -66,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity categoryEntity = new CategoryEntity();
 
         BeanUtils.copyProperties(request, categoryEntity);
-        categoryEntity.setCreateTime(new Date());
+        categoryEntity.setCreateTime(LocalDateTime.now());
 
         categoryMapper.updateByPrimaryKey(categoryEntity);
 

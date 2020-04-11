@@ -1,22 +1,20 @@
 package com.libei.Dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.libei.entity.ProductEntity;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
-public class OrderDto {
-
+public class OrderItemDetailDto {
     private Long id;
     private String orderId;
+    private Long productId;
     private Double cost;
-    private Integer number;
+    private Integer count;
     private Long userId;
-    private Long addressId;
-    private String status;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date createDate;
-    private String account;
-    private String detailAddress;
+    private LocalDateTime createDate;
+    private ProductEntity entity;
 }

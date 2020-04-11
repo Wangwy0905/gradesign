@@ -1,6 +1,7 @@
 package com.libei.controller;
 
 import com.libei.Dto.OrderDto;
+import com.libei.Dto.OrderItemDetailDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.controller.request.OrderQueryRequest;
 import com.libei.controller.request.ProductQueryRequest;
@@ -9,6 +10,7 @@ import com.libei.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -29,6 +31,7 @@ public class OrderController {
         return orderService.query(pageSize, pageNum);
     }*/
 
+    //查看订单
     @CrossOrigin
     @RequestMapping(value = "query",method = RequestMethod.GET)
     public List<OrderDto> query() {
@@ -45,15 +48,20 @@ public class OrderController {
 
     @CrossOrigin
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    public Boolean add(@RequestBody OrderAddRequest request) {
-        return orderService.add(request);
+    public Boolean add(HttpSession session, @RequestBody OrderAddRequest request) {
+        return orderService.add(session,request);
     }
 
-
+    //查看我的订单详情
     @CrossOrigin
     @RequestMapping(value = "query-front",method = RequestMethod.GET)
-    public List<OrderEntity> queryFront(@RequestParam Long userId) {
+    public List<OrderItemDetailDto> queryFront(@RequestParam Long userId) {
         return orderService.queryFront(userId);
     }
 
+/*    @CrossOrigin
+    @RequestMapping(value = "query-back",method = RequestMethod.GET)
+    public List<OrderItemDetailDto> queryBack(@RequestParam Long userId) {
+        return orderService.quer(userId);
+    }*/
 }

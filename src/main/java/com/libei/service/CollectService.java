@@ -4,13 +4,16 @@ import com.libei.Dto.CollectResDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.CollectRequest;
 import com.libei.controller.request.CommonRequest;
+import com.libei.entity.CollectEntity;
+
+import java.util.List;
 
 public interface CollectService {
-    CollectResDto query(CommonRequest request);
+    List<CollectEntity> query();
 
     Boolean add(CollectRequest request);
 
     Boolean delete(Long id);
 
-    ProductDto queryFront(CommonRequest commonRequest);
+    ProductDto queryFront(Long userId);
 }

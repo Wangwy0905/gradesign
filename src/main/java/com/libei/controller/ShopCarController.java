@@ -3,12 +3,9 @@ package com.libei.controller;
 import com.libei.Dto.ShopCarDto;
 import com.libei.service.ShopCarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -25,44 +22,44 @@ public class ShopCarController {
     ShopCarService shopCarService = null;
 
     @CrossOrigin
-    @PostMapping("add-car")
-    public Boolean addCar(@RequestBody @Valid @NotNull Long id) throws Exception {
+    @GetMapping("add-car")
+    public Boolean addCar(HttpSession session, @RequestParam Long id) throws Exception {
 
-        return shopCarService.addCar(id);
+        return shopCarService.addCar(session,id);
     }
 
     @CrossOrigin
     @PostMapping("query-car")
-    public ShopCarDto queryCar() throws Exception {
+    public ShopCarDto queryCar(HttpSession session) throws Exception {
 
-        return shopCarService.queryCar();
+        return shopCarService.queryCar(session);
     }
 
     @CrossOrigin
-    @PostMapping("remove")
-    public Boolean remove(@RequestBody @Valid @NotNull Long id) throws Exception {
+    @GetMapping("remove")
+    public Boolean remove(HttpSession session,@RequestParam Long id) throws Exception {
 
-        return shopCarService.remove(id);
+        return shopCarService.remove(session,id);
     }
 
     @CrossOrigin
-    @PostMapping("reduce")
-    public Boolean reduce(@RequestBody @Valid @NotNull Long id) throws Exception {
+    @GetMapping("reduce")
+    public Boolean reduce(HttpSession session,@RequestParam Long id) throws Exception {
 
-        return shopCarService.reduce(id);
+        return shopCarService.reduce(session,id);
     }
 
     @CrossOrigin
-    @PostMapping("add-count")
-    public Boolean addCount(@RequestBody @Valid @NotNull Long id) throws Exception {
+    @GetMapping("add-count")
+    public Boolean addCount(HttpSession session,@RequestBody Long id) throws Exception {
 
-        return shopCarService.addCount(id);
+        return shopCarService.addCount(session,id);
     }
     @CrossOrigin
     @PostMapping("clear")
-    public Boolean clear() throws Exception {
+    public Boolean clear(HttpSession session) throws Exception {
 
-        return shopCarService.clear();
+        return shopCarService.clear(session);
     }
 
 }

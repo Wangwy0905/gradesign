@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -14,5 +15,5 @@ public class MenuEntity {
     private Long id;
     private String title;
     private Boolean isShow;
-    private Date createDate;
+    private LocalDateTime createDate;
 }

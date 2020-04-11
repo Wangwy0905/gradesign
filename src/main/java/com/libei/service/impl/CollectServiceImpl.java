@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,23 +30,10 @@ public class CollectServiceImpl implements CollectService {
     private ProductMapper productMapper;
 
     @Override
-    public CollectResDto query(CommonRequest request) {
-        CollectResDto collectResDto = new CollectResDto();
-        int pageNum = request.getPageNum();
-        int pageSize = request.getPageSize();
+    public List<CollectEntity> query() {
+        List<CollectEntity> collectEntities = collectMapper.queryAll();
+        return collectEntities;
 
-        int count = 0;
-        List<CollectEntity> collectEntities = null;
-        PageHelper.startPage(pageNum, pageSize);
-        collectEntities = collectMapper.selectAll();
-        count = collectMapper.selectCount(null);
-
-
-        List<CollectDto> collectDtos = ListUtils.entityListToModelList(collectEntities, CollectDto.class);
-        collectResDto.setRows(collectDtos);
-        collectResDto.setTotal(Integer.valueOf(count));
-
-        return collectResDto;
     }
 
     @Override
@@ -53,7 +41,7 @@ public class CollectServiceImpl implements CollectService {
         CollectEntity entity = new CollectEntity();
 
         BeanUtils.copyProperties(request, entity);
-        entity.setCreateDate(new Date());
+        entity.setCreateDate(LocalDateTime.now());
 
         collectMapper.insert(entity);
 
@@ -67,8 +55,7 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public ProductDto queryFront(CommonRequest commonRequest) {
-        Long userId = commonRequest.getUserId();
+    public ProductDto queryFront(Long userId) {
         List<ProductEntity> productEntities = productMapper.queryFront(userId);
         Integer count = productMapper.count(userId);
 

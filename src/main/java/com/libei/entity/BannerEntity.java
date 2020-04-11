@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,6 +18,6 @@ public class BannerEntity {
     private Long id;
     private String picture;
     private String title;
-    private Date createTime;
+    private LocalDateTime createTime;
     private Boolean status;
 }

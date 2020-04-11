@@ -9,25 +9,38 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+
+import static javax.swing.text.html.CSS.getAttribute;
 
 @Service
 @Slf4j
 public class ShopCarServiceImpl implements ShopCarService {
 
-    private HashMap<Long, Cartitem> productHashMap = new HashMap<>();
+   // private HashMap<Long, Cartitem> productHashMap = new HashMap<>();
     @Autowired
     private ProductService productService = null;
 
     @Override
-    public Boolean addCar(Long id) {
+    public Boolean addCar(HttpSession session,Long id) {
         ProductEntity productEntity = productService.queryOne(id);
+
+       HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+
+       if (productHashMap==null){
+           productHashMap=new HashMap<>();
+
+           Cartitem cartitem = new Cartitem(productEntity, 1, productEntity.getPrice());
+           productHashMap.put(id, cartitem);
+
+       }
 
         if (!productHashMap.containsKey(id)) {
             Cartitem cartitem = new Cartitem(productEntity, 1, productEntity.getPrice());
             productHashMap.put(id, cartitem);
         } else {
-            Cartitem cartitem = productHashMap.get(id);
+            Cartitem cartitem =productHashMap.get(id);
             cartitem.setEntity(productEntity);
             cartitem.setCount(cartitem.getCount() + 1);
             cartitem.setPrice(cartitem.getPrice() + productEntity.getPrice());
@@ -38,9 +51,10 @@ public class ShopCarServiceImpl implements ShopCarService {
     }
 
     @Override
-    public ShopCarDto queryCar() {
+    public ShopCarDto queryCar(HttpSession session) {
         Double totalPrice = 0.0;
         ShopCarDto shopCarDto = new ShopCarDto();
+        HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
         if (productHashMap == null) {
             shopCarDto.setTotalPrice(totalPrice);
             shopCarDto.setProductHashMap(null);
@@ -57,7 +71,9 @@ public class ShopCarServiceImpl implements ShopCarService {
 
     //減少數量操作  刷新页面
     @Override
-    public Boolean reduce(Long id) {
+    public Boolean reduce(HttpSession session,Long id) {
+        HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+
         Cartitem cartitem = productHashMap.get(id);
         cartitem.setCount(cartitem.getCount()-1);
         cartitem.setPrice(cartitem.getPrice()-cartitem.getEntity().getPrice());
@@ -68,7 +84,9 @@ public class ShopCarServiceImpl implements ShopCarService {
 
     //添加数量操作
     @Override
-    public Boolean addCount(Long id) {
+    public Boolean addCount(HttpSession session,Long id) {
+        HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+
         Cartitem cartitem = productHashMap.get(id);
         cartitem.setCount(cartitem.getCount()+1);
         cartitem.setPrice(cartitem.getPrice()-cartitem.getEntity().getPrice());
@@ -78,13 +96,17 @@ public class ShopCarServiceImpl implements ShopCarService {
     }
 
     @Override
-    public Boolean remove(Long id) {
+    public Boolean remove(HttpSession session,Long id) {
+        HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+
         productHashMap.remove(id);
         return true;
     }
 
     @Override
-    public Boolean clear() {
+    public Boolean clear(HttpSession session) {
+        HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+
         productHashMap.clear();
         return true;
     }

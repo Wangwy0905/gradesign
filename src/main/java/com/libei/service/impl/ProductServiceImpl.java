@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
         entity.setPicture(upload);
         entity.setStatus(true);
         entity.setBrand(productCommitRequest.getBrand().toString());
-        entity.setCreateTime(new Date());
+        entity.setCreateTime(LocalDateTime.now());
         productMapper.insert(entity);
 
         return true;

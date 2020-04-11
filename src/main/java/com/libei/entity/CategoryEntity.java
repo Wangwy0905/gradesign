@@ -21,5 +21,5 @@ public class CategoryEntity {
     @Column(name = "TYPE")//分类级别
     private Long type;
     @Column(name = "CREATE_TIME")
-    private Date createTime;
+    private LocalDateTime createTime;
 }

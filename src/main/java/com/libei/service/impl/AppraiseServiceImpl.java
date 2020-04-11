@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class AppraiseServiceImpl implements AppraiseService {
     public Boolean add(AppraiseRequest request) {
         AppraiseEntity entity = new AppraiseEntity();
         BeanUtils.copyProperties(request, entity);
-        entity.setCreateDate(new Date());
+        entity.setCreateDate(LocalDateTime.now());
         appraiseMapper.insert(entity);
 
         return true;

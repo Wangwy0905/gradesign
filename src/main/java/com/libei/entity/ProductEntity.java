@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -33,7 +34,7 @@ public class ProductEntity {
     private String description;
     private Long categoryId;
     private Long categoryId2;
-    private Date createTime;
+    private LocalDateTime createTime;
     private Boolean status;
 
 }

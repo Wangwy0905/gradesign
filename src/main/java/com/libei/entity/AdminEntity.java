@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -13,5 +14,5 @@ public class AdminEntity {
     private Long id;
     private String account;
     private String password;
-    private Date createDate;
+    private LocalDateTime createDate;
 }

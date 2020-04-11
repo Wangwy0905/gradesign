@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -27,5 +28,5 @@ public class OrderEntity {
     @Column(name = "status") //支付状态   0-未支付  1-已支付
     private String status;
     @Column(name = "create_date")
-    private Date createDate;
+    private LocalDateTime createDate;
 }

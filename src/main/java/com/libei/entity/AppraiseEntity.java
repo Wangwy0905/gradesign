@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,5 +19,5 @@ public class AppraiseEntity {
     private Long orderId;
     private String content;
     private String creator;
-    private Date createDate;
+    private LocalDateTime createDate;
 }

@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class AddressServiceImpl implements AddressService {
     public Boolean add(AddressRequest request) {
         AddressEntity addressEntity = new AddressEntity();
         BeanUtils.copyProperties(request, addressEntity);
-        addressEntity.setCreateDate(new Date());
+        addressEntity.setCreateDate(LocalDateTime.now());
         addressEntity.setIsDefault(false);
         addressMapper.insert(addressEntity);
 
