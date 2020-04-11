@@ -68,7 +68,8 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setCost(cartitemEntry.getValue().getPrice());
             orderItem.setCount(cartitemEntry.getValue().getCount());
             orderItem.setProductId(cartitemEntry.getValue().getEntity().getId());
-            orderItem.setUserId(request.getUserId());
+            UserEntity entity = userMapper.selectByPrimaryKey(request.getUserId());
+            orderItem.setAccount(entity.getAccount());
 
             orderItemMapper.insert(orderItem);
         }

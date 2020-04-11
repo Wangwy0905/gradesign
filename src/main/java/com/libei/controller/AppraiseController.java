@@ -42,4 +42,11 @@ public class AppraiseController {
     }
 
     //TODO 暂不提供修改功能  后续可添加
+
+    @CrossOrigin
+    @GetMapping("query-like")
+    public List<AppraiseDto> queryLike(@RequestParam Long userId) {
+
+        return appraiseService.queryLike(userId);
+    }
 }

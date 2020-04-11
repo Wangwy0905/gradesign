@@ -12,4 +12,6 @@ public interface AppraiseMapper extends Mapper<AppraiseEntity> {
     Integer totalNum();
 
     void deleteByUserId(Long userId);
+
+    List<AppraiseEntity> queryLike(Long userId);
 }

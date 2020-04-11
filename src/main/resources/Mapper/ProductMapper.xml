@@ -5,14 +5,14 @@
     <select id="queryByCategoryId" parameterType="java.lang.Integer" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
         categoryId2,brand,capacity,description,create_time createTime,
-        picture,status from product ORDER by create_time desc where status='1' and
+        picture,status from product  where status='1' and
         <if test="categoryId！=null">
-            category_id=#{categoryId} limit ${(pageSize-1)*pageNum},${pageNum}
+            category_id=#{categoryId}
         </if>
         <if test="categoryId2！=null">
             category_id2=#{categoryId2}
         </if>
-
+        ORDER by create_time desc
     </select>
 
 

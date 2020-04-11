@@ -40,6 +40,22 @@ public class AppraiseServiceImpl implements AppraiseService {
     }
 
     @Override
+    public List<AppraiseDto> queryLike(Long userId) {
+
+        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryLike(userId);
+
+        List<AppraiseDto> appraiseDtos = ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class);
+        for (AppraiseDto appraiseDto :appraiseDtos){
+            Long id = appraiseDto.getId();
+            UserEntity userEntity = userMapper.selectByPrimaryKey(id);
+            appraiseDto.setUserName(userEntity.getAccount());
+        }
+
+        return appraiseDtos;
+    }
+
+    //搜索
+    @Override
     public List<AppraiseDto> query() {
 
         List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll();

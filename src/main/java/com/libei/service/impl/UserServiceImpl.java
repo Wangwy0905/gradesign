@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
         String salt = RandomSaltUtils.generetRandomSaltCode();
         userEntity.setPassword(DigestUtils.md5DigestAsHex((userEntity.getPassword() + salt).getBytes()));
         userEntity.setSalt(salt);
-        userEntity.setCreateTime(new Date());
+        userEntity.setCreateTime(LocalDateTime.now());
 
         userMapper.insert(userEntity);
 

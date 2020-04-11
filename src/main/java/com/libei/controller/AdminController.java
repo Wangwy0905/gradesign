@@ -5,6 +5,7 @@ import com.libei.controller.request.AdminRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.LoginRequest;
 import com.libei.entity.AddressEntity;
+import com.libei.entity.AdminEntity;
 import com.libei.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class AdminController {
 
     @CrossOrigin
     @PostMapping("query-like")
-    public List<AddressEntity> queryLike(@RequestParam("param") String param) {
+    public List<AdminEntity> queryLike(@RequestParam("param") String param) {
 
         return adminService.queryLike(param);
     }

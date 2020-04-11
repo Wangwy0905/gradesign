@@ -13,6 +13,6 @@ public class OrderItem {
     private Long productId;
     private Double cost;
     private Integer count;
-    private Long userId;
+    private String account;
     private LocalDateTime createDate;
 }

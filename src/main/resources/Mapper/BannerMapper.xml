@@ -14,7 +14,7 @@
     </select>
 
     <select id="queryLike"  resultType="BannerEntity">
-        select id,title,picture,status,create_time createTime from banner where status=1 and title like '%'||#{param}||'%' limit ${(pageNum-1)*pageSize},${pageSize}
+        select id,title,picture,status,create_time createTime from banner where title  like concat ('%',#{title},'%') order by create_time desc
     </select>
 
 </mapper>

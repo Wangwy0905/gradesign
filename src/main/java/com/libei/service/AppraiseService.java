@@ -14,4 +14,6 @@ public interface AppraiseService {
     Boolean delete(Long id);
 
     List<AppraiseDto> query();
+
+    List<AppraiseDto> queryLike(Long userId);
 }
