@@ -1,13 +1,12 @@
 package com.libei.controller;
 
+import com.libei.Dto.Cartitem;
 import com.libei.Dto.ShopCarDto;
 import com.libei.service.ShopCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author li bei
@@ -23,43 +22,44 @@ public class ShopCarController {
 
     @CrossOrigin
     @GetMapping("add-car")
-    public Boolean addCar(HttpSession session, @RequestParam Long id) throws Exception {
+    public Boolean addCar(@RequestParam("id") Long id, @RequestParam("count") Integer count) throws Exception {
 
-        return shopCarService.addCar(session,id);
+        return shopCarService.addCar(id, count);
     }
 
     @CrossOrigin
     @PostMapping("query-car")
-    public ShopCarDto queryCar(HttpSession session) throws Exception {
+    public List<ShopCarDto> queryCar() throws Exception {
 
-        return shopCarService.queryCar(session);
+        return shopCarService.queryCar();
     }
 
     @CrossOrigin
     @GetMapping("remove")
-    public Boolean remove(HttpSession session,@RequestParam Long id) throws Exception {
+    public Boolean remove(@RequestParam("id") Long id) throws Exception {
 
-        return shopCarService.remove(session,id);
+        return shopCarService.remove(id);
     }
 
     @CrossOrigin
     @GetMapping("reduce")
-    public Boolean reduce(HttpSession session,@RequestParam Long id) throws Exception {
+    public Boolean reduce(@RequestParam("id") Long id) throws Exception {
 
-        return shopCarService.reduce(session,id);
+        return shopCarService.reduce(id);
     }
 
     @CrossOrigin
     @GetMapping("add-count")
-    public Boolean addCount(HttpSession session,@RequestBody Long id) throws Exception {
+    public Boolean addCount(@RequestParam("id") Long id) throws Exception {
 
-        return shopCarService.addCount(session,id);
+        return shopCarService.addCount(id);
     }
+
     @CrossOrigin
     @PostMapping("clear")
-    public Boolean clear(HttpSession session) throws Exception {
+    public Boolean clear() throws Exception {
 
-        return shopCarService.clear(session);
+        return shopCarService.clear();
     }
 
 }

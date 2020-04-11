@@ -1,19 +1,23 @@
 package com.libei.service;
 
 import com.libei.Dto.ShopCarDto;
+import com.libei.controller.request.OrderAddRequest;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface ShopCarService {
-    Boolean addCar(HttpSession session,Long id);
+    Boolean addCar(Long id,Integer count);
 
-    ShopCarDto queryCar(HttpSession session);
+    List<ShopCarDto> queryCar();
 
-    Boolean reduce(HttpSession session,Long id);
+    Boolean reduce(Long id);
 
-    Boolean remove(HttpSession session,Long id);
+    Boolean remove(Long id);
 
-    Boolean clear(HttpSession session);
+    Boolean clear();
 
-    Boolean addCount(HttpSession session,Long id);
+    Boolean addCount(Long id);
+
+    Boolean add(OrderAddRequest request);
+
 }

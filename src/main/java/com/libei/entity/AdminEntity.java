@@ -14,5 +14,5 @@ public class AdminEntity {
     private Long id;
     private String account;
     private String password;
-    private LocalDateTime createDate;
+    private Long createDate;
 }

@@ -74,7 +74,7 @@ public class BannerServiceImpl implements BannerService {
 
         String imgPath = productService.upload(file,request);
         entity.setPicture(imgPath);
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(System.currentTimeMillis());
         entity.setStatus(true);
 
         bannerMapper.insert(entity);
@@ -104,7 +104,7 @@ public class BannerServiceImpl implements BannerService {
     public Boolean update(BannerCommitRequest request) {
         BannerEntity entity = bannerMapper.selectByPrimaryKey(request.getId());
         entity.setTitle(request.getTitle());
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(System.currentTimeMillis());
         bannerMapper.updateByPrimaryKey(entity);
         return true;
     }

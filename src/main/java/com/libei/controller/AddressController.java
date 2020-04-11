@@ -49,6 +49,14 @@ public class AddressController {
         return addressService.update(request);
     }
 
+    //修改默认
+    @CrossOrigin
+    @GetMapping("update-status")
+    public Boolean updateStatus(@RequestParam("addressId")Long addressId,@RequestParam("isDefault") Boolean isDefault,@RequestParam("userId") Long userId) throws Exception {
+
+        return addressService.updateStatus(addressId,isDefault,userId);
+    }
+
 
     @CrossOrigin
     @GetMapping("query-detail")
@@ -60,7 +68,6 @@ public class AddressController {
     @CrossOrigin
     @PostMapping("query-back")
     public List<AddressDto> queryBack() {
-
         return addressService.queryBack();
     }
 

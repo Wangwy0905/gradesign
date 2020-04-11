@@ -3,8 +3,6 @@ package com.libei.controller;
 import com.libei.Dto.CategoryDto;
 import com.libei.Dto.CategoryResDto;
 import com.libei.controller.request.CategoryRequest;
-import com.libei.controller.request.CollectRequest;
-import com.libei.controller.request.CommonRequest;
 import com.libei.entity.CategoryEntity;
 import com.libei.service.CategoryService;
 import io.swagger.annotations.Api;
@@ -65,7 +63,7 @@ public class CategoryController {
 
     @PostMapping("query-back")
     @CrossOrigin
-    public List<CategoryEntity> queryBack(){
+    public List<CategoryResDto> queryBack(){
         return categoryService.queryBack();
     }
 

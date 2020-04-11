@@ -19,5 +19,5 @@ public class AppraiseEntity {
     private Long orderId;
     private String content;
     private String creator;
-    private LocalDateTime createDate;
+    private Long createDate;
 }

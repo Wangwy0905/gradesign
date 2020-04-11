@@ -29,12 +29,12 @@ public class ProductEntity {
     private Integer repertory;//库存
     private String picture;   //图片
     private String capacity;   //容量
-    //private String saleCount;  //销售量  待添加
+    private Integer saleCount;  //销售量  待添加
     private String brand;
     private String description;
     private Long categoryId;
     private Long categoryId2;
-    private LocalDateTime createTime;
+    private Long createTime;
     private Boolean status;
 
 }

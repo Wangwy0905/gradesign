@@ -1,13 +1,9 @@
 package com.libei.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import com.libei.Dto.CategoryDto;
 import com.libei.Dto.CategoryResDto;
 import com.libei.controller.request.CategoryRequest;
-import com.libei.controller.request.CollectRequest;
-import com.libei.controller.request.CommonRequest;
 import com.libei.entity.CategoryEntity;
-import com.libei.entity.CollectEntity;
 import com.libei.mapper.CategoryMapper;
 import com.libei.mapper.ProductMapper;
 import com.libei.service.CategoryService;
@@ -16,10 +12,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity categoryEntity = new CategoryEntity();
 
         BeanUtils.copyProperties(request, categoryEntity);
-        categoryEntity.setCreateTime(LocalDateTime.now());
+        categoryEntity.setCreateTime(System.currentTimeMillis());
         categoryMapper.insert(categoryEntity);
 
         return true;
@@ -67,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity categoryEntity = new CategoryEntity();
 
         BeanUtils.copyProperties(request, categoryEntity);
-        categoryEntity.setCreateTime(LocalDateTime.now());
+        categoryEntity.setCreateTime(System.currentTimeMillis());
 
         categoryMapper.updateByPrimaryKey(categoryEntity);
 
@@ -75,11 +70,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryEntity> queryBack() {
+    public List<CategoryResDto> queryBack() {
 
         List<CategoryEntity> categoryEntities = categoryMapper.queryAll();
 
-        return categoryEntities;
+        if (CollectionUtils.isEmpty(categoryEntities)){
+            return null;
+        }
+
+        List<CategoryResDto> list=new ArrayList<>();
+        for (CategoryEntity categoryEntity:categoryEntities){
+            CategoryResDto categoryResDto=new CategoryResDto();
+            if (categoryEntity.getFirstId()!=null){
+                CategoryEntity entity = categoryMapper.selectByPrimaryKey(categoryEntity.getFirstId());
+                categoryResDto.setBrand(entity.getCategoryName());
+                categoryResDto.setModel(categoryEntity.getCategoryName());
+                categoryResDto.setCreateTime(categoryEntity.getCreateTime());
+                categoryResDto.setId(categoryEntity.getId());
+                list.add(categoryResDto);
+            }
+        }
+
+        return list;
 
     }
 

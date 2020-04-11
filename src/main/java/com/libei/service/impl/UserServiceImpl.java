@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         String salt = RandomSaltUtils.generetRandomSaltCode();
         userEntity.setPassword(DigestUtils.md5DigestAsHex((userEntity.getPassword() + salt).getBytes()));
         userEntity.setSalt(salt);
-        userEntity.setCreateTime(LocalDateTime.now());
+        userEntity.setCreateTime(System.currentTimeMillis());
 
         userMapper.insert(userEntity);
 

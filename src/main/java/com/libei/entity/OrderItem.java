@@ -14,5 +14,5 @@ public class OrderItem {
     private Double cost;
     private Integer count;
     private String account;
-    private LocalDateTime createDate;
+    private Long createDate;
 }

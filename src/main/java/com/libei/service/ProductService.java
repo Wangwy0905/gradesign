@@ -28,4 +28,6 @@ public interface ProductService {
     String upload(MultipartFile file,HttpServletRequest request) throws Exception;
 
     Boolean open(Long id,Boolean status);
+
+    List<ProductEntity> saleCount();
 }

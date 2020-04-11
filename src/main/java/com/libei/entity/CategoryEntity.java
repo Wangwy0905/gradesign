@@ -18,8 +18,6 @@ public class CategoryEntity {
     private String categoryName;
     @Column(name = "FIRST_ID")
     private Long firstId;
-    @Column(name = "TYPE")//分类级别
-    private Long type;
     @Column(name = "CREATE_TIME")
-    private LocalDateTime createTime;
+    private Long createTime;
 }

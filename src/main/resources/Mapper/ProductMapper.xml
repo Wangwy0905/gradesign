@@ -5,7 +5,7 @@
     <select id="queryByCategoryId" parameterType="java.lang.Integer" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
         categoryId2,brand,capacity,description,create_time createTime,
-        picture,status from product  where status='1' and
+        picture,status,sale_count saleCount from product  where status='1' and
         <if test="categoryId！=null">
             category_id=#{categoryId}
         </if>
@@ -18,13 +18,13 @@
 
     <select id="query" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2 categoryId2,description,brand,capacity,create_time createTime,
-        picture,status from product ORDER by create_time desc
+        picture,status,sale_count saleCount from product ORDER by create_time desc
     </select>
 
     <select id="queryLike" resultType="ProductEntity">
         select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2
         categoryId2,description,brand,capacity,create_time createTime,
-        picture,status from product
+        picture,status,sale_count saleCount from product
         <where>
             <if test="productName !=null">
                 and product_name like concat ('%',#{productName},'%')
@@ -43,12 +43,17 @@
     <select id="queryFront" parameterType="java.lang.Integer" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
         categoryId2,description,brand,capacity,create_time createTime,
-        picture,status from product where status='1' and
+        picture,status,sale_count saleCount from product where status='1' and
         user_id=#{userId}  ORDER by create_time desc
 
     </select>
 
     <select id="count" parameterType="java.lang.Integer" resultType="java.lang.Integer">
             select count(*) from product where user_id=#{userId}
+    </select>
+
+    <select id="querySaleCount" resultType="ProductEntity">
+        select id,product_name productName,color,price,repertory,category_id categoryId,sale_count saleCount,category_id2 categoryId2,description,brand,capacity,create_time createTime,
+        picture,status from product ORDER by sale_count desc
     </select>
 </mapper>

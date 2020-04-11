@@ -1,11 +1,9 @@
 package com.libei.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.libei.Dto.ProductDetailDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.OpenRequest;
 import com.libei.controller.request.ProductCommitRequest;
-import com.libei.controller.request.ProductQueryRequest;
 import com.libei.controller.request.SearchRequest;
 import com.libei.entity.ProductEntity;
 import com.libei.enums.BlandEnum;
@@ -108,4 +106,11 @@ public class ProductController {
         Boolean status = openRequest.getStatus();
         return productService.open(id,status);
     }
+
+    @CrossOrigin
+    @GetMapping("sale-count")
+    public List<ProductEntity> saleCount(){
+        return productService.saleCount();
+    }
+
 }

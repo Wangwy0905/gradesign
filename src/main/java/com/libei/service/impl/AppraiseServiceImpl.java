@@ -11,8 +11,10 @@ import com.libei.util.ListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class AppraiseServiceImpl implements AppraiseService {
     public Boolean add(AppraiseRequest request) {
         AppraiseEntity entity = new AppraiseEntity();
         BeanUtils.copyProperties(request, entity);
-        entity.setCreateDate(LocalDateTime.now());
+        entity.setCreateDate(System.currentTimeMillis());
         appraiseMapper.insert(entity);
 
         return true;
@@ -54,13 +56,15 @@ public class AppraiseServiceImpl implements AppraiseService {
         return appraiseDtos;
     }
 
-    //搜索
     @Override
     public List<AppraiseDto> query() {
 
         List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll();
 
         List<AppraiseDto> appraiseDtos = ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class);
+        if (CollectionUtils.isEmpty(appraiseDtos)){
+            return null;
+        }
         for (AppraiseDto appraiseDto :appraiseDtos){
             Long id = appraiseDto.getId();
             UserEntity userEntity = userMapper.selectByPrimaryKey(id);

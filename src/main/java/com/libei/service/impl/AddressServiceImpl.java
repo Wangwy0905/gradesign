@@ -19,6 +19,8 @@ import org.apache.tomcat.jni.Address;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class AddressServiceImpl implements AddressService {
+public class AddressServiceImpl implements AddressService{
     @Autowired
     private AddressMapper addressMapper = null;
     @Autowired
@@ -38,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
     public Boolean add(AddressRequest request) {
         AddressEntity addressEntity = new AddressEntity();
         BeanUtils.copyProperties(request, addressEntity);
-        addressEntity.setCreateDate(LocalDateTime.now());
+        addressEntity.setCreateDate(System.currentTimeMillis());
         addressEntity.setIsDefault(false);
         addressMapper.insert(addressEntity);
 
@@ -55,11 +57,23 @@ public class AddressServiceImpl implements AddressService {
             }
             AddressDto addressDto = new AddressDto();
             BeanUtils.copyProperties(addressEntity, addressDto);
+            addressDto.setDetailAddress(addressEntity.getProvince()+addressEntity.getCity()+addressEntity.getDetailAddress());
             return Arrays.asList(addressDto);
         }
 
         List<AddressEntity> addressEntityList = addressMapper.queryNotDefault(userId, isDefault);
-        return ListUtils.entityListToModelList(addressEntityList, AddressDto.class);
+
+        List<AddressDto> list=new ArrayList<>();
+        if(CollectionUtils.isEmpty(addressEntityList)){
+            return null;
+        }
+        for (AddressEntity addressEntity:addressEntityList){
+            AddressDto addressDto = new AddressDto();
+            BeanUtils.copyProperties(addressEntity, addressDto);
+            addressDto.setDetailAddress(addressEntity.getProvince()+addressEntity.getCity()+addressEntity.getDetailAddress());
+            list.add(addressDto);
+        }
+        return list;
     }
 
     @Override
@@ -103,7 +117,9 @@ public class AddressServiceImpl implements AddressService {
         List<AddressEntity> addressEntities = addressMapper.queryAll();
         List<AddressDto> addressDtos=new ArrayList<>();
 
-
+        if (CollectionUtils.isEmpty(addressEntities)){
+            return null;
+        }
         for (AddressEntity entity: addressEntities){
             AddressDto addressDto=new AddressDto();
             addressDto.setId(entity.getId());
@@ -122,8 +138,25 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public List<AddressEntity> queryLike(String param) {
         List<AddressEntity> addressEntities = addressMapper.queryLike(param);
+//       List<AddressDto> list=new
+//        for ()
         return  addressEntities;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updateStatus(Long addressId, Boolean isDefault, Long userId) {
+        AddressEntity addressEntity = addressMapper.queryDefault(userId, isDefault);
+        if (addressEntity!=null){
+            addressEntity.setIsDefault(false);
+        }
 
+        AddressEntity entity = addressMapper.selectByPrimaryKey(addressId);
+        entity.setIsDefault(true);
+
+        addressMapper.insert(addressEntity);
+        addressMapper.insert(entity);
+
+        return true;
+    }
 }

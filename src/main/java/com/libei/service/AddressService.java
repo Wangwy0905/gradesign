@@ -23,4 +23,6 @@ public interface AddressService {
     List<AddressDto> queryBack();
 
     List<AddressEntity> queryLike( String param);
+
+    Boolean updateStatus(Long addressId, Boolean isDefault,Long id);
 }

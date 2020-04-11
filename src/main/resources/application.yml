@@ -23,6 +23,8 @@ spring:
     view:
       prefix: /
       suffix: .jsp
+      date-format: yyyy-MM-dd HH:mm:ss
+
 mybatis:
   type-aliases-package: com.libei.entity
   mapper-locations: classpath:Mapper/*Mapper.xml

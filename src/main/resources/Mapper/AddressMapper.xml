@@ -6,16 +6,16 @@
     select count(*) from address
 </select>
     <select id="queryAll" resultType="AddressEntity">
-        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate from address order by
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate,gain_name gainName,phone_num phoneNum from address order by
          create_date desc
     </select>
 
     <select id="queryDefault" resultType="AddressEntity">
-        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate from address where user_id=#{userId} and is_default=#{isDefault}
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault ,user_id userId,create_date createDate,gain_name gainName,phone_num phoneNum  from address where user_id=#{userId} and is_default=#{isDefault}
     </select>
 
     <select id="queryNotDefault" resultType="AddressEntity">
-        select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate from address where user_id=#{userId} and is_default=#{isDefault}
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate,gain_name gainName,phone_num phoneNum  from address where user_id=#{userId} and is_default=#{isDefault}
     </select>
 
     <delete id="deleteByUserId">
@@ -23,7 +23,7 @@
     </delete>
 
     <select id="queryLike" resultType="AddressEntity" parameterType="java.lang.String">
-        select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate from address where userId LIKE '%'||#{param}||'%' order by create_date desc
+        select id,detail_address detailAddress,province,city,remark,is_default isDefault,user_id userId,create_date createDate,gain_name gainName,phone_num phoneNum  from address where user_id LIKE concat ('%',#{param},'%') order by create_date desc
     </select>
 
 </mapper>

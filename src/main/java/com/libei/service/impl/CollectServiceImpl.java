@@ -41,7 +41,7 @@ public class CollectServiceImpl implements CollectService {
         CollectEntity entity = new CollectEntity();
 
         BeanUtils.copyProperties(request, entity);
-        entity.setCreateDate(LocalDateTime.now());
+        entity.setCreateDate(System.currentTimeMillis());
 
         collectMapper.insert(entity);
 

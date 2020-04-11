@@ -18,6 +18,6 @@ public class BannerEntity {
     private Long id;
     private String picture;
     private String title;
-    private LocalDateTime createTime;
+    private Long createTime;
     private Boolean status;
 }

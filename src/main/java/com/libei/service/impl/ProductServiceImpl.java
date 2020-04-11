@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -59,7 +60,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDetailDto> query() {
 
-        return ListUtils.entityListToModelList(productMapper.query(), ProductDetailDto.class);
+        List<ProductEntity> query = productMapper.query();
+        return ListUtils.entityListToModelList(query,ProductDetailDto.class);
     }
 
     @Override
@@ -74,12 +76,12 @@ public class ProductServiceImpl implements ProductService {
         entity.setDescription(productCommitRequest.getDescription());
         entity.setCategoryId(productCommitRequest.getCategoryId());
         entity.setCategoryId2(productCommitRequest.getCategoryId2());
-
+        entity.setSaleCount(0);
         String upload = upload(file, request);
         entity.setPicture(upload);
         entity.setStatus(true);
         entity.setBrand(productCommitRequest.getBrand().toString());
-        entity.setCreateTime(LocalDateTime.now());
+        entity.setCreateTime(System.currentTimeMillis());
         productMapper.insert(entity);
 
         return true;
@@ -117,6 +119,22 @@ public class ProductServiceImpl implements ProductService {
         productMapper.updateByPrimaryKey(productEntity);
 
         return true;
+    }
+
+    @Override
+    public List<ProductEntity>saleCount() {
+        List<ProductEntity> productEntities = productMapper.querySaleCount();
+
+        List<ProductEntity> list=new ArrayList<>();
+        if (productEntities.size()>2){
+            list.add(productEntities.get(0));
+            list.add(productEntities.get(0));
+            list.add(productEntities.get(0));
+
+            return list;
+        }else {
+            return productEntities;
+        }
     }
 
 

@@ -20,5 +20,5 @@ public class UserEntity {
     private String email;
     private String status;
     private String salt;
-    private LocalDateTime createTime;
+    private Long createTime;
 }

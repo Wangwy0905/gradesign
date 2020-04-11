@@ -14,8 +14,7 @@ public interface OrderService {
 
     Boolean delete(Long id);
 
-    Boolean add(HttpSession session,OrderAddRequest request);
-
+    Boolean add(OrderAddRequest request);
 
     List<OrderItemDetailDto> queryFront(Long userId);
 }

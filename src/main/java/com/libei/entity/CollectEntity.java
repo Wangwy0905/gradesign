@@ -14,6 +14,6 @@ public class CollectEntity {
     private Long id;
     private Long userId;
     private Long productId;
-    private LocalDateTime createDate;
+    private Long createDate;
 
 }

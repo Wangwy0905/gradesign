@@ -9,6 +9,8 @@ public class AddressRequest {
     private String city;
     private String detailAddress;
     private Long userId;
+    private String gainName; //收货人姓名
+    private String phoneNum;
     private String remark;
     private Boolean isDefault;
 }

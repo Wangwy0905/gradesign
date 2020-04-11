@@ -15,8 +15,10 @@ public class AddressEntity {
     private String province;
     private String city;
     private String detailAddress;
+    private String gainName;
+    private String phoneNum;
     private Long userId;
     private String remark;
     private Boolean isDefault;
-    private LocalDateTime createDate;
+    private Long createDate;
 }

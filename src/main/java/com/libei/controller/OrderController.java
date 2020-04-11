@@ -2,11 +2,13 @@ package com.libei.controller;
 
 import com.libei.Dto.OrderDto;
 import com.libei.Dto.OrderItemDetailDto;
+import com.libei.Dto.ShopCarDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.controller.request.OrderQueryRequest;
 import com.libei.controller.request.ProductQueryRequest;
 import com.libei.entity.OrderEntity;
 import com.libei.service.OrderService;
+import com.libei.service.ShopCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ShopCarService shopCarService;
 
 /*    @CrossOrigin
     @RequestMapping(value = "query",method = RequestMethod.POST)
@@ -48,8 +52,8 @@ public class OrderController {
 
     @CrossOrigin
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    public Boolean add(HttpSession session, @RequestBody OrderAddRequest request) {
-        return orderService.add(session,request);
+    public Boolean add(@RequestBody OrderAddRequest request) {
+        return shopCarService.add(request);
     }
 
     //查看我的订单详情

@@ -1,21 +1,17 @@
 package com.libei.service.impl;
 
-import com.libei.Dto.Cartitem;
 import com.libei.Dto.OrderDto;
 import com.libei.Dto.OrderItemDetailDto;
 import com.libei.controller.request.OrderAddRequest;
 import com.libei.entity.*;
 import com.libei.mapper.*;
 import com.libei.service.OrderService;
-import com.libei.service.ProductService;
 import com.libei.util.ListUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -35,11 +31,11 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> query() {
         List<OrderEntity> orderEntities = orderMapper.queryAll();
         List<OrderDto> orderDtos = ListUtils.entityListToModelList(orderEntities, OrderDto.class);
-        for (OrderDto orderDto :orderDtos){
+        for (OrderDto orderDto : orderDtos) {
             AddressEntity addressEntity = addressMapper.selectByPrimaryKey(orderDto.getAddressId());
             UserEntity entity = userMapper.selectByPrimaryKey(orderDto.getUserId());
 
-            orderDto.setDetailAddress(addressEntity.getProvince()+addressEntity.getCity()+addressEntity.getDetailAddress());
+            orderDto.setDetailAddress(addressEntity.getProvince() + addressEntity.getCity() + addressEntity.getDetailAddress());
             orderDto.setAccount(entity.getAccount());
         }
 
@@ -53,32 +49,33 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Boolean add(HttpSession session, OrderAddRequest request) {
-        OrderEntity orderEntity = new OrderEntity();
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean add(OrderAddRequest request) {
+      /*  OrderEntity orderEntity = new OrderEntity();
 
         BeanUtils.copyProperties(request, orderEntity);
-        orderEntity.setStatus("0");
-        orderEntity.setCreateDate(LocalDateTime.now());
+        orderEntity.setCreateDate(System.currentTimeMillis());
         String orderId = UUID.randomUUID().toString().replace("-", "");
         orderEntity.setOrderId(orderId);
 
-        HashMap<Long, Cartitem> productHashMap= (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
-        for (Map.Entry<Long,Cartitem> cartitemEntry:productHashMap.entrySet()){
-            OrderItem orderItem=new OrderItem();
+        HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+        for (Map.Entry<Long, Cartitem> cartitemEntry : productHashMap.entrySet()) {
+            OrderItem orderItem = new OrderItem();
             orderItem.setCost(cartitemEntry.getValue().getPrice());
             orderItem.setCount(cartitemEntry.getValue().getCount());
             orderItem.setProductId(cartitemEntry.getValue().getEntity().getId());
             UserEntity entity = userMapper.selectByPrimaryKey(request.getUserId());
             orderItem.setAccount(entity.getAccount());
 
+            ProductEntity productEntity = productMapper.selectByPrimaryKey(cartitemEntry.getValue().getEntity().getId());
+            productEntity.setSaleCount(productEntity.getSaleCount() + 1);
+            productMapper.insert(productEntity);
             orderItemMapper.insert(orderItem);
         }
 
         orderMapper.insert(orderEntity);
 
-        //todo  销售排行待定
-        // productMapper.addSale();
-
+        return true;*/
         return true;
     }
 
@@ -86,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderItemDetailDto> queryFront(Long userId) {
         List<OrderItem> orderItems = orderItemMapper.queryAll(userId);
         List<OrderItemDetailDto> orderItemDetailDtos = ListUtils.entityListToModelList(orderItems, OrderItemDetailDto.class);
-        for (OrderItemDetailDto detailDto :orderItemDetailDtos){
+        for (OrderItemDetailDto detailDto : orderItemDetailDtos) {
             ProductEntity productEntity = productMapper.selectByPrimaryKey(detailDto.getProductId());
             detailDto.setEntity(productEntity);
         }
