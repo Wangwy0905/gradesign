@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class AppraiseRequest {
     private Long userId;
-    private Long orderId;
+    private Long productId;
     private String content;
 }

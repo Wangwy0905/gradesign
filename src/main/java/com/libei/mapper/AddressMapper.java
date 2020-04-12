@@ -9,7 +9,7 @@ import java.util.List;
 public interface AddressMapper extends Mapper<AddressEntity> {
     AddressEntity queryDefault(@Param("userId")Long userId, @Param("isDefault")Boolean isDefault);
 
-    List<AddressEntity> queryNotDefault(@Param("userId")Long userId, @Param("isDefault")Boolean isDefault);
+    List<AddressEntity> queryAddress(@Param("userId")Long userId);
 
     List<AddressEntity> queryAll();
 
@@ -17,5 +17,5 @@ public interface AddressMapper extends Mapper<AddressEntity> {
 
     void deleteByUserId( Long UserId);
 
-    List<AddressEntity> queryLike(String param);
+    List<AddressEntity> queryLike(Long userId);
 }

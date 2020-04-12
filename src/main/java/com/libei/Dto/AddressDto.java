@@ -6,8 +6,11 @@ import lombok.Data;
 public class AddressDto {
     private Long id;
     private String detailAddress;
-    private String  userName;
+    private String province;
+    private String city;
+    private String  gainName;
+    private String phoneNum;
     private String remark;
     private Boolean isDefault;
-    private String createDate;
+    private Long createDate;
 }

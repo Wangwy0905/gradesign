@@ -1,11 +1,13 @@
 package com.libei.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.RegisteredRequest;
+import com.libei.controller.request.UserRequest;
 import com.libei.entity.UserEntity;
-import com.libei.mapper.*;
+import com.libei.mapper.AddressMapper;
+import com.libei.mapper.AppraiseMapper;
+import com.libei.mapper.OrderMapper;
+import com.libei.mapper.UserMapper;
 import com.libei.service.UserService;
 import com.libei.util.RandomSaltUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -31,8 +31,6 @@ public class UserServiceImpl implements UserService {
     private AddressMapper addressMapper;
     @Autowired
     private AppraiseMapper appraiseMapper;
-//    @Autowired
-//    private
 
     @Override
     public UserEntity query(String account) {
@@ -98,4 +96,62 @@ public class UserServiceImpl implements UserService {
         return userMapper.queryUser(name, phoneNum);
     }
 
+    @Override
+    public Boolean update(UserRequest request) throws Exception {
+
+        UserEntity entity = userMapper.selectByPrimaryKey(request.getUserId());
+
+        if (entity == null) {
+            throw new Exception("账户信息不存在，请联系管理员");
+        }
+
+        BeanUtils.copyProperties(request, entity);
+
+        System.out.println(entity);
+
+        userMapper.updateByPrimaryKey(entity);
+
+        return true;
+    }
+
+    @Override
+    public UserEntity queryUser(Long userId) throws Exception {
+        UserEntity userEntity = userMapper.selectByPrimaryKey(userId);
+        if (userEntity == null) {
+            throw new Exception("账户信息不存在，请联系管理员");
+        }
+        return userEntity;
+    }
+
+    @Override
+    public Boolean updatePassword(Long userId, String oldPassword, String newPassword, String new2Password) throws Exception {
+        UserEntity userEntity = userMapper.selectByPrimaryKey(userId);
+        if (userEntity == null) {
+            throw new Exception("账户信息不存在，请联系管理员");
+        }
+        String password = userEntity.getPassword();
+        String salt = userEntity.getSalt();
+
+        if (!DigestUtils.md5DigestAsHex((oldPassword + salt).getBytes()).equals(password)) {
+            throw new Exception("原密码错误，请重试");
+        }
+
+        if (!newPassword.equals(new2Password)) {
+            throw new Exception("两次新密码输入不一致，请重试");
+        }
+
+        if (DigestUtils.md5DigestAsHex((newPassword + salt).getBytes()).equals(DigestUtils.md5DigestAsHex((oldPassword + salt).getBytes()))) {
+            throw new Exception("新老密码不能一致，请重新设置");
+        }
+        userEntity.setPassword(DigestUtils.md5DigestAsHex((newPassword + salt).getBytes()));
+
+        userMapper.updateByPrimaryKey(userEntity);
+
+        return true;
+    }
+
+//    public static void main(String[] args) {
+//        String s = DigestUtils.md5DigestAsHex(("123456" + "2W32").getBytes());
+//        System.out.println(s);
+//    }
 }

@@ -1,6 +1,8 @@
 package com.libei.service;
 
+import com.libei.Dto.PaySuccessDto;
 import com.libei.Dto.ShopCarDto;
+import com.libei.Dto.ShopCarSum;
 import com.libei.controller.request.OrderAddRequest;
 
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 public interface ShopCarService {
     Boolean addCar(Long id,Integer count);
 
-    List<ShopCarDto> queryCar();
+    ShopCarSum queryCar();
 
     Boolean reduce(Long id);
 
@@ -18,6 +20,6 @@ public interface ShopCarService {
 
     Boolean addCount(Long id);
 
-    Boolean add(OrderAddRequest request);
+    PaySuccessDto add(OrderAddRequest request);
 
 }

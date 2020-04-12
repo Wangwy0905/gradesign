@@ -16,8 +16,8 @@ public class AppraiseEntity {
     @Id
     private Long id;
     private Long userId;
-    private Long orderId;
+    private Long productId;
     private String content;
-    private String creator;
+   // private String account;
     private Long createDate;
 }

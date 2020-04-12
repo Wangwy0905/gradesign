@@ -4,7 +4,6 @@ import com.libei.Dto.AdminDto;
 import com.libei.controller.request.AdminRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.LoginRequest;
-import com.libei.entity.AddressEntity;
 import com.libei.entity.AdminEntity;
 import com.libei.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;

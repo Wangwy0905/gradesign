@@ -1,10 +1,7 @@
 package com.libei.controller;
 
 import com.libei.Dto.AppraiseDto;
-import com.libei.Dto.AppraiseResDto;
 import com.libei.controller.request.AppraiseRequest;
-import com.libei.controller.request.CommonRequest;
-import com.libei.entity.AppraiseEntity;
 import com.libei.service.AppraiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +33,9 @@ public class AppraiseController {
 
     @CrossOrigin
     @PostMapping("query")
-    public List<AppraiseDto> query() {
+    public List<AppraiseDto> query(@RequestParam("productId") Long productId) {
 
-        return appraiseService.query();
+        return appraiseService.query(productId);
     }
 
     //TODO 暂不提供修改功能  后续可添加

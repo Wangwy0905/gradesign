@@ -50,25 +50,25 @@ public class AppraiseServiceImpl implements AppraiseService {
         for (AppraiseDto appraiseDto :appraiseDtos){
             Long id = appraiseDto.getId();
             UserEntity userEntity = userMapper.selectByPrimaryKey(id);
-            appraiseDto.setUserName(userEntity.getAccount());
+            appraiseDto.setAccount(userEntity.getAccount());
         }
 
         return appraiseDtos;
     }
 
     @Override
-    public List<AppraiseDto> query() {
+    public List<AppraiseDto> query(Long productId) {
 
-        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll();
+        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryAll(productId);
 
         List<AppraiseDto> appraiseDtos = ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class);
         if (CollectionUtils.isEmpty(appraiseDtos)){
             return null;
         }
         for (AppraiseDto appraiseDto :appraiseDtos){
-            Long id = appraiseDto.getId();
+            Long id = appraiseDto.getUserId();
             UserEntity userEntity = userMapper.selectByPrimaryKey(id);
-            appraiseDto.setUserName(userEntity.getAccount());
+            appraiseDto.setAccount(userEntity.getAccount());
         }
 
         return appraiseDtos;

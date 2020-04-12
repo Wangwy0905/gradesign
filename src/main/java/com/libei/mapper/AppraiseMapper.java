@@ -7,11 +7,7 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface AppraiseMapper extends Mapper<AppraiseEntity> {
-    List<AppraiseEntity> queryAll();
-
-    Integer totalNum();
-
+    List<AppraiseEntity> queryAll(Long productId);
     void deleteByUserId(Long userId);
-
     List<AppraiseEntity> queryLike(Long userId);
 }

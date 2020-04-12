@@ -1,12 +1,8 @@
 package com.libei.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.libei.Dto.CollectDto;
-import com.libei.Dto.CollectResDto;
 import com.libei.Dto.ProductDetailDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.CollectRequest;
-import com.libei.controller.request.CommonRequest;
 import com.libei.entity.CollectEntity;
 import com.libei.entity.ProductEntity;
 import com.libei.mapper.CollectMapper;
@@ -17,8 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service

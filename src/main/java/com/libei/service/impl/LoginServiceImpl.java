@@ -16,7 +16,7 @@ public class LoginServiceImpl implements LoginService {
     UserService userService = null;
 
     @Override
-    public Boolean login(LoginRequest request) throws Exception {
+    public UserEntity login(LoginRequest request) throws Exception {
         String account = request.getAccount();
         String password = request.getPassword();
 
@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
             throw new Exception("密码输入错误，请重新输入");
         }
 
-        return true;
+        return entity;
     }
 
     @Override

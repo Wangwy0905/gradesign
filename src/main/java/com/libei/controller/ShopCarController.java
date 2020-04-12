@@ -1,12 +1,9 @@
 package com.libei.controller;
 
-import com.libei.Dto.Cartitem;
-import com.libei.Dto.ShopCarDto;
+import com.libei.Dto.ShopCarSum;
 import com.libei.service.ShopCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author li bei
@@ -29,7 +26,7 @@ public class ShopCarController {
 
     @CrossOrigin
     @PostMapping("query-car")
-    public List<ShopCarDto> queryCar() throws Exception {
+    public ShopCarSum queryCar() throws Exception {
 
         return shopCarService.queryCar();
     }

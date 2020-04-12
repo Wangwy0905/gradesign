@@ -7,10 +7,15 @@ import com.libei.entity.*;
 import com.libei.mapper.*;
 import com.libei.service.OrderService;
 import com.libei.util.ListUtils;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+import com.sun.tools.corba.se.idl.constExpr.Or;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +36,9 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> query() {
         List<OrderEntity> orderEntities = orderMapper.queryAll();
         List<OrderDto> orderDtos = ListUtils.entityListToModelList(orderEntities, OrderDto.class);
+        if (CollectionUtils.isEmpty(orderDtos)){
+            return null;
+        }
         for (OrderDto orderDto : orderDtos) {
             AddressEntity addressEntity = addressMapper.selectByPrimaryKey(orderDto.getAddressId());
             UserEntity entity = userMapper.selectByPrimaryKey(orderDto.getUserId());
@@ -38,15 +46,93 @@ public class OrderServiceImpl implements OrderService {
             orderDto.setDetailAddress(addressEntity.getProvince() + addressEntity.getCity() + addressEntity.getDetailAddress());
             orderDto.setAccount(entity.getAccount());
         }
-
         return orderDtos;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean delete(Long id) {
-        orderMapper.deleteByPrimaryKey(id);
+
+        OrderItem orderItem = orderItemMapper.selectByPrimaryKey(id);
+        List<OrderItem> orderItems = orderItemMapper.queryByOrderId(orderItem.getOrderId());
+        if (CollectionUtils.isEmpty(orderItems)){
+            orderMapper.deleteByOrderId(orderItem.getOrderId());
+        }
+
+        orderItemMapper.deleteByPrimaryKey(id);
         return true;
     }
+
+    @Override
+    public List<OrderItemDetailDto> queryFront(Long userId) {
+        List<OrderItem> orderItems = orderItemMapper.queryAll(userId);
+        List<OrderItemDetailDto> orderItemDetailDtos = ListUtils.entityListToModelList(orderItems, OrderItemDetailDto.class);
+        for (OrderItemDetailDto detailDto : orderItemDetailDtos) {
+            ProductEntity productEntity = productMapper.selectByPrimaryKey(detailDto.getProductId());
+            detailDto.setEntity(productEntity);
+        }
+        return orderItemDetailDtos;
+    }
+
+    @Override
+    public List<OrderItemDetailDto> queryDetails() {
+        List<OrderItem> orderItems = orderItemMapper.queryDetails();
+
+        List<OrderItemDetailDto> list=new ArrayList<>();
+        for (OrderItem orderItem:orderItems){
+            ProductEntity productEntity = productMapper.selectByPrimaryKey(orderItem.getProductId());
+            OrderItemDetailDto orderItemDetailDto=new OrderItemDetailDto();
+            BeanUtils.copyProperties(orderItem,OrderItemDetailDto.class);
+            orderItemDetailDto.setProductName(productEntity.getProductName());
+
+            list.add(orderItemDetailDto);
+        }
+        return list;
+    }
+
+    @Override
+    public List<OrderDto> search(String orderId, String account) {
+        UserEntity userEntity = userMapper.query(account);
+
+        if (userEntity==null){
+            return null;
+        }
+
+        List<OrderEntity> orderEntities = orderMapper.queryLike(orderId, userEntity.getId());
+
+
+        List<OrderDto> list=new ArrayList<>();
+
+        if (CollectionUtils.isEmpty(orderEntities)){
+            return null;
+        }
+        AddressEntity entity = addressMapper.selectByPrimaryKey(orderEntities.get(0));
+        for (OrderEntity orderEntity : orderEntities){
+            OrderDto orderDto=new OrderDto();
+            BeanUtils.copyProperties(orderEntity,OrderDto.class);
+            orderDto.setAccount(userEntity.getAccount());
+            orderDto.setDetailAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
+            list.add(orderDto);
+        }
+        return list;
+    }
+
+    @Override
+    public List<OrderItemDetailDto> searchDetail(String account) {
+        UserEntity userEntity = userMapper.query(account);
+        List<OrderItem> orderItems = orderItemMapper.queryLike(userEntity.getId());
+        List<OrderItemDetailDto> list=new ArrayList<>();
+        for (OrderItem orderItem:orderItems){
+            OrderItemDetailDto orderItemDetailDto=new OrderItemDetailDto();
+            ProductEntity productEntity = productMapper.selectByPrimaryKey(orderItem.getProductId());
+            BeanUtils.copyProperties(orderItem,OrderItemDetailDto.class);
+            orderItemDetailDto.setProductName(productEntity.getProductName());
+            list.add(orderItemDetailDto);
+        }
+
+        return list;
+    }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -79,15 +165,4 @@ public class OrderServiceImpl implements OrderService {
         return true;
     }
 
-    @Override
-    public List<OrderItemDetailDto> queryFront(Long userId) {
-        List<OrderItem> orderItems = orderItemMapper.queryAll(userId);
-        List<OrderItemDetailDto> orderItemDetailDtos = ListUtils.entityListToModelList(orderItems, OrderItemDetailDto.class);
-        for (OrderItemDetailDto detailDto : orderItemDetailDtos) {
-            ProductEntity productEntity = productMapper.selectByPrimaryKey(detailDto.getProductId());
-            detailDto.setEntity(productEntity);
-        }
-
-        return orderItemDetailDtos;
-    }
 }

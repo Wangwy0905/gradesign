@@ -30,9 +30,9 @@ public class AddressController {
 
     @CrossOrigin
     @GetMapping("query-front") //参数只需要userId  isDefault  页面地址查询
-    public List<AddressDto> query(@RequestParam("userId")Long userId,@RequestParam("isDefault") Boolean isDefault ) {
+    public List<AddressDto> query(@RequestParam("userId")Long userId) {
 
-        return addressService.query(userId,isDefault);
+        return addressService.query(userId);
     }
 
     @CrossOrigin
@@ -73,8 +73,8 @@ public class AddressController {
 
     @CrossOrigin
     @PostMapping("query-like")
-    public List<AddressEntity> queryLike(@RequestParam("param") String param) {
+    public List<AddressEntity> queryLike(@RequestParam("account") String account) {
 
-        return addressService.queryLike(param);
+        return addressService.queryLike(account);
     }
 }

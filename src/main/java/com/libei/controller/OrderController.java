@@ -2,17 +2,13 @@ package com.libei.controller;
 
 import com.libei.Dto.OrderDto;
 import com.libei.Dto.OrderItemDetailDto;
-import com.libei.Dto.ShopCarDto;
+import com.libei.Dto.PaySuccessDto;
 import com.libei.controller.request.OrderAddRequest;
-import com.libei.controller.request.OrderQueryRequest;
-import com.libei.controller.request.ProductQueryRequest;
-import com.libei.entity.OrderEntity;
 import com.libei.service.OrderService;
 import com.libei.service.ShopCarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -37,14 +33,12 @@ public class OrderController {
 
     //查看订单
     @CrossOrigin
-    @RequestMapping(value = "query",method = RequestMethod.GET)
+    @RequestMapping(value = "query-back",method = RequestMethod.GET)
     public List<OrderDto> query() {
 
         return orderService.query();
     }
-
-
-    @CrossOrigin
+    @CrossOrigin  //订单项id
     @RequestMapping(value = "delete",method = RequestMethod.GET)
     public Boolean delete(@RequestParam @Valid @NotNull Long id) {
         return orderService.delete(id);
@@ -52,7 +46,7 @@ public class OrderController {
 
     @CrossOrigin
     @RequestMapping(value = "add",method = RequestMethod.POST)
-    public Boolean add(@RequestBody OrderAddRequest request) {
+    public PaySuccessDto add(@RequestBody OrderAddRequest request) {
         return shopCarService.add(request);
     }
 
@@ -63,9 +57,26 @@ public class OrderController {
         return orderService.queryFront(userId);
     }
 
-/*    @CrossOrigin
-    @RequestMapping(value = "query-back",method = RequestMethod.GET)
-    public List<OrderItemDetailDto> queryBack(@RequestParam Long userId) {
-        return orderService.quer(userId);
-    }*/
+    //后台查询详情页列表
+    @CrossOrigin
+    @RequestMapping(value = "queryDetails",method = RequestMethod.GET)
+    public List<OrderItemDetailDto> queryDetails() {
+        return orderService.queryDetails();
+    }
+
+    //订单搜索
+    @CrossOrigin
+    @RequestMapping(value = "search",method = RequestMethod.GET)
+    public List<OrderDto> search(@RequestParam("orderId") String orderId,@RequestParam("account") String account) {
+        return orderService.search(orderId,account);
+    }
+
+    //订单项搜索
+    @CrossOrigin
+    @RequestMapping(value = "search-detail",method = RequestMethod.GET)
+    public List<OrderItemDetailDto> searchDetail(@RequestParam("account") String account) {
+        return orderService.searchDetail(account);
+    }
+
+
 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.UserMapper">
+<!--
     <select id="query" resultType="UserEntity">
         select * from user where account=#{account} and password=#{password}
     </select>
+-->
 
     <select id="queryUser" resultType="UserEntity">
         select * from user_entity
@@ -15,6 +17,8 @@
                 and account like  concat ('%',#{phoneNum,jdbcType=VARCHAR},'%')
             </if>
             order by create_time desc
-
+    </select>
+    <select id="queryDetails" resultType="UserEntity"  parameterType="java.lang.String">
+        select * from user_entity where account like concat ('%',#{account,jdbcType=VARCHAR},'%') order by create_time desc
     </select>
 </mapper>

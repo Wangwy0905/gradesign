@@ -1,17 +1,13 @@
 package com.libei.Dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import java.util.Date;
 
 @Data
 public class AppraiseDto {
     private Long id;
-    private String userName;
+    private String account;
     private Long userId;
-    private Long orderId;
+    private Long productId;
     private String content;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date createDate;
+    private Long createDate;
 }

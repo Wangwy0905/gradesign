@@ -13,4 +13,19 @@
         select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1 and user_id =#{userId} order by create_date desc
     </select>
 
+    <select id="queryLike" resultType="java.lang.Long">
+        select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1
+        <if test="userId !=null">
+            and user_id like concat ('%',#{userId},'%')
+        </if>
+        <if test="userId !=null">
+            and order_id like concat ('%',#{orderId},'%')
+        </if>
+            order by create_date desc
+    </select>
+
+    <delete id="deleteByOrderId">
+        delete from order_entity where order_id =#{OrderId}
+    </delete>
+
 </mapper>

@@ -1,9 +1,7 @@
 package com.libei.service;
 
-import com.libei.Dto.CollectResDto;
 import com.libei.Dto.ProductDto;
 import com.libei.controller.request.CollectRequest;
-import com.libei.controller.request.CommonRequest;
 import com.libei.entity.CollectEntity;
 
 import java.util.List;

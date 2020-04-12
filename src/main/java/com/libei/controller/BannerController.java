@@ -1,9 +1,7 @@
 package com.libei.controller;
 
-import com.libei.Dto.BannerDto;
 import com.libei.Dto.BannerFrontDto;
 import com.libei.controller.request.BannerCommitRequest;
-import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.OpenRequest;
 import com.libei.entity.BannerEntity;
 import com.libei.service.BannerService;

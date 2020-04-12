@@ -14,7 +14,7 @@ public class OrderItemDetailDto {
     private Double cost;
     private Integer count;
     private Long userId;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime createDate;
+    private Long createDate;
     private ProductEntity entity;
+    private String productName;
 }

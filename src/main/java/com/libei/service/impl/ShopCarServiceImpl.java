@@ -1,13 +1,8 @@
 package com.libei.service.impl;
 
-import com.libei.Dto.Cartitem;
-import com.libei.Dto.ProductDetailDto;
-import com.libei.Dto.ShopCarDto;
+import com.libei.Dto.*;
 import com.libei.controller.request.OrderAddRequest;
-import com.libei.entity.OrderEntity;
-import com.libei.entity.OrderItem;
-import com.libei.entity.ProductEntity;
-import com.libei.entity.UserEntity;
+import com.libei.entity.*;
 import com.libei.mapper.*;
 import com.libei.service.AddressService;
 import com.libei.service.ProductService;
@@ -28,6 +23,7 @@ import static javax.swing.text.html.CSS.getAttribute;
 public class ShopCarServiceImpl implements ShopCarService {
 
     private Map<Long, Cartitem> productHashMap =new HashMap<>();
+    private  Double totalPrice=0.0;
     @Autowired
     private ProductService productService = null;
     @Autowired
@@ -67,25 +63,31 @@ public class ShopCarServiceImpl implements ShopCarService {
     }
 
     @Override
-    public List<ShopCarDto> queryCar() {
+    public ShopCarSum queryCar() {
 
         List<ShopCarDto> list=new ArrayList<>();
+        ShopCarSum shopCarSum=new ShopCarSum();
+        Integer count=0;
         if (productHashMap == null) {
           return null;
         } else {
             for (Long l : productHashMap.keySet()) {
                 ShopCarDto shopCarDto=new ShopCarDto();
                 shopCarDto.setCount(productHashMap.get(l).getCount());
-                shopCarDto.setPrice(productHashMap.get(l).getPrice());
+                shopCarDto.setPrice(productHashMap.get(l).getEntity().getPrice());
                 shopCarDto.setProductName(productHashMap.get(l).getEntity().getProductName());
                 shopCarDto.setDescription(productHashMap.get(l).getEntity().getDescription());
                 shopCarDto.setPicture(productHashMap.get(l).getEntity().getPicture());
                 shopCarDto.setId(productHashMap.get(l).getEntity().getId());
-
+                totalPrice+=productHashMap.get(l).getCount()*productHashMap.get(l).getEntity().getPrice();
+                count+=productHashMap.get(l).getCount();
                 list.add(shopCarDto);
             }
+            shopCarSum.setCount(count);
+            shopCarSum.setTotalPrice(totalPrice);
+            shopCarSum.setList(list);
         }
-        return list;
+        return shopCarSum;
     }
 
     //減少數量操作  刷新页面
@@ -108,7 +110,7 @@ public class ShopCarServiceImpl implements ShopCarService {
 
         Cartitem cartitem = productHashMap.get(id);
         cartitem.setCount(cartitem.getCount() + 1);
-        cartitem.setPrice(cartitem.getPrice() - cartitem.getEntity().getPrice());
+        cartitem.setPrice(cartitem.getPrice() + cartitem.getEntity().getPrice());
         productHashMap.put(id, cartitem);
 
         return true;
@@ -133,7 +135,7 @@ public class ShopCarServiceImpl implements ShopCarService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean add(OrderAddRequest request) {
+    public PaySuccessDto add(OrderAddRequest request) {
         OrderEntity orderEntity = new OrderEntity();
 
         BeanUtils.copyProperties(request, orderEntity);
@@ -144,7 +146,6 @@ public class ShopCarServiceImpl implements ShopCarService {
         if (productHashMap==null){
             return null;
         }
-
         orderMapper.insert(orderEntity);
 
         for (Map.Entry<Long, Cartitem> cartitemEntry : productHashMap.entrySet()) {
@@ -152,8 +153,8 @@ public class ShopCarServiceImpl implements ShopCarService {
             orderItem.setCost(cartitemEntry.getValue().getPrice());
             orderItem.setCount(cartitemEntry.getValue().getCount());
             orderItem.setProductId(cartitemEntry.getValue().getEntity().getId());
-            UserEntity entity = userMapper.selectByPrimaryKey(request.getUserId());
-            orderItem.setAccount(entity.getAccount());
+            //UserEntity entity = userMapper.selectByPrimaryKey(request.getUserId());
+            orderItem.setUserId(request.getUserId());
             orderItem.setCreateDate(System.currentTimeMillis());
             orderItem.setOrderId(orderId);
 
@@ -162,12 +163,16 @@ public class ShopCarServiceImpl implements ShopCarService {
             //productMapper.insert(productEntity);
             orderItemMapper.insert(orderItem);
         }
+        //清空购物车
+        this.clear();
 
-
-
-        return true;
+        PaySuccessDto paySuccessDto=new PaySuccessDto();
+        paySuccessDto.setOrderId(orderId);
+        AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
+        paySuccessDto.setDetailAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
+        paySuccessDto.setGainName(entity.getGainName());
+        paySuccessDto.setPhoneNum(entity.getPhoneNum());
+        paySuccessDto.setTotalPrice(totalPrice);
+        return paySuccessDto;
     }
-
-
-
 }
