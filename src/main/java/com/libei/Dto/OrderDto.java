@@ -12,9 +12,7 @@ public class OrderDto {
     private Double cost;
     private Integer number;
     private Long userId;
-    private Long addressId;
-    private String status;
-    private LocalDateTime createDate;
+    private Long createDate;
     private String account;
     private String detailAddress;
 }

@@ -8,6 +8,4 @@ public class SearchRequest {
     private String productName;
     private String description;
     private BlandEnum brand;
-    private int pageSize;
-    private int pageNum;
 }

@@ -8,7 +8,7 @@
 -->
 
     <select id="queryUser" resultType="UserEntity">
-        select * from user_entity
+        select id,account,name,password,id_num idNum,sex,email,status,create_time createTime from user_entity
         where 1=1
             <if test="name !=null">
                 and name like concat ('%',#{name,jdbcType=VARCHAR},'%')
@@ -18,7 +18,15 @@
             </if>
             order by create_time desc
     </select>
-    <select id="queryDetails" resultType="UserEntity"  parameterType="java.lang.String">
+  <!--  <select id="query" resultType="UserEntity"  parameterType="java.lang.String">
         select * from user_entity where account like concat ('%',#{account,jdbcType=VARCHAR},'%') order by create_time desc
+    </select>-->
+
+    <select id="query" resultType="UserEntity"  parameterType="java.lang.String">
+        select id,account,name,password,id_num idNum,sex,email,status,create_time createTime from user_entity where account =#{account} order by create_time desc
+    </select>
+
+    <select id="search" resultType="UserEntity">
+        select id,account,name,password,id_num idNum,sex,email,status,create_time createTime from user_entity where account=#{account}order by create_time desc
     </select>
 </mapper>

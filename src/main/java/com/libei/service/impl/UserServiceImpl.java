@@ -49,10 +49,8 @@ public class UserServiceImpl implements UserService {
         if (entity != null) {
             throw new Exception("该账户已存在，请换账号登录");
         }
-
         BeanUtils.copyProperties(request, userEntity);
         userEntity.setStatus("1");
-
         String salt = RandomSaltUtils.generetRandomSaltCode();
         userEntity.setPassword(DigestUtils.md5DigestAsHex((userEntity.getPassword() + salt).getBytes()));
         userEntity.setSalt(salt);
@@ -88,12 +86,8 @@ public class UserServiceImpl implements UserService {
 
     //搜索
     @Override
-    public List<UserEntity> search(CommonRequest commonRequest) {
-
-        String name = commonRequest.getName();
-        String phoneNum = commonRequest.getPhoneNum();
-
-        return userMapper.queryUser(name, phoneNum);
+    public List<UserEntity> search(String account) {
+        return userMapper.search(account);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.libei.Dto.CategoryDto;
 import com.libei.Dto.CategoryResDto;
 import com.libei.controller.request.CategoryRequest;
 import com.libei.entity.CategoryEntity;
+import com.libei.enums.BlandEnum;
 import com.libei.service.CategoryService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,9 @@ public class CategoryController {
         return categoryDtoList;
 
     }
-
-
     @PostMapping("add")
     @CrossOrigin
-    public Boolean add(@RequestBody @Valid @NotNull CategoryRequest request){
+    public Boolean add(@RequestBody CategoryRequest request){
         return categoryService.add(request);
     }
 
@@ -57,7 +56,7 @@ public class CategoryController {
 
     @PostMapping("update")
     @CrossOrigin
-    public Boolean update(@RequestParam CategoryRequest request){
+    public Boolean update(@RequestBody CategoryRequest request){
         return categoryService.update(request);
     }
 
@@ -65,6 +64,12 @@ public class CategoryController {
     @CrossOrigin
     public List<CategoryResDto> queryBack(){
         return categoryService.queryBack();
+    }
+
+    @GetMapping("search")
+    @CrossOrigin
+    public List<CategoryResDto> queryBack(@RequestParam("brand")String brand){
+        return categoryService.queryLike(brand);
     }
 
 }

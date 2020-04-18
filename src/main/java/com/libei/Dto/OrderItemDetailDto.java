@@ -17,4 +17,5 @@ public class OrderItemDetailDto {
     private Long createDate;
     private ProductEntity entity;
     private String productName;
+    private String account;
 }

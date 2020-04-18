@@ -32,11 +32,19 @@ public class AppraiseController {
     }
 
     @CrossOrigin
-    @PostMapping("query")
+    @GetMapping("query")
     public List<AppraiseDto> query(@RequestParam("productId") Long productId) {
 
         return appraiseService.query(productId);
     }
+
+    @CrossOrigin
+    @GetMapping("query-back")
+    public List<AppraiseDto> queryBack() {
+
+        return appraiseService.queryBack();
+    }
+
 
     //TODO 暂不提供修改功能  后续可添加
 

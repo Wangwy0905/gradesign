@@ -15,6 +15,15 @@
     </select>
 
     <select id="queryAll" resultType="CategoryEntity">
-        select id,category_name categoryName,first_id firstId,create_time createTime from category order by create_time
+        select id,category_name categoryName,first_id firstId,create_time createTime from category order by create_time desc
+    </select>
+
+
+    <select id="queryLike" resultType="CategoryEntity" parameterType="java.lang.String">
+        select id,category_name categoryName,first_id firstId,create_time createTime from category  where category_name=#{categoryName} order by create_time desc
+    </select>
+
+    <select id="query" resultType="CategoryEntity" parameterType="java.lang.String">
+        select id,category_name categoryName,first_id firstId,create_time createTime from category  where category_name=#{categoryName} order by create_time desc
     </select>
 </mapper>

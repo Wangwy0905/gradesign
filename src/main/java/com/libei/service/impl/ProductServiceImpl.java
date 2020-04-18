@@ -96,7 +96,6 @@ public class ProductServiceImpl implements ProductService {
 
         String originalFilename = file.getOriginalFilename();
         String path = request.getSession().getServletContext().getRealPath("/") + "img\\" + originalFilename;
-
         File dest = new File(path);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
@@ -106,7 +105,6 @@ public class ProductServiceImpl implements ProductService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return path;
     }
 
@@ -163,18 +161,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto search(SearchRequest request) {
+    public List<ProductDetailDto> search(SearchRequest request) {
         String brand = request.getBrand().toString();
         String description = request.getDescription();
         String productName = request.getProductName();
 
         List<ProductEntity> productEntityList = productMapper.queryLike(brand, productName, description);
         List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
-        ProductDto productDto = new ProductDto();
-        productDto.setTotal(productEntityList.size());
-        productDto.setRows(productDetailDtos);
 
-        return productDto;
+        return productDetailDtos;
+
+    }
+
+    @Override
+    public  List<ProductDetailDto> searchBack(String productName) {
+        List<ProductEntity> productEntityList = productMapper.queryLikeBack(productName);
+        List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
+
+        return productDetailDtos;
 
     }
 

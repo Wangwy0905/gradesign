@@ -24,4 +24,6 @@ public interface OrderService {
     List<OrderDto> search(String orderId,String account);
 
     List<OrderItemDetailDto> searchDetail(String account);
+
+    Boolean deleteItem(Long id);
 }

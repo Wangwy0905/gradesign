@@ -39,9 +39,9 @@ public class UserController {
 
     //搜索
     @CrossOrigin
-    @RequestMapping(value = "search", method = RequestMethod.POST)
-    public List<UserEntity> search(@RequestBody CommonRequest commonRequest) {
-        return userService.search(commonRequest);
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public List<UserEntity> search(@RequestParam("account") String account) {
+        return userService.search(account);
 
     }
 

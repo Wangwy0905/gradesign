@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 收藏
+ */
 @RestController
 @RequestMapping("/collect")
 public class CollectController {

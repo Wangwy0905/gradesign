@@ -4,6 +4,7 @@ import com.libei.Dto.CategoryDto;
 import com.libei.Dto.CategoryResDto;
 import com.libei.controller.request.CategoryRequest;
 import com.libei.entity.CategoryEntity;
+import com.libei.enums.BlandEnum;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface CategoryService {
     Boolean update(CategoryRequest request);
 
     List<CategoryResDto> queryBack();
+
+    List<CategoryResDto> queryLike(String brand);
 }

@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class Cartitem {
     private ProductEntity entity;
     private Integer count;
-    private Double price;
+    private Double price;//小计
    // private Integer ddPrice;
 }

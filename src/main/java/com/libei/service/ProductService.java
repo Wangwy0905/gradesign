@@ -23,7 +23,8 @@ public interface ProductService {
 
     ProductEntity queryOne(Long id);
 
-    ProductDto search(SearchRequest request);
+    List<ProductDetailDto> search(SearchRequest request);
+    List<ProductDetailDto> searchBack(String  productName);
 
     String upload(MultipartFile file,HttpServletRequest request) throws Exception;
 

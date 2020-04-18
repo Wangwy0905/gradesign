@@ -13,5 +13,7 @@ public interface UserMapper extends Mapper<UserEntity> {
 
     List<UserEntity> queryUser(@Param("name") String name, @Param("phoneNum") String phoneNum);
 
-    UserEntity query(@Param("account") String account);
+    UserEntity query(String account);
+
+    List<UserEntity> search(String account);
 }

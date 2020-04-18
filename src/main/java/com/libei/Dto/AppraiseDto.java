@@ -10,4 +10,5 @@ public class AppraiseDto {
     private Long productId;
     private String content;
     private Long createDate;
+    private String productName;
 }

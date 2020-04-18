@@ -16,4 +16,6 @@ public interface AppraiseService {
     List<AppraiseDto> query(Long productId);
 
     List<AppraiseDto> queryLike(Long userId);
+
+    List<AppraiseDto> queryBack();
 }

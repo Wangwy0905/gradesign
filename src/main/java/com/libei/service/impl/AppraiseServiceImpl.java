@@ -3,8 +3,10 @@ package com.libei.service.impl;
 import com.libei.Dto.AppraiseDto;
 import com.libei.controller.request.AppraiseRequest;
 import com.libei.entity.AppraiseEntity;
+import com.libei.entity.ProductEntity;
 import com.libei.entity.UserEntity;
 import com.libei.mapper.AppraiseMapper;
+import com.libei.mapper.ProductMapper;
 import com.libei.mapper.UserMapper;
 import com.libei.service.AppraiseService;
 import com.libei.util.ListUtils;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AppraiseServiceImpl implements AppraiseService {
@@ -24,6 +27,8 @@ public class AppraiseServiceImpl implements AppraiseService {
     private AppraiseMapper appraiseMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ProductMapper productMapper;
 
     @Override
     public Boolean add(AppraiseRequest request) {
@@ -31,7 +36,6 @@ public class AppraiseServiceImpl implements AppraiseService {
         BeanUtils.copyProperties(request, entity);
         entity.setCreateDate(System.currentTimeMillis());
         appraiseMapper.insert(entity);
-
         return true;
     }
 
@@ -48,12 +52,32 @@ public class AppraiseServiceImpl implements AppraiseService {
 
         List<AppraiseDto> appraiseDtos = ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class);
         for (AppraiseDto appraiseDto :appraiseDtos){
-            Long id = appraiseDto.getId();
+            Long id = appraiseDto.getUserId();
             UserEntity userEntity = userMapper.selectByPrimaryKey(id);
             appraiseDto.setAccount(userEntity.getAccount());
         }
 
         return appraiseDtos;
+    }
+
+    @Override
+    public List<AppraiseDto> queryBack() {
+        List<AppraiseEntity> appraiseEntities= appraiseMapper.queryBack();
+
+        List<AppraiseDto> appraiseDtos = ListUtils.entityListToModelList(appraiseEntities, AppraiseDto.class);
+        for (AppraiseDto appraiseDto :appraiseDtos){
+            Long id = appraiseDto.getUserId();
+            UserEntity userEntity = userMapper.selectByPrimaryKey(id);
+            Long productId=appraiseDto.getProductId();
+            ProductEntity productEntity = productMapper.selectByPrimaryKey(productId);
+            appraiseDto.setAccount(userEntity.getAccount());
+            appraiseDto.setProductName(productEntity.getProductName());
+        }
+
+        return appraiseDtos;
+
+        //通用mapper  github
+
     }
 
     @Override

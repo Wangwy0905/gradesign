@@ -4,10 +4,13 @@ import com.libei.Dto.CategoryDto;
 import com.libei.Dto.CategoryResDto;
 import com.libei.controller.request.CategoryRequest;
 import com.libei.entity.CategoryEntity;
+import com.libei.entity.ProductEntity;
+import com.libei.enums.BlandEnum;
 import com.libei.mapper.CategoryMapper;
 import com.libei.mapper.ProductMapper;
 import com.libei.service.CategoryService;
 import com.libei.util.ListUtils;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,20 +51,20 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean delete(Long id) {
-        categoryMapper.deleteByPrimaryKey(id);
-
         //级联删除该分类下所有商品   慎用
-        CategoryEntity categoryEntity = categoryMapper.selectByPrimaryKey(id);
-        productMapper.deleteByCategory(id);
+        List<ProductEntity> list = productMapper.selectByCategory(id);
+        if (! CollectionUtils.isEmpty(list) ){
+            productMapper.deleteByCategory(id);
+        }
+        categoryMapper.deleteByPrimaryKey(id);
 
         return true;
     }
 
     @Override
     public Boolean update(CategoryRequest request) {
-        CategoryEntity categoryEntity = new CategoryEntity();
-
-        BeanUtils.copyProperties(request, categoryEntity);
+        CategoryEntity categoryEntity = categoryMapper.selectByPrimaryKey(request.getId());
+        categoryEntity.setCategoryName(request.getCategoryName());
         categoryEntity.setCreateTime(System.currentTimeMillis());
 
         categoryMapper.updateByPrimaryKey(categoryEntity);
@@ -93,6 +96,26 @@ public class CategoryServiceImpl implements CategoryService {
 
         return list;
 
+    }
+
+    @Override
+    public List<CategoryResDto> queryLike(String brand) {
+        CategoryEntity t = categoryMapper.query(brand);
+
+        List<CategoryEntity> categoryEntities  = categoryMapper.querySecond(t.getId());
+        List<CategoryResDto> list=new ArrayList<>();
+        for (CategoryEntity categoryEntity:categoryEntities){
+
+            CategoryResDto categoryResDto=new CategoryResDto();
+            CategoryEntity entity = categoryMapper.selectByPrimaryKey(categoryEntity.getFirstId());
+            categoryResDto.setBrand(entity.getCategoryName());
+            categoryResDto.setModel(categoryEntity.getCategoryName());
+            categoryResDto.setCreateTime(categoryEntity.getCreateTime());
+            categoryResDto.setId(categoryEntity.getId());
+            list.add(categoryResDto);
+        }
+
+        return list;
     }
 
 

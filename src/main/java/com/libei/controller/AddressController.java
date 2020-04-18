@@ -21,7 +21,7 @@ public class AddressController {
     @Autowired
     private AddressService addressService = null;
 
-    @CrossOrigin
+    @CrossOrigin  //解决跨域
     @PostMapping("add")
     public Boolean add(@RequestBody AddressRequest request) {
 
@@ -72,7 +72,7 @@ public class AddressController {
     }
 
     @CrossOrigin
-    @PostMapping("query-like")
+    @GetMapping("query-like")
     public List<AddressEntity> queryLike(@RequestParam("account") String account) {
 
         return addressService.queryLike(account);

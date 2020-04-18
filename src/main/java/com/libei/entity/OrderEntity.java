@@ -19,8 +19,8 @@ public class OrderEntity {
     private Integer number;
     @Column(name = "user_id")
     private Long userId;
-    @Column(name = "address_id")
-    private Long addressId;
+    @Column(name = "address")
+    private String address;
     @Column(name = "create_date")
     private Long createDate;
 }

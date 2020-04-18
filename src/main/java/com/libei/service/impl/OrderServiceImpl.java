@@ -11,6 +11,7 @@ import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -35,33 +36,40 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> query() {
         List<OrderEntity> orderEntities = orderMapper.queryAll();
-        List<OrderDto> orderDtos = ListUtils.entityListToModelList(orderEntities, OrderDto.class);
-        if (CollectionUtils.isEmpty(orderDtos)){
+        if (CollectionUtils.isEmpty(orderEntities)){
             return null;
         }
-        for (OrderDto orderDto : orderDtos) {
-            AddressEntity addressEntity = addressMapper.selectByPrimaryKey(orderDto.getAddressId());
-            UserEntity entity = userMapper.selectByPrimaryKey(orderDto.getUserId());
-
-            orderDto.setDetailAddress(addressEntity.getProvince() + addressEntity.getCity() + addressEntity.getDetailAddress());
+        List<OrderDto> list=new ArrayList<>();
+        for (OrderEntity orderEntity : orderEntities) {
+           // AddressEntity addressEntity = addressMapper.selectByPrimaryKey(orderDto.getAddressId());
+            UserEntity entity = userMapper.selectByPrimaryKey(orderEntity.getUserId());
+           // orderDto.setDetailAddress(orderDto.getDetailAddress());
+            OrderDto orderDto=new OrderDto();
+            BeanUtils.copyProperties(orderEntity,orderDto);
+            orderDto.setDetailAddress(orderEntity.getAddress());
             orderDto.setAccount(entity.getAccount());
+            list.add(orderDto);
         }
-        return orderDtos;
+        return list;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean delete(Long id) {
 
-        OrderItem orderItem = orderItemMapper.selectByPrimaryKey(id);
-        List<OrderItem> orderItems = orderItemMapper.queryByOrderId(orderItem.getOrderId());
+        OrderEntity orderEntity = orderMapper.selectByPrimaryKey(id);
+        List<OrderItem> orderItems = orderItemMapper.queryByOrderId(orderEntity.getOrderId());
         if (CollectionUtils.isEmpty(orderItems)){
-            orderMapper.deleteByOrderId(orderItem.getOrderId());
-        }
+            for (OrderItem orderItem:orderItems){
+                orderItemMapper.deleteByPrimaryKey(orderItem.getId());
+            }
 
-        orderItemMapper.deleteByPrimaryKey(id);
+        }
+        orderMapper.deleteByPrimaryKey(id);
         return true;
     }
+
+
 
     @Override
     public List<OrderItemDetailDto> queryFront(Long userId) {
@@ -82,8 +90,10 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItem orderItem:orderItems){
             ProductEntity productEntity = productMapper.selectByPrimaryKey(orderItem.getProductId());
             OrderItemDetailDto orderItemDetailDto=new OrderItemDetailDto();
-            BeanUtils.copyProperties(orderItem,OrderItemDetailDto.class);
+            UserEntity userEntity = userMapper.selectByPrimaryKey(orderItem.getUserId());
+            BeanUtils.copyProperties(orderItem,orderItemDetailDto);
             orderItemDetailDto.setProductName(productEntity.getProductName());
+            orderItemDetailDto.setAccount(userEntity.getAccount());
 
             list.add(orderItemDetailDto);
         }
@@ -92,6 +102,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> search(String orderId, String account) {
+
+        orderId=null;
         UserEntity userEntity = userMapper.query(account);
 
         if (userEntity==null){
@@ -106,12 +118,18 @@ public class OrderServiceImpl implements OrderService {
         if (CollectionUtils.isEmpty(orderEntities)){
             return null;
         }
-        AddressEntity entity = addressMapper.selectByPrimaryKey(orderEntities.get(0));
+       // AddressEntity entity = addressMapper.selectByPrimaryKey(orderEntities.get(0));
         for (OrderEntity orderEntity : orderEntities){
             OrderDto orderDto=new OrderDto();
-            BeanUtils.copyProperties(orderEntity,OrderDto.class);
+            BeanUtils.copyProperties(orderEntity,orderDto);
             orderDto.setAccount(userEntity.getAccount());
-            orderDto.setDetailAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
+            orderDto.setDetailAddress(orderEntity.getAddress());
+          /*  if (entity!=null){
+                orderDto.setDetailAddress();
+            }else{
+                orderDto.setDetailAddress("地址已删除");
+            }
+*/
             list.add(orderDto);
         }
         return list;
@@ -125,12 +143,20 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItem orderItem:orderItems){
             OrderItemDetailDto orderItemDetailDto=new OrderItemDetailDto();
             ProductEntity productEntity = productMapper.selectByPrimaryKey(orderItem.getProductId());
-            BeanUtils.copyProperties(orderItem,OrderItemDetailDto.class);
+            BeanUtils.copyProperties(orderItem,orderItemDetailDto);
             orderItemDetailDto.setProductName(productEntity.getProductName());
+            orderItemDetailDto.setAccount(userEntity.getAccount());
             list.add(orderItemDetailDto);
         }
 
         return list;
+    }
+
+    @Override
+    public Boolean deleteItem(Long id) {
+        orderItemMapper.deleteByPrimaryKey(id);
+
+        return true;
     }
 
 

@@ -12,4 +12,7 @@ public interface CategoryMapper extends Mapper<CategoryEntity> {
     List<CategoryEntity> queryAll();
 
     List<CategoryEntity> queryFirst();
+
+    List<CategoryEntity> queryLike(String categoryName);
+    CategoryEntity query(String categoryName);
 }

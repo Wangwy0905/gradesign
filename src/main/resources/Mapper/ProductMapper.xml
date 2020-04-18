@@ -27,10 +27,10 @@
         picture,status,sale_count saleCount from product
         <where>
             <if test="productName !=null">
-                and product_name like concat ('%',#{productName},'%')
+                and product_name =#{productName}
             </if>
             <if test="brand !=null">
-                and brand like concat ('%',#{brand},'%')
+                and brand=#{brand}
             </if>
             <if test="description !=null">
                 and description like concat ('%',#{description},'%')
@@ -38,6 +38,12 @@
             and status='1'
         </where>
         ORDER by create_time desc
+    </select>
+
+    <select id="queryLikeBack" resultType="ProductEntity" parameterType="java.lang.String">
+        select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2
+        categoryId2,description,brand,capacity,create_time createTime,
+        picture,status,sale_count saleCount from product where product_name =#{productName} ORDER by create_time desc
     </select>
 
     <select id="queryFront" parameterType="java.lang.Integer" resultType="ProductEntity">
@@ -56,4 +62,13 @@
         select id,product_name productName,color,price,repertory,category_id categoryId,sale_count saleCount,category_id2 categoryId2,description,brand,capacity,create_time createTime,
         picture,status from product ORDER by sale_count desc
     </select>
+
+    <select id="selectByCategory" resultType="ProductEntity">
+        select id,product_name productName,color,price,repertory,category_id categoryId,sale_count saleCount,category_id2 categoryId2,description,brand,capacity,create_time createTime,
+        picture,status from product where category_id2 =#{categoryId2}
+    </select>
+
+    <delete id="deleteByCategory">
+         delete from product where category_id2 =#{categoryId2}
+    </delete>
 </mapper>

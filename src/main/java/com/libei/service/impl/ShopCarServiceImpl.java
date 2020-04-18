@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 import static javax.swing.text.html.CSS.getAttribute;
@@ -22,7 +25,7 @@ import static javax.swing.text.html.CSS.getAttribute;
 @Slf4j
 public class ShopCarServiceImpl implements ShopCarService {
 
-    private Map<Long, Cartitem> productHashMap =new HashMap<>();
+    private Map<Long, Cartitem> productHashMap =new HashMap<>(); //定义全局map集合
     private  Double totalPrice=0.0;
     @Autowired
     private ProductService productService = null;
@@ -48,16 +51,17 @@ public class ShopCarServiceImpl implements ShopCarService {
 
             Cartitem cartitem = new Cartitem(productEntity, count, productEntity.getPrice() * count);
             productHashMap.put(id, cartitem);
-        }*/ if (!productHashMap.containsKey(id)) {
-            Cartitem cartitem = new Cartitem(productEntity, count, productEntity.getPrice() * count);
-            productHashMap.put(id, cartitem);
-        } else {
-            Cartitem cartitem = productHashMap.get(id);
-            cartitem.setEntity(productEntity);
-            cartitem.setCount(cartitem.getCount() + count);
-            cartitem.setPrice(cartitem.getPrice() + productEntity.getPrice()*count);
-            productHashMap.put(id, cartitem);
-        }
+        }*/
+      if (!productHashMap.containsKey(id)) {
+        Cartitem cartitem = new Cartitem(productEntity, count, productEntity.getPrice() * count);
+        productHashMap.put(id, cartitem);
+    } else {
+        Cartitem cartitem = productHashMap.get(id);
+        cartitem.setEntity(productEntity);
+        cartitem.setCount(cartitem.getCount() + count);
+        cartitem.setPrice(cartitem.getPrice() + productEntity.getPrice()*count);
+        productHashMap.put(id, cartitem);
+    }
 
         return true;
     }
@@ -68,6 +72,7 @@ public class ShopCarServiceImpl implements ShopCarService {
         List<ShopCarDto> list=new ArrayList<>();
         ShopCarSum shopCarSum=new ShopCarSum();
         Integer count=0;
+        Double totalPrice=0.0;
         if (productHashMap == null) {
           return null;
         } else {
@@ -94,7 +99,6 @@ public class ShopCarServiceImpl implements ShopCarService {
     @Override
     public Boolean reduce(Long id) {
        // HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
-
         Cartitem cartitem = productHashMap.get(id);
         cartitem.setCount(cartitem.getCount() - 1);
         cartitem.setPrice(cartitem.getPrice() - cartitem.getEntity().getPrice());
@@ -115,15 +119,14 @@ public class ShopCarServiceImpl implements ShopCarService {
 
         return true;
     }
-
+    //删除
     @Override
     public Boolean remove(Long id) {
        // HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
-
         productHashMap.remove(id);
         return true;
     }
-
+    //清空
     @Override
     public Boolean clear() {
       //  HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
@@ -137,8 +140,9 @@ public class ShopCarServiceImpl implements ShopCarService {
     @Transactional(rollbackFor = Exception.class)
     public PaySuccessDto add(OrderAddRequest request) {
         OrderEntity orderEntity = new OrderEntity();
-
+        AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
         BeanUtils.copyProperties(request, orderEntity);
+        orderEntity.setAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
         orderEntity.setCreateDate(System.currentTimeMillis());
         String orderId = UUID.randomUUID().toString().replace("-", "");
         orderEntity.setOrderId(orderId);
@@ -168,7 +172,7 @@ public class ShopCarServiceImpl implements ShopCarService {
 
         PaySuccessDto paySuccessDto=new PaySuccessDto();
         paySuccessDto.setOrderId(orderId);
-        AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
+       // AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
         paySuccessDto.setDetailAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
         paySuccessDto.setGainName(entity.getGainName());
         paySuccessDto.setPhoneNum(entity.getPhoneNum());

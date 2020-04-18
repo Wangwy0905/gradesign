@@ -3,23 +3,23 @@
 <mapper namespace="com.libei.mapper.OrderMapper">
 
     <select id="queryAll" resultType="OrderEntity">
-        select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1  order by create_date desc
+        select id,order_id orderId,cost,number,user_id userId,address,create_date createDate from order_entity where 1=1  order by create_date desc
     </select>
     <delete id="deleteByUserId">
         delete from order_entity where user_id =#{userId}
     </delete>
 
     <select id="queryFront" resultType="java.lang.Long">
-        select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1 and user_id =#{userId} order by create_date desc
+        select id,cost,number,user_id userId,address,create_date createDate from order_entity where 1=1 and user_id =#{userId} order by create_date desc
     </select>
 
-    <select id="queryLike" resultType="java.lang.Long">
-        select id,cost,number,user_id userId,address_id addressId,status,create_date createDate from order_entity where 1=1
+    <select id="queryLike" resultType="OrderEntity">
+        select id,cost,number,user_id userId,address,create_date createDate from order_entity where 1=1
         <if test="userId !=null">
-            and user_id like concat ('%',#{userId},'%')
+            and user_id =#{userId}
         </if>
-        <if test="userId !=null">
-            and order_id like concat ('%',#{orderId},'%')
+        <if test="orderId !=null">
+            and order_id=#{orderId}
         </if>
             order by create_date desc
     </select>

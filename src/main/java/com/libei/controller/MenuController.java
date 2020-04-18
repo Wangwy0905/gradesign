@@ -1,3 +1,4 @@
+/*
 package com.libei.controller;
 
 import com.libei.Dto.MenuDto;
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+*/
 /**
  * @Author li bei
  * @date 2019.12.28
  * 菜单接口
- */
+ *//*
+
 
 @RestController
 @RequestMapping("menu")
@@ -30,3 +33,4 @@ public class MenuController {
         return menuDtoList;
     }
 }
+*/

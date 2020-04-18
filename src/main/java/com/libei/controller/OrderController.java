@@ -13,6 +13,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * 订单
+ */
 @RestController
 @RequestMapping("order")
 public class OrderController {
@@ -38,10 +41,17 @@ public class OrderController {
 
         return orderService.query();
     }
-    @CrossOrigin  //订单项id
+    @CrossOrigin  //订单id
     @RequestMapping(value = "delete",method = RequestMethod.GET)
     public Boolean delete(@RequestParam @Valid @NotNull Long id) {
         return orderService.delete(id);
+    }
+
+    //订单项删除
+    @CrossOrigin
+    @RequestMapping(value = "delete-item",method = RequestMethod.GET)
+    public Boolean deleteItem(@RequestParam @Valid @NotNull Long id) {
+        return orderService.deleteItem(id);
     }
 
     @CrossOrigin
@@ -59,7 +69,7 @@ public class OrderController {
 
     //后台查询详情页列表
     @CrossOrigin
-    @RequestMapping(value = "queryDetails",method = RequestMethod.GET)
+    @RequestMapping(value = "query-details",method = RequestMethod.GET)
     public List<OrderItemDetailDto> queryDetails() {
         return orderService.queryDetails();
     }

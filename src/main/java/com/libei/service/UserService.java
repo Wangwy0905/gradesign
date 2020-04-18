@@ -17,7 +17,7 @@ public interface UserService {
 
     Boolean delete(Long id) throws Exception;
 
-    List<UserEntity> search(CommonRequest commonRequest);
+    List<UserEntity> search(String account);
 
     Boolean update(UserRequest request) throws Exception;
 

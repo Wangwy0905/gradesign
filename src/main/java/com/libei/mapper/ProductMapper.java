@@ -13,16 +13,18 @@ public interface ProductMapper extends Mapper<ProductEntity> {
 
     List<ProductEntity> queryLike(@Param(value = "brand")String brand, @Param(value = "productName")String productName, @Param(value = "description")String description);
 
-    void deleteByCategory(Long categoryId);
+    void deleteByCategory(Long categoryId2);
 
     List<ProductEntity> queryFront(Long userId);
 
 
     Integer count(Long userId);
 
-    void addSale(Long id);
+    List<ProductEntity> queryLikeBack(String productName);
 
     List<ProductEntity> querySaleCount();
+
+    List<ProductEntity> selectByCategory(Long categoryId2);
 
 
     //Boolean addSale();

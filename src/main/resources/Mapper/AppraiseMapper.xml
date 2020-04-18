@@ -23,4 +23,10 @@
 
     </select>
 
+    <select id="queryBack" resultType="AppraiseEntity">
+
+        select id,user_id userId,product_id productId,content,create_date createDate from appraise order by create_date desc
+
+    </select>
+
 </mapper>

@@ -91,12 +91,21 @@ public class ProductController {
         return productService.queryOne(id);
     }
 
+    //TODO 前台搜索
     @CrossOrigin
     @PostMapping("search")
-    public ProductDto search(@RequestBody SearchRequest request) throws IOException {
+    public  List<ProductDetailDto> search(@RequestBody SearchRequest request) throws IOException {
 
         return productService.search(request);
     }
+
+    @CrossOrigin
+    @GetMapping("search-back")
+    public List<ProductDetailDto> searchBack(@RequestParam("productName") String productName) throws IOException {
+
+        return productService.searchBack(productName);
+    }
+
 
     //激活
     @CrossOrigin
