@@ -2,10 +2,8 @@ package com.libei.service.impl;
 
 import com.libei.Dto.AdminDetailDto;
 import com.libei.Dto.AdminDto;
-import com.libei.controller.request.AdminRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.LoginRequest;
-import com.libei.entity.AddressEntity;
 import com.libei.entity.AdminEntity;
 import com.libei.mapper.AdminMapper;
 import com.libei.service.AdminService;
@@ -41,7 +39,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Boolean login(LoginRequest request) throws Exception {
+    public Long login(LoginRequest request) throws Exception {
         String account = request.getAccount();
         String password = request.getPassword();
 
@@ -59,18 +57,30 @@ public class AdminServiceImpl implements AdminService {
             throw new Exception("密码输入错误，请重新输入");
         }
 
-        return true;
+        return adminEntity.getId();
     }
 
     @Override
-    public Boolean updatePassword(AdminRequest adminRequest) throws Exception {
-        AdminEntity adminEntity = adminMapper.selectByPrimaryKey(adminRequest.getId());
+    public Boolean updatePassword(Long adminId,String oldPassword, String newPassword, String new2Password) throws Exception {
+        AdminEntity adminEntity = adminMapper.selectByPrimaryKey(adminId);
 
         if (adminEntity == null) {
-            throw new Exception("管理员账户号不存在");
+            throw new Exception("账户信息不存在，请联系管理员");
+        }
+        String password = adminEntity.getPassword();
+
+        if (!oldPassword .equals(password)) {
+            throw new Exception("原密码错误，请重试");
         }
 
-        adminEntity.setPassword(adminRequest.getPassword());
+        if (!newPassword.equals(new2Password)) {
+            throw new Exception("两次新密码输入不一致，请重试");
+        }
+
+        if (newPassword.equals(oldPassword )) {
+            throw new Exception("新老密码不能一致，请重新设置");
+        }
+        adminEntity.setPassword(newPassword);
 
         adminMapper.updateByPrimaryKey(adminEntity);
 

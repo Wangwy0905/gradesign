@@ -6,8 +6,8 @@
         select id,cost,user_id userId,product_id productId,order_id orderId,count,create_date createDate from order_entity where 1=1  order by create_date desc
     </select>-->
 
-    <select id="queryAll" resultType="OrderEntity">
-        select id,cost,user_id userId,order_id orderId,create_date createDate,number,address_id addressId from order_entity where 1=1  order by create_date desc
+    <select id="queryAll" resultType="OrderItem" parameterType="java.lang.Long">
+        select id,cost,user_id userId,product_id productId,order_id orderId,count,create_date createDate from order_detail where user_id=#{userId}  order by create_date desc
     </select>
    <!--&lt;!&ndash; <delete id="deleteByUserId">
         delete from order_entity where user_id =#{userId}

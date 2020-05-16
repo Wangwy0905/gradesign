@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ProductDetailDto {
     private Long id;
+    private Long CollectId;
     private String productName;
     private String color;   //颜色
     private Double price;  //价格

@@ -1,7 +1,6 @@
 package com.libei.controller;
 
 import com.libei.Dto.AdminDto;
-import com.libei.controller.request.AdminRequest;
 import com.libei.controller.request.CommonRequest;
 import com.libei.controller.request.LoginRequest;
 import com.libei.entity.AdminEntity;
@@ -26,15 +25,15 @@ public class AdminController {
 
 
     @CrossOrigin
-    @PostMapping("update-password")
-    public Boolean update(@RequestBody AdminRequest adminRequest) throws Exception {
-        return adminService.updatePassword(adminRequest);
+    @GetMapping("update-password")
+    public Boolean update(@RequestParam("adminId") Long adminId,@RequestParam("oldPassword") String oldPassword,@RequestParam("newPassword") String newPassword,@RequestParam("new2Password") String new2Password) throws Exception {
+        return adminService.updatePassword(adminId,oldPassword,newPassword,new2Password);
 
     }
 
     @CrossOrigin
     @PostMapping("login")
-    public Boolean login(@RequestBody LoginRequest loginRequest) throws Exception {
+    public Long login(@RequestBody LoginRequest loginRequest) throws Exception {
         return adminService.login(loginRequest);
 
     }

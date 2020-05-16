@@ -13,7 +13,7 @@ public interface OrderMapper extends Mapper<OrderEntity> {
 
     List<OrderEntity> queryFront(Long userId);
 
-    List<OrderEntity> queryLike(@Param("orderId") String orderId,@Param("userId") Long userId);
+    List<OrderEntity> queryLike(@Param("userId") Long userId);
 
     Boolean deleteByOrderId(String orderId);
 }

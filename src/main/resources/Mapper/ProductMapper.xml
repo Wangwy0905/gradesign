@@ -46,11 +46,11 @@
         picture,status,sale_count saleCount from product where product_name =#{productName} ORDER by create_time desc
     </select>
 
-    <select id="queryFront" parameterType="java.lang.Integer" resultType="ProductEntity">
+    <select id="queryFront" parameterType="java.lang.Long" resultType="ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
         categoryId2,description,brand,capacity,create_time createTime,
         picture,status,sale_count saleCount from product where status='1' and
-        user_id=#{userId}  ORDER by create_time desc
+        id=#{productId}  ORDER by create_time desc
 
     </select>
 

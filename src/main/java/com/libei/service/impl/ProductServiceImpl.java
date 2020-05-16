@@ -5,7 +5,9 @@ import com.libei.Dto.ProductDto;
 import com.libei.controller.request.ProductCommitRequest;
 import com.libei.controller.request.SearchRequest;
 import com.libei.entity.ProductEntity;
+import com.libei.mapper.CollectMapper;
 import com.libei.mapper.ProductMapper;
+import com.libei.service.CollectService;
 import com.libei.service.ProductService;
 import com.libei.util.ListUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +36,9 @@ import java.util.List;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
     @Autowired
-    ProductMapper productMapper;
+    private ProductMapper productMapper;
+    @Autowired
+    private CollectMapper collectMapper;
 
     @Override
     public ProductDto query(Long categoryId, Long category2) {
@@ -61,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDetailDto> query() {
 
         List<ProductEntity> query = productMapper.query();
-        return ListUtils.entityListToModelList(query,ProductDetailDto.class);
+        return ListUtils.entityListToModelList(query, ProductDetailDto.class);
     }
 
     @Override
@@ -95,7 +99,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         String originalFilename = file.getOriginalFilename();
-        String path = request.getSession().getServletContext().getRealPath("/") + "img\\" + originalFilename;
+        //String path = request.getSession().getServletContext().getRealPath("/") + "img\\" + originalFilename;
+        String path = "C:\\Users\\13037\\Desktop\\mall\\static\\images\\" + originalFilename;
         File dest = new File(path);
         if (!dest.getParentFile().exists()) {
             dest.getParentFile().mkdirs();
@@ -105,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return path;
+        return "\\static\\images\\" + originalFilename;
     }
 
     @Override
@@ -120,26 +125,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity>saleCount() {
+    public List<ProductEntity> saleCount() {
         List<ProductEntity> productEntities = productMapper.querySaleCount();
 
-        List<ProductEntity> list=new ArrayList<>();
-        if (productEntities.size()>2){
+        List<ProductEntity> list = new ArrayList<>();
+        if (productEntities.size() > 2) {
             list.add(productEntities.get(0));
-            list.add(productEntities.get(0));
-            list.add(productEntities.get(0));
+            list.add(productEntities.get(1));
+            list.add(productEntities.get(2));
 
             return list;
-        }else {
+        } else {
             return productEntities;
         }
     }
 
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean delete(Long id) {
+        //删除商品
         productMapper.deleteByPrimaryKey(id);
-
+        //删除收藏
+        collectMapper.deleteByProId(id);
         return true;
     }
 
@@ -174,7 +182,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public  List<ProductDetailDto> searchBack(String productName) {
+    public List<ProductDetailDto> searchBack(String productName) {
         List<ProductEntity> productEntityList = productMapper.queryLikeBack(productName);
         List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntityList, ProductDetailDto.class);
 

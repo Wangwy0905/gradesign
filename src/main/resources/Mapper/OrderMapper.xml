@@ -14,14 +14,7 @@
     </select>
 
     <select id="queryLike" resultType="OrderEntity">
-        select id,cost,number,user_id userId,address,create_date createDate from order_entity where 1=1
-        <if test="userId !=null">
-            and user_id =#{userId}
-        </if>
-        <if test="orderId !=null">
-            and order_id=#{orderId}
-        </if>
-            order by create_date desc
+        select id,cost,order_id orderId,number,user_id userId,address,create_date createDate from order_entity where  user_id =#{userId} order by create_date desc
     </select>
 
     <delete id="deleteByOrderId">

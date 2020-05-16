@@ -36,54 +36,56 @@ public class OrderController {
 
     //查看订单
     @CrossOrigin
-    @RequestMapping(value = "query-back",method = RequestMethod.GET)
+    @RequestMapping(value = "query-back", method = RequestMethod.GET)
     public List<OrderDto> query() {
 
         return orderService.query();
     }
+
     @CrossOrigin  //订单id
-    @RequestMapping(value = "delete",method = RequestMethod.GET)
-    public Boolean delete(@RequestParam @Valid @NotNull Long id) {
-        return orderService.delete(id);
+    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    public Boolean delete(@RequestParam @Valid @NotNull Long id) throws Exception {
+        Boolean delete =  orderService.delete(id);
+        return delete;
     }
 
     //订单项删除
     @CrossOrigin
-    @RequestMapping(value = "delete-item",method = RequestMethod.GET)
+    @RequestMapping(value = "delete-item", method = RequestMethod.GET)
     public Boolean deleteItem(@RequestParam @Valid @NotNull Long id) {
         return orderService.deleteItem(id);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public PaySuccessDto add(@RequestBody OrderAddRequest request) {
         return shopCarService.add(request);
     }
 
     //查看我的订单详情
     @CrossOrigin
-    @RequestMapping(value = "query-front",method = RequestMethod.GET)
-    public List<OrderItemDetailDto> queryFront(@RequestParam Long userId) {
+    @RequestMapping(value = "query-front", method = RequestMethod.GET)
+    public List<OrderItemDetailDto> queryFront(@RequestParam("userId") Long userId) {
         return orderService.queryFront(userId);
     }
 
     //后台查询详情页列表
     @CrossOrigin
-    @RequestMapping(value = "query-details",method = RequestMethod.GET)
+    @RequestMapping(value = "query-details", method = RequestMethod.GET)
     public List<OrderItemDetailDto> queryDetails() {
         return orderService.queryDetails();
     }
 
     //订单搜索
     @CrossOrigin
-    @RequestMapping(value = "search",method = RequestMethod.GET)
-    public List<OrderDto> search(@RequestParam("orderId") String orderId,@RequestParam("account") String account) {
-        return orderService.search(orderId,account);
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public List<OrderDto> search(@RequestParam("account") String account) {
+        return orderService.search(account);
     }
 
     //订单项搜索
     @CrossOrigin
-    @RequestMapping(value = "search-detail",method = RequestMethod.GET)
+    @RequestMapping(value = "search-detail", method = RequestMethod.GET)
     public List<OrderItemDetailDto> searchDetail(@RequestParam("account") String account) {
         return orderService.searchDetail(account);
     }

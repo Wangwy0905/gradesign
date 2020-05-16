@@ -13,7 +13,7 @@ import java.util.List;
 public interface OrderService {
     List<OrderDto> query();
 
-    Boolean delete(Long id);
+    Boolean delete(Long id) throws Exception;
 
     Boolean add(OrderAddRequest request);
 
@@ -21,7 +21,7 @@ public interface OrderService {
 
     List<OrderItemDetailDto> queryDetails();
 
-    List<OrderDto> search(String orderId,String account);
+    List<OrderDto> search(String account);
 
     List<OrderItemDetailDto> searchDetail(String account);
 

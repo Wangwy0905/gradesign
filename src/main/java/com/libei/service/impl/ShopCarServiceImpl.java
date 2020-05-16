@@ -25,8 +25,8 @@ import static javax.swing.text.html.CSS.getAttribute;
 @Slf4j
 public class ShopCarServiceImpl implements ShopCarService {
 
-    private Map<Long, Cartitem> productHashMap =new HashMap<>(); //定义全局map集合
-    private  Double totalPrice=0.0;
+    private Map<Long, Cartitem> productHashMap = new HashMap<>(); //定义全局map集合
+    private Double totalPrice = 0.0;
     @Autowired
     private ProductService productService = null;
     @Autowired
@@ -52,16 +52,16 @@ public class ShopCarServiceImpl implements ShopCarService {
             Cartitem cartitem = new Cartitem(productEntity, count, productEntity.getPrice() * count);
             productHashMap.put(id, cartitem);
         }*/
-      if (!productHashMap.containsKey(id)) {
-        Cartitem cartitem = new Cartitem(productEntity, count, productEntity.getPrice() * count);
-        productHashMap.put(id, cartitem);
-    } else {
-        Cartitem cartitem = productHashMap.get(id);
-        cartitem.setEntity(productEntity);
-        cartitem.setCount(cartitem.getCount() + count);
-        cartitem.setPrice(cartitem.getPrice() + productEntity.getPrice()*count);
-        productHashMap.put(id, cartitem);
-    }
+        if (!productHashMap.containsKey(id)) {
+            Cartitem cartitem = new Cartitem(productEntity, count, productEntity.getPrice() * count);
+            productHashMap.put(id, cartitem);
+        } else {
+            Cartitem cartitem = productHashMap.get(id);
+            cartitem.setEntity(productEntity);
+            cartitem.setCount(cartitem.getCount() + count);
+            cartitem.setPrice(cartitem.getPrice() + productEntity.getPrice() * count);
+            productHashMap.put(id, cartitem);
+        }
 
         return true;
     }
@@ -69,36 +69,38 @@ public class ShopCarServiceImpl implements ShopCarService {
     @Override
     public ShopCarSum queryCar() {
 
-        List<ShopCarDto> list=new ArrayList<>();
-        ShopCarSum shopCarSum=new ShopCarSum();
-        Integer count=0;
-        Double totalPrice=0.0;
+        List<ShopCarDto> list = new ArrayList<>();
+        ShopCarSum shopCarSum = new ShopCarSum();
+        Integer count = 0;
+        Double price = 0.0;
         if (productHashMap == null) {
-          return null;
+            return null;
         } else {
             for (Long l : productHashMap.keySet()) {
-                ShopCarDto shopCarDto=new ShopCarDto();
+                ShopCarDto shopCarDto = new ShopCarDto();
                 shopCarDto.setCount(productHashMap.get(l).getCount());
                 shopCarDto.setPrice(productHashMap.get(l).getEntity().getPrice());
                 shopCarDto.setProductName(productHashMap.get(l).getEntity().getProductName());
                 shopCarDto.setDescription(productHashMap.get(l).getEntity().getDescription());
                 shopCarDto.setPicture(productHashMap.get(l).getEntity().getPicture());
                 shopCarDto.setId(productHashMap.get(l).getEntity().getId());
-                totalPrice+=productHashMap.get(l).getCount()*productHashMap.get(l).getEntity().getPrice();
-                count+=productHashMap.get(l).getCount();
+                price += productHashMap.get(l).getCount() * productHashMap.get(l).getEntity().getPrice();
+                count += productHashMap.get(l).getCount();
                 list.add(shopCarDto);
             }
             shopCarSum.setCount(count);
-            shopCarSum.setTotalPrice(totalPrice);
+            shopCarSum.setTotalPrice(price);
             shopCarSum.setList(list);
         }
+
+        totalPrice = price;
         return shopCarSum;
     }
 
     //減少數量操作  刷新页面
     @Override
     public Boolean reduce(Long id) {
-       // HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+        // HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
         Cartitem cartitem = productHashMap.get(id);
         cartitem.setCount(cartitem.getCount() - 1);
         cartitem.setPrice(cartitem.getPrice() - cartitem.getEntity().getPrice());
@@ -110,7 +112,7 @@ public class ShopCarServiceImpl implements ShopCarService {
     //添加数量操作
     @Override
     public Boolean addCount(Long id) {
-      //  HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+        //  HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
 
         Cartitem cartitem = productHashMap.get(id);
         cartitem.setCount(cartitem.getCount() + 1);
@@ -119,17 +121,19 @@ public class ShopCarServiceImpl implements ShopCarService {
 
         return true;
     }
+
     //删除
     @Override
     public Boolean remove(Long id) {
-       // HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+        // HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
         productHashMap.remove(id);
         return true;
     }
+
     //清空
     @Override
     public Boolean clear() {
-      //  HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
+        //  HashMap<Long, Cartitem> productHashMap = (HashMap<Long, Cartitem>) session.getAttribute("productHashMap");
 
         productHashMap.clear();
         return true;
@@ -139,19 +143,22 @@ public class ShopCarServiceImpl implements ShopCarService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PaySuccessDto add(OrderAddRequest request) {
+
+        //生成订单
         OrderEntity orderEntity = new OrderEntity();
         AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
         BeanUtils.copyProperties(request, orderEntity);
-        orderEntity.setAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
+        orderEntity.setAddress(entity.getProvince() + entity.getCity() + entity.getDetailAddress());
         orderEntity.setCreateDate(System.currentTimeMillis());
         String orderId = UUID.randomUUID().toString().replace("-", "");
         orderEntity.setOrderId(orderId);
 
-        if (productHashMap==null){
+        if (productHashMap == null) {
             return null;
         }
-        orderMapper.insert(orderEntity);
+        orderMapper.insert(orderEntity); //插入
 
+        //订单项
         for (Map.Entry<Long, Cartitem> cartitemEntry : productHashMap.entrySet()) {
             OrderItem orderItem = new OrderItem();
             orderItem.setCost(cartitemEntry.getValue().getPrice());
@@ -170,10 +177,10 @@ public class ShopCarServiceImpl implements ShopCarService {
         //清空购物车
         this.clear();
 
-        PaySuccessDto paySuccessDto=new PaySuccessDto();
+        PaySuccessDto paySuccessDto = new PaySuccessDto();
         paySuccessDto.setOrderId(orderId);
-       // AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
-        paySuccessDto.setDetailAddress(entity.getProvince()+entity.getCity()+entity.getDetailAddress());
+        // AddressEntity entity = addressMapper.selectByPrimaryKey(request.getAddressId());
+        paySuccessDto.setDetailAddress(entity.getProvince() + entity.getCity() + entity.getDetailAddress());
         paySuccessDto.setGainName(entity.getGainName());
         paySuccessDto.setPhoneNum(entity.getPhoneNum());
         paySuccessDto.setTotalPrice(totalPrice);

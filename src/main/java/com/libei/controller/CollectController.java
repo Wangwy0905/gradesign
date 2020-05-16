@@ -1,6 +1,6 @@
 package com.libei.controller;
 
-import com.libei.Dto.ProductDto;
+import com.libei.Dto.ProductDetailDto;
 import com.libei.controller.request.CollectRequest;
 import com.libei.entity.CollectEntity;
 import com.libei.service.CollectService;
@@ -27,7 +27,7 @@ public class CollectController {
     }
 
     @CrossOrigin
-    @GetMapping("add")
+    @PostMapping("add")
     public Boolean add(@RequestBody CollectRequest request) throws Exception {
 
         return collectService.add(request);
@@ -35,15 +35,15 @@ public class CollectController {
 
     //取消收藏
     @CrossOrigin
-    @PostMapping("delete")
-    public Boolean delete(@RequestBody Long id) throws Exception {
+    @GetMapping("delete")
+    public Boolean delete(@RequestParam Long collectId) throws Exception {
 
-        return collectService.delete(id);
+        return collectService.delete(collectId);
     }
 
     @CrossOrigin
     @GetMapping("query-front")
-    public ProductDto queryFront(@RequestParam Long userId) throws Exception {
+    public List<ProductDetailDto> queryFront(@RequestParam Long userId) throws Exception {
 
         return collectService.queryFront(userId);
     }

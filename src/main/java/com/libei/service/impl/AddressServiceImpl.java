@@ -29,17 +29,19 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean add(AddressRequest request) {
         AddressEntity addressEntity = new AddressEntity();
-        AddressEntity entity =null;
-        if (request.getIsDefault()) {
-            entity=addressMapper.queryDefault(request.getUserId(), request.getIsDefault());
+
+        if (request.getIsDefault() != null && request.getIsDefault() != false) {
+            AddressEntity entity = addressMapper.queryDefault(request.getUserId(), request.getIsDefault());
             if (entity != null) {
                 entity.setIsDefault(false);
             }
+            addressMapper.updateByPrimaryKey(entity);
+        }else {
+            request.setIsDefault(false);
         }
         BeanUtils.copyProperties(request, addressEntity);
         addressEntity.setCreateDate(System.currentTimeMillis());
         addressMapper.insert(addressEntity);
-        addressMapper.updateByPrimaryKey(entity);
 
         return true;
     }
@@ -84,14 +86,14 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    @Transactional(rollbackFor =Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     public Boolean update(AddressRequest request) {
         Long id = request.getId();
         AddressEntity addressEntity = addressMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(request, addressEntity);
-        AddressEntity entity =null;
+        AddressEntity entity = null;
         if (request.getIsDefault()) {
-            entity=addressMapper.queryDefault(request.getUserId(), request.getIsDefault());
+            entity = addressMapper.queryDefault(request.getUserId(), request.getIsDefault());
             if (entity != null) {
                 entity.setIsDefault(false);
             }

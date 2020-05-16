@@ -7,8 +7,10 @@ import com.libei.entity.CategoryEntity;
 import com.libei.entity.ProductEntity;
 import com.libei.enums.BlandEnum;
 import com.libei.mapper.CategoryMapper;
+import com.libei.mapper.CollectMapper;
 import com.libei.mapper.ProductMapper;
 import com.libei.service.CategoryService;
+import com.libei.service.CollectService;
 import com.libei.util.ListUtils;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +29,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryMapper categoryMapper;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private CollectMapper collectMapper;
 
     @Override
     public List<CategoryDto> queryFirst() {
@@ -53,8 +57,11 @@ public class CategoryServiceImpl implements CategoryService {
     public Boolean delete(Long id) {
         //级联删除该分类下所有商品   慎用
         List<ProductEntity> list = productMapper.selectByCategory(id);
-        if (! CollectionUtils.isEmpty(list) ){
+        if (!CollectionUtils.isEmpty(list)) {
             productMapper.deleteByCategory(id);
+            for (ProductEntity productEntity : list) {
+                collectMapper.deleteByProId(productEntity.getId());
+            }
         }
         categoryMapper.deleteByPrimaryKey(id);
 
@@ -77,14 +84,14 @@ public class CategoryServiceImpl implements CategoryService {
 
         List<CategoryEntity> categoryEntities = categoryMapper.queryAll();
 
-        if (CollectionUtils.isEmpty(categoryEntities)){
+        if (CollectionUtils.isEmpty(categoryEntities)) {
             return null;
         }
 
-        List<CategoryResDto> list=new ArrayList<>();
-        for (CategoryEntity categoryEntity:categoryEntities){
-            CategoryResDto categoryResDto=new CategoryResDto();
-            if (categoryEntity.getFirstId()!=null){
+        List<CategoryResDto> list = new ArrayList<>();
+        for (CategoryEntity categoryEntity : categoryEntities) {
+            CategoryResDto categoryResDto = new CategoryResDto();
+            if (categoryEntity.getFirstId() != null) {
                 CategoryEntity entity = categoryMapper.selectByPrimaryKey(categoryEntity.getFirstId());
                 categoryResDto.setBrand(entity.getCategoryName());
                 categoryResDto.setModel(categoryEntity.getCategoryName());
@@ -102,11 +109,11 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResDto> queryLike(String brand) {
         CategoryEntity t = categoryMapper.query(brand);
 
-        List<CategoryEntity> categoryEntities  = categoryMapper.querySecond(t.getId());
-        List<CategoryResDto> list=new ArrayList<>();
-        for (CategoryEntity categoryEntity:categoryEntities){
+        List<CategoryEntity> categoryEntities = categoryMapper.querySecond(t.getId());
+        List<CategoryResDto> list = new ArrayList<>();
+        for (CategoryEntity categoryEntity : categoryEntities) {
 
-            CategoryResDto categoryResDto=new CategoryResDto();
+            CategoryResDto categoryResDto = new CategoryResDto();
             CategoryEntity entity = categoryMapper.selectByPrimaryKey(categoryEntity.getFirstId());
             categoryResDto.setBrand(entity.getCategoryName());
             categoryResDto.setModel(categoryEntity.getCategoryName());

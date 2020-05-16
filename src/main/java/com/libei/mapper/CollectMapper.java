@@ -8,4 +8,8 @@ import java.util.List;
 public interface CollectMapper extends Mapper<CollectEntity> {
 
     List<CollectEntity> queryAll();
+
+    List<CollectEntity> queryByUserId(Long userId);
+
+    Boolean deleteByProId(Long productId);
 }

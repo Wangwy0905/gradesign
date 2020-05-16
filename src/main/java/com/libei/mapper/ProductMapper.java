@@ -15,7 +15,7 @@ public interface ProductMapper extends Mapper<ProductEntity> {
 
     void deleteByCategory(Long categoryId2);
 
-    List<ProductEntity> queryFront(Long userId);
+    ProductEntity queryFront(Long productId);
 
 
     Integer count(Long userId);

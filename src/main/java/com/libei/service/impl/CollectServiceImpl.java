@@ -9,10 +9,12 @@ import com.libei.mapper.CollectMapper;
 import com.libei.mapper.ProductMapper;
 import com.libei.service.CollectService;
 import com.libei.util.ListUtils;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,23 +45,27 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public Boolean delete(Long id) {
-        collectMapper.deleteByPrimaryKey(id);
+    public Boolean delete(Long collectId) {
+        collectMapper.deleteByPrimaryKey(collectId);
         return true;
     }
 
     @Override
-    public ProductDto queryFront(Long userId) {
-        List<ProductEntity> productEntities = productMapper.queryFront(userId);
-        Integer count = productMapper.count(userId);
+    public List<ProductDetailDto> queryFront(Long userId) {
+        List<CollectEntity> collectEntities = collectMapper.queryByUserId(userId);
 
-        ProductDto productDto=new ProductDto();
-
-        List<ProductDetailDto> productDetailDtos = ListUtils.entityListToModelList(productEntities, ProductDetailDto.class);
-        productDto.setRows(productDetailDtos);
-        productDto.setTotal(count);
-
-        return productDto;
+        List<ProductDetailDto> productDetailDtoList = new ArrayList<>();
+        for (CollectEntity entity : collectEntities) {
+            ProductEntity productEntity = productMapper.queryFront(entity.getProductId());
+            ProductDetailDto productDetailDto = new ProductDetailDto();
+            if (productEntity != null) {
+                BeanUtils.copyProperties(productEntity, productDetailDto);
+                productDetailDto.setCollectId(entity.getId());
+                productDetailDtoList.add(productDetailDto);
+            }
+        }
+        System.out.println(collectEntities);
+        return productDetailDtoList;
 
     }
 }
