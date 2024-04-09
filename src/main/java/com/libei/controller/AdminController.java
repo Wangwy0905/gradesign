@@ -22,6 +22,8 @@ public class AdminController {
         System.out.println("123测试");
 
         System.out.println("想要问问你敢不敢");
+        System.out.println("像你说过的那么爱我");
+        System.out.println("你是谁的谁");
 
         return adminService.queryAdminDto(commonRequest);
     }
