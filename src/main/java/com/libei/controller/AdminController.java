@@ -19,8 +19,9 @@ public class AdminController {
     @CrossOrigin
     @PostMapping("queryAll")
     public AdminDto queryAll(@RequestBody CommonRequest commonRequest) throws Exception {
-        return adminService.queryAdminDto(commonRequest);
+        System.out.println("123测试");
 
+        return adminService.queryAdminDto(commonRequest);
     }
 
 
