@@ -21,6 +21,8 @@ public class AdminController {
     public AdminDto queryAll(@RequestBody CommonRequest commonRequest) throws Exception {
         System.out.println("123测试");
 
+        System.out.println("想要问问你敢不敢");
+
         return adminService.queryAdminDto(commonRequest);
     }
 
