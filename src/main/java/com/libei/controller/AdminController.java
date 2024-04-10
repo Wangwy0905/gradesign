@@ -44,6 +44,10 @@ public class AdminController {
     @CrossOrigin
     @PostMapping("query-like")
     public List<AdminEntity> queryLike(@RequestParam("param") String param) {
+        System.out.println("小子，飘了");
+        System.out.println("你试试额");
+        System.out.println("你好啊");
+        System.out.println("1111git");
 
         return adminService.queryLike(param);
     }
