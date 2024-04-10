@@ -48,6 +48,7 @@ public class AdminController {
         System.out.println("你试试额");
         System.out.println("你好啊");
         System.out.println("1111git");
+        System.out.println(11);
 
         return adminService.queryLike(param);
     }
