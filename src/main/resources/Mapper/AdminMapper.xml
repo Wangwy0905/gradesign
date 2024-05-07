@@ -7,14 +7,14 @@
     select count(*) from admin
 
 </select>
-    <select id="queryAll" resultType="AdminEntity">
+    <select id="queryAll" resultType="com.libei.entity.AdminEntity">
 
         select id,account,password,create_date createDate from admin limit ${(pageNum-1)*pageSize},${pageSize}
 
     </select>
 
 
-    <select id="queryLike" resultType="AddressEntity" parameterType="java.lang.String">
+    <select id="queryLike" resultType="com.libei.entity.AddressEntity" parameterType="java.lang.String">
         select id,account,password,create_date createDate from admin where  account like  '%'||#{param}||'%'  order by create_date desc
     </select>
 

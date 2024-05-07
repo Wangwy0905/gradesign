@@ -16,12 +16,12 @@
     </select>
 
 
-    <select id="query" resultType="ProductEntity">
+    <select id="query" resultType="com.libei.entity.ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2 categoryId2,description,brand,capacity,create_time createTime,
         picture,status,sale_count saleCount from product ORDER by create_time desc
     </select>
 
-    <select id="queryLike" resultType="ProductEntity">
+    <select id="queryLike" resultType="com.libei.entity.ProductEntity">
         select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2
         categoryId2,description,brand,capacity,create_time createTime,
         picture,status,sale_count saleCount from product
@@ -40,13 +40,13 @@
         ORDER by create_time desc
     </select>
 
-    <select id="queryLikeBack" resultType="ProductEntity" parameterType="java.lang.String">
+    <select id="queryLikeBack" resultType="com.libei.entity.ProductEntity" parameterType="java.lang.String">
         select id,product_name productName,color,price,brand,repertory, category_id categoryId, category_id2
         categoryId2,description,brand,capacity,create_time createTime,
         picture,status,sale_count saleCount from product where product_name =#{productName} ORDER by create_time desc
     </select>
 
-    <select id="queryFront" parameterType="java.lang.Long" resultType="ProductEntity">
+    <select id="queryFront" parameterType="java.lang.Long" resultType="com.libei.entity.ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,category_id2
         categoryId2,description,brand,capacity,create_time createTime,
         picture,status,sale_count saleCount from product where status='1' and
@@ -58,12 +58,12 @@
             select count(*) from product where user_id=#{userId}
     </select>
 
-    <select id="querySaleCount" resultType="ProductEntity">
+    <select id="querySaleCount" resultType="com.libei.entity.ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,sale_count saleCount,category_id2 categoryId2,description,brand,capacity,create_time createTime,
         picture,status from product ORDER by sale_count desc
     </select>
 
-    <select id="selectByCategory" resultType="ProductEntity">
+    <select id="selectByCategory" resultType="com.libei.entity.ProductEntity">
         select id,product_name productName,color,price,repertory,category_id categoryId,sale_count saleCount,category_id2 categoryId2,description,brand,capacity,create_time createTime,
         picture,status from product where category_id2 =#{categoryId2}
     </select>

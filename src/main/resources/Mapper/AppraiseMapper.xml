@@ -7,7 +7,7 @@
     select count(*) from appraise
 
 </select>
-    <select id="queryAll" resultType="AppraiseEntity" parameterType="java.lang.Long">
+    <select id="queryAll" resultType="com.libei.entity.AppraiseEntity" parameterType="java.lang.Long">
 
         select id,user_id userId,product_id productId,content,create_date createDate from appraise where product_id=#{productId} order by create_date desc
 
@@ -17,13 +17,13 @@
         delete from appraise where user_id =#{userId}
     </delete>
 
-    <select id="queryLike" resultType="AppraiseEntity">
+    <select id="queryLike" resultType="com.libei.entity.AppraiseEntity">
 
         select id,user_id userId,product_id productId,content,create_date createDate from appraise where user_id like concat ('%',#{userId},'%') order by create_date desc
 
     </select>
 
-    <select id="queryBack" resultType="AppraiseEntity">
+    <select id="queryBack" resultType="com.libei.entity.AppraiseEntity">
 
         select id,user_id userId,product_id productId,content,create_date createDate from appraise order by create_date desc
 

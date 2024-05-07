@@ -35,7 +35,6 @@ public class AdminServiceImpl implements AdminService {
 
         return adminDto;
 
-
     }
 
     @Override
@@ -46,9 +45,7 @@ public class AdminServiceImpl implements AdminService {
 
         AdminEntity entity = new AdminEntity();
         entity.setAccount(account);
-
         AdminEntity adminEntity = adminMapper.selectOne(entity);
-
         if (adminEntity == null) {
             throw new Exception("账户号不存在,请确定账户号的正确性");
         }
@@ -56,7 +53,6 @@ public class AdminServiceImpl implements AdminService {
         if (!password.equals(adminEntity.getPassword())) {
             throw new Exception("密码输入错误，请重新输入");
         }
-
         return adminEntity.getId();
     }
 
@@ -72,7 +68,6 @@ public class AdminServiceImpl implements AdminService {
         if (!oldPassword .equals(password)) {
             throw new Exception("原密码错误，请重试");
         }
-
         if (!newPassword.equals(new2Password)) {
             throw new Exception("两次新密码输入不一致，请重试");
         }
@@ -91,5 +86,10 @@ public class AdminServiceImpl implements AdminService {
     public List<AdminEntity> queryLike(String param) {
         List<AdminEntity> adminEntities = adminMapper.queryLike(param);
         return  adminEntities;
+    }
+
+    public static void main(String[] args) {
+        String no="32532";
+        System.out.println(no);
     }
 }

@@ -5,7 +5,7 @@
  <!--   <select id="queryAll" resultType="CollectEntity">
         select id,product_id productId ,user_id userId,create_date createDate from collect where 1=1  order by create_date desc
     </select>-->
-     <select id="queryByUserId" resultType="CollectEntity"  parameterType="java.lang.Long" >
+     <select id="queryByUserId" resultType="com.libei.entity.CollectEntity"  parameterType="java.lang.Long" >
          select id,product_id productId ,user_id userId,create_date createDate from collect where 1=1 and user_id =#{userId} order by create_date desc
      </select>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.OrderMapper">
 
-    <select id="queryAll" resultType="OrderEntity">
+    <select id="queryAll" resultType="com.libei.entity.OrderEntity">
         select id,order_id orderId,cost,number,user_id userId,address,create_date createDate from order_entity where 1=1  order by create_date desc
     </select>
     <delete id="deleteByUserId">
@@ -13,7 +13,7 @@
         select id,cost,number,user_id userId,address,create_date createDate from order_entity where 1=1 and user_id =#{userId} order by create_date desc
     </select>
 
-    <select id="queryLike" resultType="OrderEntity">
+    <select id="queryLike" resultType="com.libei.entity.OrderEntity">
         select id,cost,order_id orderId,number,user_id userId,address,create_date createDate from order_entity where  user_id =#{userId} order by create_date desc
     </select>
 

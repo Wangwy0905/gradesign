@@ -2,28 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.libei.mapper.CategoryMapper">
 
-    <select id="querySecond" resultType="CategoryEntity" parameterType="java.lang.Long">
+    <select id="querySecond" resultType="com.libei.entity.CategoryEntity" parameterType="java.lang.Long">
         select id,category_name categoryName,first_id firstId,create_time createTime from category where first_id =#{firstId}
     </select>
 
-    <select id="queryFirst" resultType="CategoryEntity">
+    <select id="queryFirst" resultType="com.libei.entity.CategoryEntity">
         select id,category_name categoryName,first_id firstId,create_time createTime from category where first_id is null
     </select>
 
-    <select id="queryByParam" resultType="CategoryEntity">
+    <select id="queryByParam" resultType="com.libei.entity.CategoryEntity">
         select id,category_name categoryName,first_id firstId,type, create_time createTime from category where category_name=#{categoryName} limit ${(pageNum-1)*pageSize},${pageSize}
     </select>
 
-    <select id="queryAll" resultType="CategoryEntity">
+    <select id="queryAll" resultType="com.libei.entity.CategoryEntity">
         select id,category_name categoryName,first_id firstId,create_time createTime from category order by create_time desc
     </select>
 
 
-    <select id="queryLike" resultType="CategoryEntity" parameterType="java.lang.String">
+    <select id="queryLike" resultType="com.libei.entity.CategoryEntity" parameterType="java.lang.String">
         select id,category_name categoryName,first_id firstId,create_time createTime from category  where category_name=#{categoryName} order by create_time desc
     </select>
 
-    <select id="query" resultType="CategoryEntity" parameterType="java.lang.String">
+    <select id="query" resultType="com.libei.entity.CategoryEntity" parameterType="java.lang.String">
         select id,category_name categoryName,first_id firstId,create_time createTime from category  where category_name=#{categoryName} order by create_time desc
     </select>
 </mapper>
