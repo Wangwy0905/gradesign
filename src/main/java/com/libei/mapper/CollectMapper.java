@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CollectMapper extends Mapper<CollectEntity> {
 
-    List<CollectEntity> queryAll();
+   // List<CollectEntity> queryAll();
 
     List<CollectEntity> queryByUserId(Long userId);
 
